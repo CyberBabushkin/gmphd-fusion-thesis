@@ -1,0 +1,103 @@
+% This file should not be included anywhere
+% This file contains several snippets (recipes) for later use
+
+%% ------------------------------------------------------------
+% The following environment can be used as a mini-introduction for a chapter. Use that any way it pleases you (or comment it out). It can contain, for instance, a summary of the chapter. Or, there can be a quotation.
+\begin{chapterabstract}
+	\lipsum[1]
+\end{chapterabstract}
+
+%% ------------------------------------------------------------
+% A numbered list
+\begin{enumerate}
+    \item Ut enim ad minim veniam, quis nostrud
+    \item Ut enim ad minim 
+    \item Ut enim ad minim veniam, quis 
+    \begin{enumerate}
+        \item Ut enim ad
+        \item Ut enim ad
+        \begin{enumerate}
+            \item Ut enim 
+            \item Ut enim 
+            \begin{enumerate}
+            \item Ut enim 
+            \item Ut enim 
+        \end{enumerate}
+        \end{enumerate}
+    \end{enumerate}
+\end{enumerate}
+
+%% ------------------------------------------------------------
+% Unordered list
+\begin{itemize}
+    \item Ut enim ad minim veniam, quis nostrud
+    \item Ut enim ad minim 
+    \item Ut enim ad minim veniam, quis 
+    \begin{itemize}
+        \item Ut enim ad
+        \item Ut enim ad
+        \begin{itemize}
+            \item Ut enim 
+            \item Ut enim 
+            \begin{itemize}
+            \item Ut enim 
+            \item Ut enim 
+        \end{itemize}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+%% ------------------------------------------------------------
+% Some code
+\begin{lstlisting}[caption={~Zbytečný kód},label=list:8-6,captionpos=t,float,abovecaptionskip=-\medskipamount,belowcaptionskip=\medskipamount,language=C]
+    #include<stdio.h>
+    #include<iostream>
+    // A comment
+    int main(void)
+    {
+        printf("Hello World\n");
+        return 0;
+    }
+\end{lstlisting}
+
+%% ------------------------------------------------------------
+% code using package minted for source highlighting
+% package minted requires execution with `-shell-escape'
+% e.g., `xelatex -shell-escape ctufit-thesis.tex'
+\begin{listing}
+\caption{Zbytečný kód}\label{list:8-6}
+\begin{minted}{C}
+    #include<stdio.h>
+    #include<iostream>
+    // A comment
+    int main(void)
+    {
+        printf("Hello World\n");
+        return 0;
+    }
+\end{minted}
+\end{listing}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------------------------------
+% citations
+\cite{Crochemore2002}, \cite{def:1, def:2}
+
+%% ------------------------------------------------------------
+% table
+\begin{table}\centering
+\caption[Příklad tabulky]{~Zadávání matematiky}\label{tab:matematika}
+\begin{tabular}{l|l|c|c}
+	Typ		& Prostředí		& \LaTeX{}ovská zkratka	& \TeX{}ovská zkratka	\tabularnewline \hline 
+ 	Text		& \verb|math|		& \verb|\(...\)|	& \verb|$...$|	\tabularnewline \hline
+ 	Displayed	& \verb|displaymath|	& \verb|\[...\]|	& \verb|$$...$$|	\tabularnewline 
+\end{tabular}
+\end{table}
+
+%% ------------------------------------------------------------
+% Theorems, lemmas, corollaries, etc.
+% environments:
+%     definition,example,theorem,proof,corollary,proposition,note,remark,lemma
+\begin{definition}[Optional label]
+Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Fusce suscipit libero eget elit. Etiam dui sem, fermentum vitae, sagittis id, malesuada in, quam. Aliquam id dolor. Curabitur bibendum justo non orci.
+\end{definition}

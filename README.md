@@ -1,6 +1,6 @@
 # Multiple target tracking with external information
 
-Author: Andrey Babushkin \<babusand@fit.cvut.cz\>
+Author: Bc. Andrey Babushkin \<babusand@fit.cvut.cz\>
 
 ## Task description
 
