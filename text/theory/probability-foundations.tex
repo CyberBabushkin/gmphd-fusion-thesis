@@ -1,0 +1,60 @@
+% Introduction to probability theory
+    % - [x] Basic concepts such as events, outcomes, and sample spaces
+    % - [x] Definition of probability and probability axioms
+    % - [ ] Discrete and continuous probability distributions
+    % - [ ] Expectation, variance, and covariance
+% Conditional probability and Bayes' rule
+    % - [ ] Definition of conditional probability
+    % - [ ] Bayes' rule and its derivation
+    % - [ ] Bayes' rule in the context of Bayesian inference for object tracking
+% Likelihood functions
+    % - [ ] Definition of likelihood functions
+    % - [ ] Maximum likelihood estimation (MLE)
+    % - [ ] Likelihood functions in the context of Bayesian inference for object tracking
+% Bayesian inference
+    % - [ ] Overview of Bayesian inference and its advantages over frequentist methods
+    % - [ ] Bayesian inference in the context of object tracking with the GM-PHD filter
+    % - [ ] Markov Chain Monte Carlo (MCMC) methods for Bayesian inference
+% Non-parametric Bayesian methods
+    % - [ ] Introduction to non-parametric Bayesian methods
+    % - [ ] Dirichlet processes and the Dirichlet process mixture model (DPMM)
+    % - [ ] The GM-PHD filter as a non-parametric Bayesian filter
+% Conclusion
+    % Summary of the main concepts covered in the section
+    % Relevance of these concepts for object tracking with the GM-PHD filter
+
+\renewcommand{\Pr}[1]{\operatorname{Pr}\{#1\}}
+
+When we are dealing with probability of an event, we assume that there is a possibility
+of that event occurring and we measure it using a number between 0 and 1 or a percentage
+between 0\% and 100\%. In other words, we use the probability theory framework to assign
+numerical values to arbitrary events. This section covers several fundamental concepts of
+probability theory, which serve as the basis for this work.
+
+The \textit{event}, which we formally denote as $E$, comes from some space of all possible
+events, the \textit{outcome space} $\Omega$. We also denote the \textit{probability} of the
+event $E$ as $\Pr{E}$. This probability is a real non-negative number,
+that is $\Pr{E} \in \mathbb{R}, \Pr{E} \geq 0$. The outcome
+space covers all possible events, that is $\Pr{\Omega} = 1$. It then follows
+that the probability of disjoint events from the outcome space $\Omega$ is the sum of
+probabilities of these events, that is for
+$E_1, \ldots, E_n \in \Omega, \Pr{\bigcup_{i=1}^n E_i} = \sum_{i=1}^n \Pr{E_i}$.
+
+We have defined three main axioms of probability theory. In addition to these axioms, several crucial concepts illustrate the relationship between events. Given two events, $E_1$ and $E_2$, the \textit{conditional probability} of $E_1$ given $E_2$ is defined as
+
+$$
+\Pr{E_1 \mid E_2} = \frac{\Pr{E_1 \cap E_2}}{\Pr{E_2}}.
+$$
+
+If the events are \textit{independent} of each other, the probability of them occurring simultaneously is given by
+
+$$
+\Pr{E_1 \cap E_2} = \Pr{E_1}\Pr{E_2}.
+$$
+
+These relationships allow us to define the \textit{law of total probability}\cite[31]{zwillinger_crc_2000}, which is a key part of the Bayes' rule. Let $F$ be an event, $F \int \Omega$, and $\{E_n : n = 1, 2, \ldots\}$ be a countable partition of the space $\Omega$. Then
+
+$$
+\Pr{F} = \sum_n \Pr{F \mid E_n} \Pr{E_n}.
+$$
+
