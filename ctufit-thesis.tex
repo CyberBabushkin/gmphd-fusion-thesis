@@ -40,12 +40,12 @@
 \ctufitauthorsurnames{Babushkin} % replace with your surname(s) / family name(s)
 \ctufitauthorgivennames{Andrey} % replace with your first name(s) / given name(s)
 \ctufitsupervisor{doc.\,Ing.\,Kamil Dedecius,\,Ph.D.} % replace with name of your supervisor/advisor (include academic degrees)
-\ctufitdepartment{Katedra aplikované matematiky} % replace with the department of your defence
+\ctufitdepartment{Department of Applied Mathematics} % replace with the department of your defence
 \ctufityear{2023} % replace with the year of your defence
 \ctufitdeclarationplace{Prague} % replace with the place where you sign the declaration
 \ctufitdeclarationdate{\today} % replace with the date of signature of the declaration
 \ctufitabstractCZE{\input{text/abstract-cz}}
-\ctufitabstractENG{\input{text/abstract-cz}}
+\ctufitabstractENG{\input{text/abstract-en}}
 \ctufitkeywordsCZE{\input{text/keywords-cz}}
 \ctufitkeywordsENG{\input{text/keywords-en}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -88,7 +88,7 @@
 \usepackage{lipsum,tikz}
 \usepackage{csquotes}
 \usepackage[style=iso-numeric]{biblatex}
-\addbibresource{text/bib-database.bib}
+\addbibresource{text/references.bib}
 \usepackage{listings} % typesetting of sources
 % \usepackage{minted} % typesetting of sources
 
@@ -166,15 +166,18 @@
 % Theoretical background
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Theoretical background}\input{text/theory/index}
+\section{Probability theory foundations}\input{text/theory/probability-foundations}
 % - Probability theory, Bayes' rule, Bayesian inference, likelihood
-% - State model
-% - Kalman filter general deduction (more in an Appendix)
-% - Constant Velocity state model and it measurement model
+% - State-space model
+% - Kalman filter
+% - Constant velocity model (incl. the measurement model, which is a part of CVM)
 % - Multi-object tracking problem, assumptions
+%     - Recall some part from Intro, gradually from JPDA to PHD
 % - Object birth/survival
 % - PHD filter
 % - GM-PHD filter
-% - Gaussian fusion
+% - Inclusion of external information, Gaussian fusion
+%     - Known stuff is gone, new stuff's coming
 % - Convergence analysis?
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
