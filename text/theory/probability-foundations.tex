@@ -1,29 +1,11 @@
 % Introduction to probability theory
     % - [x] Basic concepts such as events, outcomes, and sample spaces
     % - [x] Definition of probability and probability axioms
+    % - [x] Definition of conditional probability
+    % - [x] Bayes' rule and its derivation
     % - [x] Discrete and continuous probability distributions
     % - [x] Expectation, variance, and covariance
     % - [x] Known probability distributions and their properties
-    % - [ ] Mixtures
-% Conditional probability and Bayes' rule
-    % - [ ] Definition of conditional probability
-    % - [ ] Bayes' rule and its derivation
-    % - [ ] Bayes' rule in the context of Bayesian inference for object tracking
-% Likelihood functions
-    % - [ ] Definition of likelihood functions
-    % - [ ] Maximum likelihood estimation (MLE)
-    % - [ ] Likelihood functions in the context of Bayesian inference for object tracking
-% Bayesian inference
-    % - [ ] Overview of Bayesian inference and its advantages over frequentist methods
-    % - [ ] Bayesian inference in the context of object tracking with the GM-PHD filter
-    % - [ ] Markov Chain Monte Carlo (MCMC) methods for Bayesian inference
-% Non-parametric Bayesian methods
-    % - [ ] Introduction to non-parametric Bayesian methods
-    % - [ ] Dirichlet processes and the Dirichlet process mixture model (DPMM)
-    % - [ ] The GM-PHD filter as a non-parametric Bayesian filter
-% Conclusion
-    % Summary of the main concepts covered in the section
-    % Relevance of these concepts for object tracking with the GM-PHD filter
 
 \renewcommand{\Pr}[1]{\operatorname{Pr}\{#1\}}
 
@@ -57,7 +39,8 @@ $$
 \Pr{E_1 \cap E_2} = \Pr{E_1}\Pr{E_2}.
 $$
 
-These relationships allow us to define the \textit{law of total probability} \cite[31]{zwillingerCRCStandardProbability2000}, which is a key component of Bayes' rule.
+These relationships allow us to define the \textit{law of total probability}
+\cite[31]{zwillingerCRCStandardProbability2000}, which is a key component of Bayes' rule.
 Let $A$ be an event, $A \int \Omega$, and $\{B_n : n = 1, 2, \ldots\}$ be a countable
 partition of the space $\Omega$. Then, we have:
 
@@ -348,3 +331,4 @@ in many applications, including object tracking. Although it may be too
 simple to model certain scenarios, it represents the approximate average 
 position of objects and their uncertainty quite well. This work utilizes
 mixtures of Gaussians, which will be discussed in more detail later.
+

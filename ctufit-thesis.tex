@@ -93,6 +93,8 @@
 \usepackage{caption}
 \usepackage{subcaption}  % subfigures
 \usepackage{mathrsfs}  % mathscr
+\usepackage{todonotes}  % TODOs that are not later lost
+\usepackage{epigraph}  % nice quotes
 % \usepackage{minted} % typesetting of sources
 
 %theorems, definitions, etc.
@@ -170,13 +172,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Theoretical background}\input{text/theory/index}
 \section{Probability theory foundations}\input{text/theory/probability-foundations}
-% - Probability theory, Bayes' rule, Bayesian inference, likelihood
-% - State-space model
-% - Kalman filter
-% - Constant velocity model (incl. the measurement model, which is a part of CVM)
+\section{Bayesian inference}\input{text/theory/inference}
+\section{Kalman filter}\input{text/theory/kalman}
 % - Multi-object tracking problem, assumptions
 %     - Recall some part from Intro, gradually from JPDA to PHD
 % - Object birth/survival
+% - Gaussian mixtures
 % - PHD filter
 % - GM-PHD filter
 % - Inclusion of external information, Gaussian fusion

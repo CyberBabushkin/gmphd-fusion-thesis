@@ -1,0 +1,115 @@
+% - State-space model
+% - Bayes filter
+% - Kalman filter
+% - Constant velocity model (incl. the measurement model, which is a part of CVM)
+
+We have now introduced the main principles of Bayesian inference. Now, we can
+turn to the Kalman filter, a popular and widely used algorithm for state 
+estimation. The Kalman filter (KF, for short) is a recursive algorithm that uses
+Bayesian inference to estimate the state of a dynamic system based on a sequence
+of noisy measurements.
+
+The key feature of the KF is the ability to predict future states of the system.
+This is essential for applications that require to foresee the behavior of
+tracked objects before the state of these objects is measured. Examples of such
+systems may include autonomous driving or air defence systems. The prediction 
+ability helps also to overcome situations when a sensor fails to measure the
+position of an object (a so-called misdetection).
+
+In the following subsections, we will introduce the state-space models, give
+a formal definition of a general Bayes filter, infer the Kalman filter formulas
+and discuss the Constant Velocity (CV) model, a common motion model used in the
+Kalman filter.
+
+\subsection{State-space model}
+
+\todo{TBD}
+% use p(x_{k} | z_k) notation
+
+\begin{enumerate}
+    \item \textbf{The motion model} (propagation model, dynamic model, transition model, state transition model, system model) Describes how 
+    \item \textbf{The measurement model} (observation model, sensor model, measurement likelihood model, measurement probability distribution)
+\end{enumerate}
+
+\subsection{The Bayes filter}
+
+We have learned how the internal state of a system can be represented in terms
+of a state vector and motion and measurement models. Now, we are ready to 
+present the formal definition of the Bayes filter, the general abstraction of
+any Bayesian filter, including the Kalman filter and the PHD filter.
+
+First, we need to make a very important assumption on states. This assumption
+is called the \textit{Markov model property}. This property states that, for 
+the kinematic model, the present state of a system $x_k$ is dependent only on 
+the state on the previous time step $x_{k-1}$ given all past states $x_{1:k-1}$ 
+and measurements $z_{1:k-1}$. More formally:
+
+$$
+p(x_k | x_1, \ldots, x_{k-2}, x_{k-1},
+        z_1, \ldots, z_{k-2}, z_{k-1}) 
+    = p(x_k | x_{k-1}).
+$$
+
+A similar requirement must hold for measurement model, that is:
+
+$$
+p(z_k | x_1, \ldots, x_{k-2}, x_{k-1}, x_{k}
+        z_1, \ldots, z_{k-2}, z_{k-1}) 
+    = p(z_k | x_k).
+$$
+
+The Markov property may seem restrictive but in reality it is not because state-
+space models allows us to capture dependencies in the system dynamics by simply 
+introducing more variables into the state vector. For instance, if we have a 
+system where the current state has a dependence on the previous two states, we 
+can augment the state vector to include the last two states as variables, and 
+the Markov property will still hold.
+
+The Bayes filter uses the kinematic and measurement models and assumes that this
+property holds. The Bayes filter is a recursive framework that estimates an
+internal state of the system over time using measurements. Every iteration of
+the filter consists of two steps: prediction and update. On the prediction step,
+the filter estimates a internal state $x_k$ based on the previous state
+$x_{k-1}$ and the kinematic model $p(x_k | x_{k-1})$. The prediction step
+is also known as the Chapman-Kolmogorov equation.
+
+\begin{theorem}[The prediction step. The Chapman-Kolmogorov equation]
+    Given the set of measurements $z_{1:k-1} = \{z_1, z_2, \ldots, z_{k-1}\}$ 
+    and the current state $x_{k-1}$ and the kinematic model $p(x_k | x_{k-1})$, 
+    the prediction step of the Bayes filter is computed as follows:
+
+    $$
+    p\left({x}_k | {z}_{1: k-1}\right)
+        = \int 
+            p\left(
+                {x}_k, {x}_{k-1} | {z}_{1: k-1}
+            \right)
+            \mathrm{d} {x}_{k-1}
+        = \int
+            p\left(
+                {x}_k | {x}_{k-1}\right
+            ) p\left(
+                {x}_{k-1} | {z}_{1: k-1}
+            \right)
+            \mathrm{d} {x}_{k-1}.
+    $$
+\end{theorem}
+
+Next, on the update step, the filter corrects the predicted state with the 
+measurement $z_k$ using the measurement model $p(z_k | x_k)$. This step is
+computed using the standard Bayes' rule.
+
+\begin{theorem}[The update step]
+    Given the output of the prediction step of the Bayes filter 
+    $p\left({x}_k | {z}_{1: k-1}\right)$, the observed measurement $z_k$
+    and the measurement model $p(z_k | x_k)$, the update step of the Bayes
+    filter is computed as follows:
+    
+    $$
+    p\left({x}_k | {z}_{1: k}\right)=\frac{p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right)}{p\left({z}_k | {z}_{1: k-1}\right)} \propto p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right).
+    $$
+\end{theorem}
+
+Now, having introduced the general Bayes filter, we will continue with 
+exploring the Kalman filter in detail, the popular and widely used tool for 
+state estimation.
