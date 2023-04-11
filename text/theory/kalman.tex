@@ -23,13 +23,124 @@ Kalman filter.
 
 \subsection{State-space model}
 
-\todo{TBD}
-% use p(x_{k} | z_k) notation
+In the previous section, we established the relationships between prior and 
+posterior distributions and learned about recursive Bayesian estimation of the 
+posterior. Now, we will explore these concepts in the context of object 
+tracking.
 
-\begin{enumerate}
-    \item \textbf{The motion model} (propagation model, dynamic model, transition model, state transition model, system model) Describes how 
-    \item \textbf{The measurement model} (observation model, sensor model, measurement likelihood model, measurement probability distribution)
-\end{enumerate}
+Object tracking involves estimating the internal states of objects that move in 
+some space, which are often unknown to us. These states may include physical 
+properties of objects such as position, velocity, acceleration, and 
+orientation, depending on the application. Sensors such as cameras, infrared 
+scanners, lidars or radars constantly generate measurements of the object 
+states, which may be the distance of an object to the sensor, or its 
+temperature. However, these measurements are often noisy due to environmental 
+conditions or imperfections of the sensor. We use Bayesian filtering to 
+estimate the real state of the objects and filter out the noise.
+
+To handle the complexity and diversity of possible situations and properties, 
+we need a systematic framework for modeling object motion that captures all 
+sources of uncertainty and the nature of physical behavior of objects. This 
+framework is called state-space modeling. In state-space models, the internal 
+state we want to estimate is represented as a vector of variables that evolve 
+over time according to a set of rules specified by the \textit{motion model}, 
+which is a known function. The measurements obtained at each time step are 
+modeled as a different function of the state variables, known as the 
+\textit{measurement model}\footnote{
+    It should be mentioned that the names `motion' and `measurement' models are 
+    not the only terms used to describe them. The reader may also encounter 
+    terms such as kinematic, state-transition, dynamic, or system models for the 
+    motion model, and terms like observation, sensor, or likelihood models for 
+    the measurement model. All of these names are correct, and their use depends 
+    on the context in which they are applied. However, in this work, the author 
+    strives for consistency and will use the terms `motion' and `measurement' 
+    models throughout the entire text.
+}.
+
+For example, consider a moving bicycle and a surveillance camera with a 
+rectangular field of view (FoV). The bicycle enters the FoV and crosses it at a 
+constant speed. The camera has an algorithm that estimates the position of 
+objects in the space from the image. With each frame $f$, it returns a new 
+position, say $(\hat x_f, \hat y_f)$. We can represent the state of the bicycle 
+as a vector of the position and velocity, which are unknown variables. Based on 
+the measurements, we estimate their values using the known physical relation 
+between distance, velocity, and time: $d = v \Delta t$, where $d$ is the 
+distance that the object with velocity $v$ traveled in time $\Delta t$.
+
+Both the motion and measurement models should include some noise. In the 
+example above, the movement of the bicycle cannot perfectly follow the formula, 
+and there will always be some minor changes in speed. Moreover, the measurement 
+model, which translates an estimated state into a measurement, will also 
+contain some uncertainty since the camera does not have a perfect 
+representation of the space.
+
+We can now describe these models formally. Note that since the state is a 
+vector, we will use $\mathbf{x}$ for vectors. The motion and measurement models 
+can be generally expressed as:
+
+$$
+\begin{aligned}
+    p(\vecat{x}{k} | \vecat{x}{k-1}) 
+        &= f_t(\vecat{x}{k-1}, \vecat{u}{k}, \vecat{w}{k}), \\
+    p(\vecat{z}{k} | \vecat{x}{k}) 
+        &= h_t(\vecat{x}{k}, \vecat{v}{k}),
+\end{aligned}
+$$
+
+where $f_t$ and $h_t$ are functions, $\vecat{x}{k-1}$ is the estimated state 
+from time step $k-1$, $\vecat{u}{k}$ is called the input (or control) vector, 
+and $\vecat{w}{k}$ and $\vecat{v}{k}$ are zero-mean noise random variables.
+
+However, this definition is too general since the functions $f_t$ and $h_t$ can 
+be anything. As mentioned earlier, to get a closed-form solution in the 
+Bayesian inference framework, we need to choose conjugate distributions for the 
+likelihood and the prior. The Kalman filter, which we will describe soon, works 
+for the Gaussian-linear case, where the functions $f_t$ and $h_t$ are linear 
+and noise variables are distributed as Gaussian, i.e., 
+$\vecat{w}{k}, \vecat{v}{k} \sim \mathscr{N}(\mathbf{0}, \Sigma)$. The Gaussian-
+linear state-space model has the following representation:
+
+$$
+\begin{aligned}
+    p(\vecat{x}{k} | \vecat{x}{k-1}) 
+        &= \mathbf{F} \vecat{x}{k-1}
+            + \mathbf{B} \vecat{u}{k}
+            + \vecat{w}{k},
+        & \vecat{v}{k} \sim \mathscr{N}(\mathbf{0}, \mathbf{Q}), \\
+    p(\vecat{z}{k} | \vecat{x}{k})
+        &= \mathbf{H} \vecat{x}{k} + \vecat{v}{k},
+        & \vecat{w}{k} \sim \mathscr{N}(\mathbf{0}, \mathbf{R}), \\
+    p(\vecat{x}{0}) &\sim \mathscr{N}(\vecat{\hat{x}}{0}), \vecat{P}{0}),&
+\end{aligned}
+$$
+
+where:
+
+\begin{itemize}
+    \item $\mathbf{F}$ is the \textit{transition matrix},
+    \item $\mathbf{B}$ is the \textit{input matrix},
+    \item $\mathbf{H}$ is the \textit{measurement matrix},
+    \item $\mathbf{Q}$ and $\mathbf{R}$ are symmetric positive definite matrices
+        that describe the statistical properties of the motion noise
+        \vecat{v}{k} and the measurement noise \vecat{w}{k}, respectively,
+    \item $\vecat{\hat x}{0}$ and $\vecat{P}{0}$ are mean and variance of the 
+    prior state.
+\end{itemize}
+
+The control variable $\vecat{u}{k}$, in general, represents some input signal from the environment, and $\mathbf{B}$ specifies how the input signal affects the dynamic system. This may include the effect of gravity on the vertical traveled distance or the voltage applied to some circuit. However, in object tracking, we rely on measurements obtained from sensors to update our estimate of the object's state. We do not have control over the object's motion. Thus, the input matrix is often redundant, and we omit it (or set it to a zero matrix) along with the input variable $\vecat{u}{k}$.
+
+The notation above may be inconvenient in some cases. In this work, we will often use a shorter version that has the same meaning:
+
+$$
+\begin{aligned}
+    p(\vecat{x}{k} | \vecat{x}{k-1})
+        &= \mathscr{N}(\vecat{x}{k}; \mathbf{F}\vecat{x}{k-1}, \mathbf{Q}), \\
+    p(\vecat{z}{k} | \vecat{x}{k})
+        &= \mathscr{N}(\vecat{z}{k}; \mathbf{H}\vecat{x}{k}, \mathbf{R}), \\
+    \vecat{x}{0}
+        &\sim \mathscr{N}(\vecat{x}{0}; \vecat{\hat{x}}{0}, \vecat{P}{0}).
+\end{aligned}
+$$
 
 \subsection{The Bayes filter}
 
@@ -40,7 +151,7 @@ any Bayesian filter, including the Kalman filter and the PHD filter.
 
 First, we need to make a very important assumption on states. This assumption
 is called the \textit{Markov model property}. This property states that, for 
-the kinematic model, the present state of a system $x_k$ is dependent only on 
+the motion model, the present state of a system $x_k$ is dependent only on 
 the state on the previous time step $x_{k-1}$ given all past states $x_{1:k-1}$ 
 and measurements $z_{1:k-1}$. More formally:
 
@@ -65,17 +176,17 @@ system where the current state has a dependence on the previous two states, we
 can augment the state vector to include the last two states as variables, and 
 the Markov property will still hold.
 
-The Bayes filter uses the kinematic and measurement models and assumes that this
+The Bayes filter uses the motion and measurement models and assumes that this
 property holds. The Bayes filter is a recursive framework that estimates an
 internal state of the system over time using measurements. Every iteration of
 the filter consists of two steps: prediction and update. On the prediction step,
 the filter estimates a internal state $x_k$ based on the previous state
-$x_{k-1}$ and the kinematic model $p(x_k | x_{k-1})$. The prediction step
+$x_{k-1}$ and the motion model $p(x_k | x_{k-1})$. The prediction step
 is also known as the Chapman-Kolmogorov equation.
 
 \begin{theorem}[The prediction step. The Chapman-Kolmogorov equation]
     Given the set of measurements $z_{1:k-1} = \{z_1, z_2, \ldots, z_{k-1}\}$ 
-    and the current state $x_{k-1}$ and the kinematic model $p(x_k | x_{k-1})$, 
+    and the current state $x_{k-1}$ and the motion model $p(x_k | x_{k-1})$, 
     the prediction step of the Bayes filter is computed as follows:
 
     $$
@@ -113,3 +224,6 @@ computed using the standard Bayes' rule.
 Now, having introduced the general Bayes filter, we will continue with 
 exploring the Kalman filter in detail, the popular and widely used tool for 
 state estimation.
+
+\subsection{The Kalman filter}
+

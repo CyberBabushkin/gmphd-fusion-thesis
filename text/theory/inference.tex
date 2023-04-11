@@ -96,7 +96,7 @@ straightforward manner.
     Let $z_k$ be an observed random variable at discrete time steps
     $k = 1, 2, \ldots$ and let $z_{1:k-1}$ represent the realizations of $z_k$ 
     obtained from the time step $k = 1$ up to $(k-1)$, that is $z_{1:k-1} = 
-    \{z_1, z_2,\ldots, z_{k-1}\}$. Let $p(x_k | z_{1:k-1}$ denote the posterior 
+    \{z_1, z_2,\ldots, z_{k-1}\}$. Let $p(x_k | z_{1:k-1})$ denote the posterior 
     distribution obtained at time $k-1$ using all the measurements up to $k-1$ 
     and $p(z_k | x_k)$ be the likelihood of the new measurement $z_k$. The 
     posterior distribution $p(x_k | z_{1:k})$ at time step $k$ is:
@@ -173,6 +173,6 @@ observed data. Comparing to the MLE, MAP uses prior information and more robust
 when the data is noisy or incomplete. That is the reason why MAP is often used
 in Bayesian inference.\footnote{
     In this work, we use Gaussian posterior distributions and MAP estimates are 
-    equal to posterior mean estimates. However, for general distributions, it
-    will rarely be the case.
+    equal to posterior mean estimates, or MMSE-estimates. However, for general 
+    distributions, it will rarely be the case.
 }
