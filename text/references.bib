@@ -123,6 +123,18 @@
   file = {/Users/mannannlegur/Zotero/storage/883Z32G2/García-Fernández et al. - 2018 - Poisson Multi-Bernoulli Mixture Filter Direct Der.pdf}
 }
 
+@article{gePerformanceAnalysisKalman2016,
+  title = {Performance {{Analysis}} of the {{Kalman Filter With Mismatched Noise Covariances}}},
+  author = {Ge, Quanbo and Shao, Teng and Duan, Zhansheng and Wen, Chenglin},
+  date = {2016-12-01},
+  journaltitle = {IEEE Transactions on Automatic Control},
+  shortjournal = {IEEE Transactions on Automatic Control},
+  volume = {61},
+  pages = {1--1},
+  doi = {10.1109/TAC.2016.2535158},
+  abstract = {The Kalman filter is a powerful state estimator and has been successfully applied in many fields. To guarantee the optimality of the Kalman filter, the noise covariances need to be exactly known. However, this is not necessarily true in many practical applications. Usually, they are either completely unknown or at most partially known. In this technical note, we study performance of the Kalman filter with mismatched process and measurement noise covariances. For this purpose, three mean squared errors (MSEs) are used, namely the ideal MSE (IMSE), the filter calculated MSE (FMSE), and the true MSE (TMSE). The main contribution of this work is that the relationships between the three MSEs are disclosed from two points of views. The first view is about their ordering and the second view is about the relative closeness from the FMSE and TMSE to the IMSE. Using the first view, it is found that for the case with positive (definite) deviation from the truth, the FMSE is the worst and the IMSE is the best. And for the case with negative (definite) deviation, the TMSE is the worst and the best is the FMSE. Using the second view, it is found that the TMSE is relatively closer to the IMSE than the FMSE if the deviation is larger than certain threshold, and the TMSE will be farther away otherwise. Numerical examples further verify these conclusions.}
+}
+
 @article{grewalApplicationsKalmanFiltering2010,
   title = {Applications of {{Kalman Filtering}} in {{Aerospace}} 1960 to the {{Present}} [{{Historical Perspectives}}},
   author = {Grewal, Mohinder and Andrews, Angus},
@@ -161,6 +173,43 @@
   eventtitle = {2011 {{IEEE}} 3rd {{International Conference}} on {{Communication Software}} and {{Networks}}},
   keywords = {data fusion,GM-PHD,IEL,multitarget tracking,Radar tracking,radar/infrared sensor,random finite sets,Target tracking},
   file = {/Users/mannannlegur/Zotero/storage/WLY93HZS/Huazhi and Jian - 2011 - A multitarget tracking algorithm based on radar an.pdf;/Users/mannannlegur/Zotero/storage/XBGRVTY2/6014586.html}
+}
+
+@article{kalmanNewApproachLinear1960,
+  title = {A {{New Approach}} to {{Linear Filtering}} and {{Prediction Problems}}},
+  author = {Kalman, R. E.},
+  date = {1960-03-01},
+  journaltitle = {Journal of Basic Engineering},
+  shortjournal = {Journal of Basic Engineering},
+  volume = {82},
+  number = {1},
+  pages = {35--45},
+  issn = {0021-9223},
+  doi = {10.1115/1.3662552},
+  url = {https://doi.org/10.1115/1.3662552},
+  urldate = {2023-04-11},
+  abstract = {The classical filtering and prediction problem is re-examined using the Bode-Shannon representation of random processes and the “state-transition” method of analysis of dynamic systems. New results are: (1) The formulation and methods of solution of the problem apply without modification to stationary and nonstationary statistics and to growing-memory and infinite-memory filters. (2) A nonlinear difference (or differential) equation is derived for the covariance matrix of the optimal estimation error. From the solution of this equation the co-efficients of the difference (or differential) equation of the optimal linear filter are obtained without further calculations. (3) The filtering problem is shown to be the dual of the noise-free regulator problem. The new method developed here is applied to two well-known problems, confirming and extending earlier results. The discussion is largely self-contained and proceeds from first principles; basic concepts of the theory of random processes are reviewed in the Appendix.},
+  file = {/Users/mannannlegur/Zotero/storage/XTVB2CDY/A-New-Approach-to-Linear-Filtering-and-Prediction.html}
+}
+
+@article{matiskoNoiseCovariancesEstimation2010,
+  title = {Noise Covariances Estimation for {{Kalman}} Filter Tuning},
+  author = {Matisko, Peter and Havlena, Vladimír},
+  date = {2010-01-01},
+  journaltitle = {IFAC Proceedings Volumes},
+  shortjournal = {IFAC Proceedings Volumes},
+  series = {10th {{IFAC Workshop}} on the {{Adaptation}} and {{Learning}} in {{Control}} and {{Signal Processing}}},
+  volume = {43},
+  number = {10},
+  pages = {31--36},
+  issn = {1474-6670},
+  doi = {10.3182/20100826-3-TR-4015.00009},
+  url = {https://www.sciencedirect.com/science/article/pii/S1474667015323351},
+  urldate = {2023-04-11},
+  abstract = {Kalman filter tuning is based on process and measurement noise covariances that are parameters of Riccati equation. Based on the Riccati equation solution, Kalman gain is calculated and further used for state estimator. Noise covariances are generally not known. Several methods have been published since 70s. The latest methods and their modifications were published in 2005 and later. In many parts of technical science the Bayesian approach can be used for various estimation problems. However many scientists and researchers a priori consider Bayesian principles to be unpractical because in most cases it is very difficult to work with probabilities or likelihood functions. The probability or likelihood functions cannot be solved analytically for most problems. In this paper we will discuss the performance of some published methods and compare them with the maximum likelihood approach using numerical methods. The key goal is to demonstrate quality of maximum likelihood approach that can effectivelly use information from given data. A very simple algorithm demonstrates using maximum likelihood approach for noise covariances estimation of a scalar system.},
+  langid = {english},
+  keywords = {Adaptive Kalman filter,Kalman filter tuning,Maximum likelihood method,Noise covariance estimation,State estimation},
+  file = {/Users/mannannlegur/Zotero/storage/UISEXYGX/S1474667015323351.html}
 }
 
 @article{noackNonlinearTracktotrackFusion,
@@ -217,6 +266,19 @@
   abstract = {Based on random finite set, the probability hypothesis density (PHD) filter and the cardinalized PHD (CPHD) filter have been proposed for multitarget tracking as they are computational tractable. But the classical PHD and CPHD filter is not applicable when a target generates multiple detections. The general PHD filter was proposed to apply the PHD filter to arbitrary clutter and target measurement process. However, as a filter with better performance than the PHD filter, the CPHD filter for multiple-detection tracking is not proposed except the extended target CPHD filter and the multisensor CPHD filter. In our work, the general CPHD filter, which allows the clutter process and target measurement process to be arbitrary and performs better than the general PHD filter, is proposed. The proposed general CPHD filter is the general form of all kinds of CPHD filters, as well as all kinds of PHD filters and Bernoulli filters. In the simulation, the multiple-detection model of the over-the-horizon radar is used to demonstrate the tracking performance. The simulation results show that the proposed filter improves the accuracy of the state estimates and reduces the variance of the estimated number of targets.},
   keywords = {Clutter process,CPHD filter,Measurement process,Multitarget tracking (MTT),Random finite set (RFS)},
   file = {/Users/mannannlegur/Zotero/storage/REZ7ZD8Y/Shen et al. - 2022 - A general cardinalized probability hypothesis dens.pdf}
+}
+
+@report{smithApplicationStatisticalFilter1962,
+  title = {Application of {{Statistical Filter Theory}} to the {{Optimal Estimation}} of {{Position}} and {{Velocity}} on {{Board}} a {{Circumlunar Vehicle}}},
+  author = {Smith, Gerald L. and Schmidt, Stanley F. and McGee, Leonard A.},
+  date = {1962-01-01},
+  number = {NASA-TR-R-135},
+  url = {https://ntrs.nasa.gov/citations/20190002215},
+  urldate = {2023-04-11},
+  abstract = {Statistical filter theory is employed to develop a method for determining the best possible estimate of the position and velocity of a space vehicle in the midcourse phase of flight. Results of a computer simulation are given to illustrate the performance attainable. An on-board system is visualized in which the source of information is an arbitrary sequence of observations of space angles, corrupted by measurement errors. The scheme is in effect a dynamical time-varying filter, implemented by a digital computer, which processes the incoming data to compute an up-to-date optimal estimate of position and velocity.},
+  keywords = {Astrodynamics},
+  annotation = {NTRS Author Affiliations: NASA Ames Research Center NTRS Document ID: 20190002215 NTRS Research Center: Ames Research Center (ARC)},
+  file = {/Users/mannannlegur/Zotero/storage/EHGL9Q27/Smith et al. - 1962 - Application of Statistical Filter Theory to the Op.pdf;/Users/mannannlegur/Zotero/storage/RWGJA459/20190002215.html}
 }
 
 @book{streitPoissonPointProcesses2010,
@@ -323,6 +385,18 @@
   eventtitle = {2016 {{International Conference}} on {{Control}}, {{Automation}} and {{Information Sciences}} ({{ICCAIS}})},
   keywords = {association map,Automation,centralized,Clutter,Estimation,Radar tracking,Radio frequency,Robot sensing systems,sensor network,Target tracking,δ-GLMB},
   file = {/Users/mannannlegur/Zotero/storage/HNIKKE35/Wei et al. - 2016 - Centralized multi-sensor multi-target tracking wit.pdf}
+}
+
+@article{yuenOnlineEstimationNoise2013,
+  title = {Online Estimation of Noise Parameters for {{Kalman}} Filter},
+  author = {Yuen, Ka-Veng and Liang, Peng-Fei and Kuok, Sin-Chi},
+  date = {2013-08-10},
+  journaltitle = {Structural Engineering and Mechanics},
+  shortjournal = {Structural Engineering and Mechanics},
+  volume = {47},
+  doi = {10.12989/sem.2013.47.3.361},
+  abstract = {A Bayesian probabilistic method is proposed for online estimation of the process noise and measurement noise parameters for Kalman filter. Kalman filter is a well-known recursive algorithm for state estimation of dynamical systems. In this algorithm, it is required to prescribe the covariance matrices of the process noise and measurement noise. However, inappropriate choice of these covariance matrices substantially deteriorates the performance of the Kalman filter. In this paper, a probabilistic method is proposed for online estimation of the noise parameters which govern the noise covariance matrices. The proposed Bayesian method not only estimates the optimal noise parameters but also quantifies the associated estimation uncertainty in an online manner. By utilizing the estimated noise parameters, reliable state estimation can be accomplished. Moreover, the proposed method does not assume any stationarity condition of the process noise and/or measurement noise. By removing the stationarity constraint, the proposed method enhances the applicability of the state estimation algorithm for nonstationary circumstances generally encountered in practice. To illustrate the efficacy and efficiency of the proposed method, examples using a fifty-story building with different stationarity scenarios of the process noise and measurement noise are presented.},
+  file = {/Users/mannannlegur/Zotero/storage/C6HACKJA/Yuen et al. - 2013 - Online estimation of noise parameters for Kalman f.pdf}
 }
 
 @book{zwillingerCRCStandardProbability2000,
