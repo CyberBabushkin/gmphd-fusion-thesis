@@ -152,6 +152,13 @@
 % THE THESIS
 % MODIFY ANYTHING BELOW THIS LINE
 %%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\varat}[2]{\relax\ifmmode{#1}_{#2}\else ${#1}_{#2}$\fi}
+\newcommand{\vecat}[2]{\relax\ifmmode\mathbf{#1}_{#2}\else $\mathbf{#1}_{#2}$\fi}
+
 \graphicspath{figures}
 \mainmatter\mainmatterinit % do not remove these two commands
 

@@ -325,10 +325,16 @@ $$
 \end{aligned}
 $$
 
-Despite not having a closed-form solution, the Gaussian distribution 
-possesses several desirable properties that allow for closed-form solutions 
-in many applications, including object tracking. Although it may be too 
-simple to model certain scenarios, it represents the approximate average 
-position of objects and their uncertainty quite well. This work utilizes
-mixtures of Gaussians, which will be discussed in more detail later.
+In the notation $\mathscr{N}\left(x ; \mu, \sigma^2\right)$, the first 
+parameter $x$ means ``evaluated at.'' It should be noted that if the mean is a 
+vector, denoted as $\mathbf{\mu}$, the variance becomes a matrix, written as 
+$\Sigma$, and the overall distribution is, therefore, denoted as 
+$\mathscr{N}\left(\mathbf{x} ; \mathbf\mu, \mathbf\Sigma\right)$.
 
+Despite the cdf of the Gaussian distribution not having a closed-form 
+representation, the distribution possesses several desirable properties that 
+allow for closed-form solutions in many applications, including object 
+tracking. Although it may be too simple to model certain scenarios, it 
+represents the approximate average position of objects and their uncertainty 
+quite well. This work utilizes mixtures of Gaussians, which will be discussed 
+in more detail later.
