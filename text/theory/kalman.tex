@@ -21,7 +21,7 @@ a formal definition of a general Bayes filter, infer the Kalman filter formulas
 and discuss the Constant Velocity (CV) model, a common motion model used in the
 Kalman filter.
 
-\subsection{State-space model}
+\subsection{State-space model}\label{sec:state-model}
 
 In the previous section, we established the relationships between prior and 
 posterior distributions and learned about recursive Bayesian estimation of the 
@@ -142,7 +142,7 @@ $$
 \end{aligned}
 $$
 
-\subsection{The Bayes filter}
+\subsection{The Bayes filter}\label{sec:bayes-filter}
 
 We have learned how the internal state of a system can be represented in terms
 of a state vector and motion and measurement models. Now, we are ready to 
@@ -184,7 +184,7 @@ the filter estimates a internal state $x_k$ based on the previous state
 $x_{k-1}$ and the motion model $p(x_k | x_{k-1})$. The prediction step
 is also known as the Chapman-Kolmogorov equation.
 
-\begin{theorem}[The prediction step. The Chapman-Kolmogorov equation]
+\begin{theorem}[The prediction step. The Chapman-Kolmogorov equation]\label{theorem:bayes-filter-predict}\label{theorem:chapman-kolmogorov}
     Given the set of measurements $z_{1:k-1} = \{z_1, z_2, \ldots, z_{k-1}\}$ 
     and the current state $x_{k-1}$ and the motion model $p(x_k | x_{k-1})$, 
     the prediction step of the Bayes filter is computed as follows:
@@ -210,7 +210,7 @@ Next, on the update step, the filter corrects the predicted state with the
 measurement $z_k$ using the measurement model $p(z_k | x_k)$. This step is
 computed using the standard Bayes' rule.
 
-\begin{theorem}[The update step]
+\begin{theorem}[The update step]\label{theorem:bayes-filter-update}
     Given the output of the prediction step of the Bayes filter 
     $p\left({x}_k | {z}_{1: k-1}\right)$, the observed measurement $z_k$
     and the measurement model $p(z_k | x_k)$, the update step of the Bayes
@@ -226,4 +226,52 @@ exploring the Kalman filter in detail, the popular and widely used tool for
 state estimation.
 
 \subsection{The Kalman filter}
+
+The Kalman filter is one of the most well-known and widely used algorithms in 
+signal processing and control theory. It is a recursive algorithm that allows 
+the estimation of internal states of entities in dynamic systems from a set of 
+measurements that may be noisy or missing at some time steps. The filter was 
+proposed by Rudolf Kalman in 1960 \cite{kalmanNewApproachLinear1960} and has 
+since been pervasively used to control a vast array of consumer, health, 
+commercial, and defense products \cite{grewalApplicationsKalmanFiltering2010}.
+
+The development of the filter was motivated by the need to improve aerospace 
+technology in the United States during the Cold War between the Soviet Block 
+and the North American Treaty Organization. Because the Soviet Union managed to 
+launch its artificial satellites and successfully send a human to space, the 
+federal government of the United States supported research into new 
+technologies in the aerospace area.
+
+The Kalman filter is an example of a general Bayes filter that was introduced 
+earlier. This means that the filter estimates the posterior distribution of the 
+internal state at discrete time steps using prior information about the 
+observed object's state and a set of noisy measurements. As briefly mentioned 
+in Section \ref{sec:state-model}, the Kalman filter works on state-space linear 
+models with Gaussian noise and a Gaussian prior of the state. The predict-
+update loop in the Kalman filter is the same as in the Bayes filter, and the 
+same Chapman-Kolmogorov equation defined in \ref{theorem:chapman-kolmogorov} 
+and the update equation defined in \ref{theorem:bayes-filter-update} are 
+incorporated.
+
+The main advantage of the Kalman filter is that it allows for the estimation of 
+the state of a system in real-time. It handles noisy measurements well and is 
+fast; however, it is sensitive to initial parameter settings, such as the noise 
+covariance matrices \cite{gePerformanceAnalysisKalman2016}. Nonetheless, there 
+are new methods being developed that propose mechanisms to overcome this 
+drawback, as in \cite{matiskoNoiseCovariancesEstimation2010} and 
+\cite{yuenOnlineEstimationNoise2013}.
+
+One of the main drawbacks of the Kalman filter is its Gaussian-linear 
+assumption. In real-world applications, many systems exhibit non-linearity, and 
+the Kalman filter may be ineffective. Nonetheless, several extensions of the 
+filter have been proposed that address this. Two well-known algorithms are the 
+Unscented Kalman Filter (UKF) \cite{wanUnscentedKalmanFilter2000a} and the 
+Extended Kalman filter (EKF) \cite{smithApplicationStatisticalFilter1962}. The 
+UKF is an algorithm that uses a set of carefully chosen sigma points to capture 
+the true mean and covariance of the predicted and updated distributions without 
+the need for linearization. The EKF, on the other hand, linearizes the 
+nonlinear motion and measurement models using a first-order Taylor expansion. 
+These methods have been proven to be effective in many applications, including 
+the PHD filter. However, they are beyond the scope of this thesis and will not 
+be covered in detail.
 
