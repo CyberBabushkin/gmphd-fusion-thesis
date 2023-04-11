@@ -265,13 +265,12 @@ One of the main drawbacks of the Kalman filter is its Gaussian-linear
 assumption. In real-world applications, many systems exhibit non-linearity, and 
 the Kalman filter may be ineffective. Nonetheless, several extensions of the 
 filter have been proposed that address this. Two well-known algorithms are the 
-Unscented Kalman Filter (UKF) \cite{wanUnscentedKalmanFilter2000a} and the 
-Extended Kalman filter (EKF) \cite{smithApplicationStatisticalFilter1962}. The 
-UKF is an algorithm that uses a set of carefully chosen sigma points to capture 
-the true mean and covariance of the predicted and updated distributions without 
-the need for linearization. The EKF, on the other hand, linearizes the 
-nonlinear motion and measurement models using a first-order Taylor expansion. 
+Unscented Kalman Filter (UKF) and the Extended Kalman filter (EKF). The UKF is 
+an algorithm that uses a set of carefully chosen sigma points to capture the 
+true mean and covariance of the predicted and updated distributions without 
+the need for linearization \cite{wanUnscentedKalmanFilter2000a}. The EKF, on 
+the other hand, linearizes the nonlinear motion and measurement models using a 
+first-order Taylor expansion \cite{smithApplicationStatisticalFilter1962}. 
 These methods have been proven to be effective in many applications, including 
 the PHD filter. However, they are beyond the scope of this thesis and will not 
 be covered in detail.
-
