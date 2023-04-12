@@ -304,7 +304,7 @@ The uniform distribution is generally used to represent the uncertainty when
 all outcomes are equally possible. In this work, we use the uniform distribution
 to model positions of clutter measurements at some time step $k$.
 
-\subsubsection{Gaussian distribution}
+\subsubsection{Gaussian distribution}\label{sec:gauss}
 
 The Gaussian distribution, also known as the normal distribution, is a 
 continuous probability distribution that is widely used in many branches
@@ -326,11 +326,7 @@ $$
 $$
 
 In the notation $\mathscr{N}\left(x ; \mu, \sigma^2\right)$, the first 
-parameter $x$ means ``evaluated at.'' It should be noted that if the mean is a 
-vector, denoted as $\mathbf{\mu}$, the variance becomes a matrix, written as 
-$\Sigma$, and the overall distribution is, therefore, denoted as 
-$\mathscr{N}\left(\mathbf{x} ; \mathbf\mu, \mathbf\Sigma\right)$.
-
+parameter $x$ means ``evaluated at.''
 Despite the cdf of the Gaussian distribution not having a closed-form 
 representation, the distribution possesses several desirable properties that 
 allow for closed-form solutions in many applications, including object 

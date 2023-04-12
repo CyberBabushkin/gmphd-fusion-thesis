@@ -21,6 +21,79 @@ a formal definition of a general Bayes filter, infer the Kalman filter formulas
 and discuss the Constant Velocity (CV) model, a common motion model used in the
 Kalman filter.
 
+\subsection{Multivariate Gaussian Distribution}
+
+Before we start learning the basics of Bayesian filtration, we should extend our knowledge of the Gaussian distribution to the multidimensional case. As mentioned in Section \ref{sec:gauss}, it plays a very important role in object tracking and, in particular, in this work. Formulas and theorems defined in this section are essential for defining and proving the Kalman filter formulas. We will define several properties of multivariate Gaussians required later.
+
+First, we define the multivariate Gaussian distribution with mean vector $\boldsymbol\mu$, covariance matrix $\Sigma$, and evaluated at $\mathbf{x}$ as:
+
+\begin{equation}\label{eq:vec-gauss-def}
+    \mathscr{N}\left(\mathbf{x} ; \mathbf\mu, \mathbf\Sigma\right)
+    = \frac{1}{\sqrt{(2\pi)^n|\mathbf{\Sigma}|}}\exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\top \mathbf{\Sigma}^{-1} (\mathbf{x}-\boldsymbol{\mu})\right),
+\end{equation}
+
+where $n$ is the length of the vector $\mathbf{x}$, and $|\cdot|$ denotes the determinant of a matrix. 
+
+The multivariate Gaussian distribution is a generalization of the univariate Gaussian distribution, where instead of a single mean and variance, we have a mean vector and a covariance matrix that characterizes the correlation between the variables. Note that the exponent contains the expression known as the Mahalanobis distance, which we will encounter throughout this work. It is given by:
+
+\begin{definition}[Mahalanobis distance]\label{def:mahalanobis}
+    For vectors $\mathbf x$ and $\mathbf y$ and the symmetrical positive-definite matrix $\mathbf S$, the Mahalanobis distance is defined as:
+
+    \begin{equation}
+        d(\mathbf x, \mathbf y) 
+        = \sqrt{
+            (\mathbf x - \mathbf y)^\intercal
+            \mathbf{S}^{-1}
+            (\mathbf x - \mathbf y)
+        }.
+    \end{equation}
+\end{definition}
+
+As we will later see, in object tracking, we heavily use conditional probabilities, and in particular, conditioning and marginalization of joint distributions of Gaussian random variables. Thus, we define the following two theorems.
+
+\begin{theorem}[Conditioning on a Gaussian joint distribution]\label{theorem:gauss-cond}
+    Let $\mathbf{x}$ and $\mathbf{y}$ be Gaussian random variables with distributions $\mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right)$ and $\mathscr{N}\left(\mathbf{y} ; \mathbf\mu_y, \mathbf\Sigma_{yy}\right)$, respectively. Let their joint probability be given by:
+
+    \begin{equation*}
+        p(\mathbf{x}, \mathbf{y}) = \mathscr{N}\left(
+            \begin{bmatrix}
+                \mathbf{x} \\
+                \mathbf{y}
+            \end{bmatrix};
+            \begin{bmatrix}
+                \boldsymbol\mu_x \\
+                \boldsymbol\mu_y
+            \end{bmatrix},
+            \begin{bmatrix}
+                \mathbf{\Sigma}_{xx} & \mathbf{\Sigma}_{xy} \\
+                \mathbf{\Sigma}_{xy}^\intercal & \mathbf{\Sigma}_{yy}
+            \end{bmatrix}
+        \right).
+    \end{equation*}
+    Then the conditional distribution of $\mathbf{x}$ given $\mathbf{y}$ is defined as:
+    \begin{equation}\label{eq:gauss-cond}
+        p(\mathbf{x}|\mathbf{y}) =
+        \mathscr{N}\left(\mathbf{x}; \boldsymbol\mu_{x|y}, \mathbf\Sigma_{x|y}\right),
+    \end{equation}
+    where
+    \begin{align}
+        \boldsymbol\mu_{x|y}
+        &= \boldsymbol\mu_x + \mathbf{\Sigma}_{xy} \mathbf{\Sigma}_{yy}^{-1}(\mathbf{y} - \boldsymbol\mu_y) \\
+        \mathbf\Sigma_{x|y} 
+        &= \mathbf\Sigma_{xx} - \mathbf\Sigma_{xy}\mathbf\Sigma_{yy}^{-1}\mathbf\Sigma_{xy}^\intercal.\label{eq:gauss-cond-params}
+    \end{align}
+\end{theorem}
+
+\begin{theorem}[Marginalization of a Gaussian joint distribution]\label{theorem:gauss-marg}
+    Consider $\mathbf{x}$, $\mathbf{y}$, $\mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right)$, $\mathscr{N}\left(\mathbf{y} ; \mathbf\mu_y, \mathbf\Sigma_{xx}\right)$ and $p(\mathbf{x}, \mathbf{y})$ given in Theorem \ref{theorem:gauss-cond}. The marginal distribution of $x$ is defined as:
+
+    \begin{equation*}
+        p(\mathbf{x}) = \mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right).
+    \end{equation*}
+\end{theorem}
+
+The proofs for Theorem \ref{theorem:gauss-cond} and Theorem \ref{theorem:gauss-marg} can be found in classical statistical textbooks such as \cite[pp. 161-163]{johnsonAppliedMultivariateStatistical2007}.
+
 \subsection{State-space model}\label{sec:state-model}
 
 In the previous section, we established the relationships between prior and 
@@ -78,14 +151,12 @@ We can now describe these models formally. Note that since the state is a
 vector, we will use $\mathbf{x}$ for vectors. The motion and measurement models 
 can be generally expressed as:
 
-$$
-\begin{aligned}
+\begin{align*}
     p(\vecat{x}{k} | \vecat{x}{k-1}) 
         &= f_t(\vecat{x}{k-1}, \vecat{u}{k}, \vecat{w}{k}), \\
     p(\vecat{z}{k} | \vecat{x}{k}) 
         &= h_t(\vecat{x}{k}, \vecat{v}{k}),
-\end{aligned}
-$$
+\end{align*}
 
 where $f_t$ and $h_t$ are functions, $\vecat{x}{k-1}$ is the estimated state 
 from time step $k-1$, $\vecat{u}{k}$ is called the input (or control) vector, 
@@ -100,8 +171,7 @@ and noise variables are distributed as Gaussian, i.e.,
 $\vecat{w}{k}, \vecat{v}{k} \sim \mathscr{N}(\mathbf{0}, \Sigma)$. The Gaussian-
 linear state-space model has the following representation:
 
-$$
-\begin{aligned}
+\begin{align*}
     p(\vecat{x}{k} | \vecat{x}{k-1}) 
         &= \mathbf{F} \vecat{x}{k-1}
             + \mathbf{B} \vecat{u}{k}
@@ -111,8 +181,7 @@ $$
         &= \mathbf{H} \vecat{x}{k} + \vecat{v}{k},
         & \vecat{w}{k} \sim \mathscr{N}(\mathbf{0}, \mathbf{R}), \\
     p(\vecat{x}{0}) &\sim \mathscr{N}(\vecat{\hat{x}}{0}), \vecat{P}{0}),&
-\end{aligned}
-$$
+\end{align*}
 
 where:
 
@@ -131,16 +200,16 @@ The control variable $\vecat{u}{k}$, in general, represents some input signal fr
 
 The notation above may be inconvenient in some cases. In this work, we will often use a shorter version that has the same meaning:
 
-$$
-\begin{aligned}
+\begin{align}
     p(\vecat{x}{k} | \vecat{x}{k-1})
-        &= \mathscr{N}(\vecat{x}{k}; \mathbf{F}\vecat{x}{k-1}, \mathbf{Q}), \\
+        &= \mathscr{N}(\vecat{x}{k}; \mathbf{F}\vecat{x}{k-1}, \mathbf{Q}), 
+        \label{eq:motion-model} \\
     p(\vecat{z}{k} | \vecat{x}{k})
-        &= \mathscr{N}(\vecat{z}{k}; \mathbf{H}\vecat{x}{k}, \mathbf{R}), \\
+        &= \mathscr{N}(\vecat{z}{k}; \mathbf{H}\vecat{x}{k}, \mathbf{R}), 
+        \label{eq:measurement-model} \\
     \vecat{x}{0}
         &\sim \mathscr{N}(\vecat{x}{0}; \vecat{\hat{x}}{0}, \vecat{P}{0}).
-\end{aligned}
-$$
+\end{align}
 
 \subsection{The Bayes filter}\label{sec:bayes-filter}
 
@@ -155,19 +224,19 @@ the motion model, the present state of a system $x_k$ is dependent only on
 the state on the previous time step $x_{k-1}$ given all past states $x_{1:k-1}$ 
 and measurements $z_{1:k-1}$. More formally:
 
-$$
+\begin{equation}
 p(x_k | x_1, \ldots, x_{k-2}, x_{k-1},
         z_1, \ldots, z_{k-2}, z_{k-1}) 
     = p(x_k | x_{k-1}).
-$$
+\end{equation}
 
 A similar requirement must hold for measurement model, that is:
 
-$$
-p(z_k | x_1, \ldots, x_{k-2}, x_{k-1}, x_{k}
+\begin{equation}
+    p(z_k | x_1, \ldots, x_{k-2}, x_{k-1}, x_{k}
         z_1, \ldots, z_{k-2}, z_{k-1}) 
     = p(z_k | x_k).
-$$
+\end{equation}
 
 The Markov property may seem restrictive but in reality it is not because state-
 space models allows us to capture dependencies in the system dynamics by simply 
@@ -189,8 +258,8 @@ is also known as the Chapman-Kolmogorov equation.
     and the current state $x_{k-1}$ and the motion model $p(x_k | x_{k-1})$, 
     the prediction step of the Bayes filter is computed as follows:
 
-    $$
-    p\left({x}_k | {z}_{1: k-1}\right)
+    \begin{equation}
+        p\left({x}_k | {z}_{1: k-1}\right)
         = \int 
             p\left(
                 {x}_k, {x}_{k-1} | {z}_{1: k-1}
@@ -203,7 +272,7 @@ is also known as the Chapman-Kolmogorov equation.
                 {x}_{k-1} | {z}_{1: k-1}
             \right)
             \mathrm{d} {x}_{k-1}.
-    $$
+    \end{equation}
 \end{theorem}
 
 Next, on the update step, the filter corrects the predicted state with the 
@@ -216,9 +285,9 @@ computed using the standard Bayes' rule.
     and the measurement model $p(z_k | x_k)$, the update step of the Bayes
     filter is computed as follows:
     
-    $$
-    p\left({x}_k | {z}_{1: k}\right)=\frac{p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right)}{p\left({z}_k | {z}_{1: k-1}\right)} \propto p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right).
-    $$
+    \begin{equation}
+        p\left({x}_k | {z}_{1: k}\right)=\frac{p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right)}{p\left({z}_k | {z}_{1: k-1}\right)} \propto p\left({z}_k | {x}_k\right) p\left({x}_k | {z}_{1: k-1}\right).
+    \end{equation}
 \end{theorem}
 
 Now, having introduced the general Bayes filter, we will continue with 
@@ -268,9 +337,341 @@ filter have been proposed that address this. Two well-known algorithms are the
 Unscented Kalman Filter (UKF) and the Extended Kalman filter (EKF). The UKF is 
 an algorithm that uses a set of carefully chosen sigma points to capture the 
 true mean and covariance of the predicted and updated distributions without 
-the need for linearization \cite{wanUnscentedKalmanFilter2000a}. The EKF, on 
+the need for linearization \cite{wanUnscentedKalmanFilter2000}. The EKF, on 
 the other hand, linearizes the nonlinear motion and measurement models using a 
 first-order Taylor expansion \cite{smithApplicationStatisticalFilter1962}. 
 These methods have been proven to be effective in many applications, including 
 the PHD filter. However, they are beyond the scope of this thesis and will not 
 be covered in detail.
+
+\subsubsection{The Gaussian identity}
+
+Before we introduce the actual formulas of the Kalman filter, we should introduce a new fundamental theorem in object tracking and then deduce a corollary from it. These will also be used later when we infer formulas for the the GM-PHD filter. We define this theorem using a general notation without any meaning for Bayesian filters to avoid the confusion of variables when we use this theorem in different parts of different filters.
+\todo{when finished, make the notation bold}
+
+\begin{theorem}[The Gaussian product identity]\label{theorem:gaussian-identity}
+    Given matrices and vectors $A, U, m$, and $V$ of appropriate dimensions, and that $U$ and $V$ are positive definite, the following identity applies:
+
+    \begin{equation}\label{eq:gauss-prod}
+        \mathscr{N}(x ; A y, U) \mathscr{N}(y ; m, V)=\mathscr{N}(x ; A m, U + A V A^\intercal) \mathscr{N}(\mathbf{y} ; \hat{m}, \hat{V}),
+    \end{equation}
+
+    where
+
+    \begin{align}
+        \hat{m} & = m + K (y - Am), \\
+        \hat{V} & = (I - K A) V, \\
+        K &= V A^\intercal (U + A V A^\intercal)^{-1}.
+    \end{align}
+\end{theorem}
+
+\begin{proof}\label{proof:gaussian-identity}
+    The proof of Theorem \ref{theorem:gaussian-identity} presented here follows similar proofs in \cite{mahlerStatisticalMultisourcemultitargetInformation2007} (Appendix D) and \cite{risticKalmanFilterParticle2004} (Section 3.8). However, the main idea of using algebraic manipulation of matrices was taken from \cite{tokleMultiTargetTracking2018}.
+    
+    The proof is based on the idea that both sides of \ref{eq:gauss-prod} represent the joint Gaussian distribution of two random variables, $p(x,y)$. From \ref{def:cond-prob-pdf}, we know that we can express this distribution as:
+    
+    \begin{equation}
+        p(x, y) = p(x|y)p(y) = p(y|x)p(x).
+    \end{equation}
+    
+    We claim that the left-hand side (LHS) of \ref{eq:gauss-prod} represents this equality, i.e.,
+    
+    \begin{equation}
+        p(x, y) = p(x|y)p(y) = \mathscr{N}(x ; A y, U) \mathscr{N}(y ; m, V).
+    \end{equation}
+
+    Next, we can express the product of two Gaussians in their quadratic forms, the same form as defined in \ref{eq:vec-gauss-def}, i.e.
+
+    \begin{align}
+        \mathscr{N}(x ; A y, U) \mathscr{N}(y ; m, V)
+        &= \frac{1}{(2\pi)^{n} \sqrt{|U| |V|}}
+        \exp \left(
+        -\frac{1}{2}
+        \bigg[(x - Ay)^\intercal U^{-1} (x - Ay) \right.\\
+        &\left.\qquad\qquad\qquad\qquad\qquad+ (y - m)^\intercal V^{-1} (y - m) \bigg] \right).
+        \label{eq:gid-proof:lhs-expanded}
+    \end{align}
+
+    If we introduce a small algebraic trick for matrices:
+
+    \begin{equation*}
+        \begin{bmatrix}
+            I & -A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            x - Am - Ay + Am \\
+            y - m \\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            x - Ay \\
+            y - m
+        \end{bmatrix},
+    \end{equation*}
+    
+    we can manipulate the exponent to obtain another quadratic form:
+
+    \begin{align}
+        &\phantom{=}
+        (x - Ay)^\intercal U^{-1} (x - Ay) + (y - m)^\intercal V^{-1} (y - m) 
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Ay \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            U^{-1} & 0 \\
+            0 & V^{-1}
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Ay \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            I & 0 \\
+            -A^\intercal & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            U^{-1} & 0 \\
+            0 & V^{-1}
+        \end{bmatrix}
+        \begin{bmatrix}
+            I & -A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}^\intercal
+        \left(
+        \begin{bmatrix}
+            I & A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            U & 0 \\
+            0 & V
+        \end{bmatrix}
+        \begin{bmatrix}
+            I & 0 \\
+            A^\intercal & I
+        \end{bmatrix}
+        \right)^{-1}
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            U + A V A^\intercal & A V \\
+            V A^\intercal & V
+        \end{bmatrix}^{-1}
+        \begin{bmatrix}
+            x - Am \\
+            y - m
+        \end{bmatrix}. \label{eq:gid-proof-quadratic-form}
+    \end{align}
+
+    This expression is also a joint Gaussian distribution $p(x,y)$, but it cannot be split into two independent Gaussians due to the fact that the matrix is not block-diagonal. Therefore, to conclude the proof, we need to infer two other distributions, $p(y|x)$ and $p(x)$, from the derived distribution $p(x, y)$.
+    
+    Notice that this is also a quadratic form, and it expresses a dependency on both $x$ and $y$. Therefore, his expression is also a joint Gaussian distribution $p(x,y)$, but it cannot be split into two independent Gaussians due to the fact that the covariance matrix in \ref{eq:gid-proof-quadratic-form} is not block-diagonal. Therefore, to conclude the proof, we need to infer two other distributions, $p(y|x)$ and $p(x)$, from the derived distribution $p(x, y)$.
+    
+    We are going to obtain the $p(y|x)$ distribution by conditioning on the joint distribution, i.e. using the formula that was presented in Theorem <MATH>. For completeness and simplicity, we will write the joint distribution the same way that it is presented in the theorem:
+
+    \begin{equation}
+        p(x,y) = 
+        \mathscr{N}\left(
+            \begin{bmatrix}
+                x \\
+                y
+            \end{bmatrix}
+            ;
+            \begin{bmatrix}
+                Am \\
+                m
+            \end{bmatrix}
+            ,
+            \begin{bmatrix}
+                U + A V A^\intercal & A V \\
+                V A^\intercal & V
+            \end{bmatrix}
+        \right).
+    \end{equation}
+
+    Now, using equations \ref{eq:gauss-cond} and \ref{eq:gauss-cond-params}, we will infer:
+
+    \begin{align}
+        \mu_{y|x}
+        &= \mu_y + \Sigma_{yx} \Sigma_{xx}^{-1}(x - \mu_x) \nonumber \\
+        &= m + V A^\intercal (U + A V A^\intercal)^{-1}(x - Am) \\
+        \Sigma_{y|x}
+        &= \Sigma_{yy} - \Sigma{yx}\Sigma_{xx}^{-1}\Sigma_{yx} \nonumber \\
+        &= V - V A^\intercal (U + A V A^\intercal)^{-1} A V \nonumber \\
+        &= (I - V A^\intercal (U + A V A^\intercal)^{-1} A) V \\
+        p(y|x)
+        &= \mathscr{N}\left(y; \mu_{y|x}, \Sigma_{y|x}\right).
+    \end{align}
+
+    Using Theorem \ref{theorem:gauss-marg}, we obtain the expression for $p(x)$:
+
+    \begin{equation}
+        p(x) = \mathscr{N}(x; Am, U + A V A^\intercal).
+    \end{equation}
+
+    If we introduce a new notation, $K = V A^\intercal (U + A V A^\intercal)^{-1}$, we obtain the exact same expressions for the Gaussians on the right-hand side (RHS) of the initial theorem. That confirms that both LHS and RHS are equal due to the equivalence of their quadratic forms. And that concludes the proof.
+
+
+
+
+
+
+
+    
+\end{proof}
+
+\subsubsection{KF. Theoretical background}
+
+Let us infer formulas for the Kalman filter. First, we should recall that the filter has the Gaussian-linear motion and measurement models and it is in principle a Bayesian filter. The formal description of the linear models was given in \ref{eq:motion-model} and \ref{eq:measurement-model}, the prediction step of the Bayesian filter in Theorem \ref{theorem:bayes-filter-predict} and the update step in Theorem \ref{theorem:bayes-filter-update}. Having all the necessary pieces in place, we can now derive the prediction and update formulas for the Kalman filter.
+
+\begin{theorem}[The Kalman prediction]
+    Assume that the motion and measurement models are given by \ref{eq:motion-model} and \ref{eq:measurement-model}, respectively, and that the Markov assumption of the Bayes filter holds, so that the Chapman-Kolmogorov equation is applicable. Let the posterior density at time step $k-1$ be denoted as $\mathscr{N}(\vecat{x}{k-1}; \vecat{\hat{x}}{k-1}, \vecat{P}{k-1})$. Then, the predicted density is given by:
+
+    \begin{align}
+        p\left(\vecat{x}{k} | \vecat{z}{1:k-1}\right)
+        &= \int
+            p\left(
+                \vecat{x}{k} | \vecat{x}{k-1}\right)
+            p\left(
+                \vecat{x}{k-1} | \vecat{z}{1:k-1}
+            \right)
+            \mathrm{d} \vecat{x}{k-1} \\
+        &= \int
+            \mathscr{N}\left(
+                \vecat{x}{k}; \mathbf{F}\vecat{x}{k-1}, \mathbf{Q}
+            \right)
+            \mathscr{N}\left(
+                \vecat{x}{k-1}; \vecat{\hat{x}}{k-1}, \vecat{P}{k-1}
+            \right)
+            \mathrm{d} \vecat{x}{k-1} \\
+        &= \int
+            \mathscr{N}\left(
+                \vecat{x}{k};
+                \mathbf{F} \vecat{\hat{x}}{k-1},
+                \mathbf{Q} + \mathbf{F} \vecat{P}{k-1} \mathbf{F}^\intercal
+            \right)
+            \mathscr{N}\left(
+                \vecat{x}{k-1}; \vecat{\Tilde{x}}{k-1}, \vecat{\Tilde{P}}{k-1}
+            \right)
+            \mathrm{d} \vecat{x}{k-1} \label{eq:kf-predict-gauss-id}\\
+        &= \mathscr{N}\left(
+                \vecat{x}{k};
+                \mathbf{F} \vecat{\hat{x}}{k-1},
+                \mathbf{F} \vecat{P}{k-1} \mathbf{F}^\intercal + \mathbf{Q}
+            \right), \label{eq:kf-predict-result}
+    \end{align}
+    where:
+    \begin{align}
+        \vecat{\Tilde{x}}{k-1}
+        &= \vecat{\hat{x}}{k-1} + \mathbf{K}\left(
+            \vecat{x}{k} - \mathbf{F}\vecat{\hat{x}}{k-1}
+        \right), \\
+        \vecat{\Tilde{P}}{k-1}
+        &= \left(\mathbf{I} - \mathbf{KF}\right)\vecat{P}{k-1}, \\
+        \mathbf{K}
+        &= \vecat{P}{k-1}\mathbf{F}^\intercal\left(
+            \mathbf{Q} + \mathbf{F}\vecat{P}{k-1}\mathbf{F}^\intercal
+        \right)^{-1}.
+    \end{align}
+\end{theorem}
+
+To prove that the equations \ref{eq:kf-predict-gauss-id} and \ref{eq:kf-predict-result} are mathematically correct, we need to introduce a new fundamental theorem in object tracking and its corollary. These will also be used later when we infer formulas for the the GM-PHD filter. We define this theorem using a general notation without any meaning for Bayesian filters to avoid the confusion of variables when we use this theorem in different parts of different filters.
+
+
+
+
+
+
+
+
+\iffalse
+But before, we should start with a lemma that we will need in the theorem. The proof of the lemma can be found in \cite{woodburyInvertingModifiedMatrices1950}.
+
+\begin{lemma}[Woodbury formula]\label{lemma:woodbury-identity}
+    Let $A, B$ be square invertible matrices of dimensions $n_A \times n_A$ and $n_B \times n_B$ respectively, and let $C, D$ be matrices of size $n_A \times n_B$ and $n_B \times n_A$, respectively. The following identity holds:
+
+    \begin{equation}
+        (A+C B D)^{-1}=A^{-1}-A^{-1} C\left(B^{-1}+D A^{-1} C\right)^{-1} D A^{-1}.
+    \end{equation}
+\end{lemma}
+
+\begin{theorem}[The Gaussian product identity]\label{theorem:gaussian-identity}
+    Given matrices and vectors $A, U, m$, and $V$ of appropriate dimensions, and that $U$ and $V$ are positive definite, the following identity applies:
+
+    \begin{equation}
+        \mathscr{N}(x ; A y, U) \mathscr{N}(y ; m, V)=\mathscr{N}(x ; A m, U + A V A^\intercal) \mathscr{N}(\mathbf{y} ; \hat{m}, \hat{V}),
+    \end{equation}
+
+    where
+
+    \begin{align}
+        \hat{m} & = m + K (y - Am), \\
+        \hat{V} & = (I - K A) V, \\
+        K &= V A^\intercal (U + A V A^\intercal)^{-1}.
+    \end{align}
+\end{theorem}
+
+\begin{proof}\label{proof:gaussian-identity}
+    The proof of Theorem \ref{theorem:gaussian-identity} follows similar proofs in \cite{mahlerStatisticalMultisourcemultitargetInformation2007} (Appendix D) and \cite{risticKalmanFilterParticle2004} (Section 3.8).
+
+    We will prove the theorem step by step:
+
+    \begin{enumerate}
+        \item Expand the Gaussian distributions on the left-hand side (LHS):
+        \begin{align}
+            \text{LHS}
+            &= \mathscr{N}(x ; A y, U) \mathscr{N}(y ; m, V) \nonumber\\
+            &= \frac{1}{(2\pi)^{n} \sqrt{|U| |V|}}
+            \exp \left(-\frac{1}{2}\left[(x - Ay)^\intercal U^{-1} (x - Ay) + (y - m)^\intercal V^{-1} (y - m) \right] \right).
+            \label{eq:gid-proof:lhs-expanded}
+        \end{align}
+        \item Now, expand the right-hand side (RHS) in the same way:
+        \begin{align}
+            \text{RHS}
+            &= \mathscr{N}(x ; A m, U + A V A^\intercal) \mathscr{N}(y ; \hat{m}, \hat{V}) \nonumber\\
+            &= \frac{1}{(2\pi)^{n} \sqrt{|U + A V A^\intercal| |\hat{V}|}} \exp \left(-\frac{1}{2} \bigg[(x - A m)^\intercal (U + A V A^\intercal)^{-1} (x - A m) + \right. \nonumber\\
+            &\qquad\qquad \left. + (y - \hat{m})^\intercal \hat{V}^{-1} (y - \hat{m}) \bigg] \right).
+            \label{eq:gid-proof-rhs-expanded}
+        \end{align}
+        \item Using the Woodbury formula from Lemma \ref{lemma:woodbury-identity}, substitute the term $(U + AVA^\intercal)^{-1}$ with:
+        \begin{equation}
+            (U + A V A^\intercal)^{-1} = U^{-1} - U^{-1} A (V^{-1} + A^\intercal U^{-1} A)^{-1} A^\intercal U^{-1}.
+        \end{equation}
+        \item 
+    \end{enumerate}
+\end{proof}
+
+\fi
