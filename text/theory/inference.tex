@@ -55,7 +55,14 @@ measurements.
 
 In Bayesian object tracking, probability distributions are used instead of pure 
 probabilities. Therefore, Bayes' rule must be defined using distributions. 
-Fortunately, this is straightforward.
+Fortunately, this is straightforward after we define the conditional probability in terms of pdfs.
+
+\begin{definition}[Conditional probability for pdfs]\label{def:cond-prob-pdf}
+    Let $x$ and $y$ be random variables with pdfs $p(x)$ and $p(y)$, respectively, and the joint distribution $p(x,y)$. Then the conditional probability of $x$ given $y$ is defined as:
+    \begin{equation*}
+        p(x|y) = \frac{p(x,y)}{p(y)}.
+    \end{equation*}
+\end{definition}
 
 \begin{definition}[Bayes' rule for pdfs]
     Let $z$ and $x$ be random variables with densities $p(z | x)$ and $p(x)$, 
