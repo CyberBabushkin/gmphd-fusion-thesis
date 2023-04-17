@@ -11,6 +11,37 @@
   langid = {english}
 }
 
+@book{bar-shalomMultitargetmultisensorTrackingPrinciples1995,
+  title = {Multitarget-Multisensor Tracking: Principles and Techniques},
+  shorttitle = {Multitarget-Multisensor Tracking},
+  author = {Bar-Shalom, Yaakov and Li, Xiao-Rong},
+  date = {1995},
+  edition = {3rd printing},
+  publisher = {{YBS}},
+  location = {{Storrs, Conn}},
+  isbn = {978-0-9648312-0-9},
+  langid = {english},
+  pagetotal = {615},
+  keywords = {reading-list},
+  file = {/Users/mannannlegur/Zotero/storage/7VP4C42Z/Bar-Shalom and Li - 1995 - Multitarget-multisensor tracking principles and t.pdf}
+}
+
+@article{bar-shalomProbabilisticDataAssociation2009,
+  title = {The Probabilistic Data Association Filter},
+  author = {Bar-Shalom, Yaakov and Daum, Fred and Huang, Jim},
+  date = {2009-12},
+  journaltitle = {IEEE Control Systems Magazine},
+  volume = {29},
+  number = {6},
+  pages = {82--100},
+  issn = {1941-000X},
+  doi = {10.1109/MCS.2009.934469},
+  abstract = {The measurement selection for updating the state estimate of a target's track, known as data association, is essential for good performance in the presence of spurious measurements or clutter. A classification of tracking and data association approaches has been presented, as a pure MMSE approach, which amounts to a soft decision, and single best-hypothesis approach, which amounts to a hard decision. It has been shown that the optimal state estimator in the presence of data association uncertainty consists of the computation of the conditional pdf of the state x(k) given all information available at time k, namely, the prior information about the initial state, the intervening known inputs, and the sets of measurements through time k. It has also been pointed out that if the exact conditional pdf, which is a mixture, is available, then its recursion requires only the probabilities of the most recent association events. The conditions under which this result holds, namely whiteness of the noise, detection, and clutter processes, were presented. The PDAF and JPDAF algorithms, which carry out data association and state estimation in clutter, have been described. A simple example was given to illustrate how the clutter and occasional missed detections can lead to track loss for a standard tracking filter, and how PDAF can keep the target in track under such circumstances. By using the Monte Carlo in a simulated based surveillance as an exampled shown. The numerous applications of the PDAF/JPDAF illustrated in "Real-World Applications of PDAF and JPDAF" show the potential pitfalls of using sophisticated algorithms for tracking in difficult environments as well as how to overcome them. The effect of finite sensor resolution can be a more severe problem than the data association and deserves special attention.},
+  eventtitle = {{{IEEE Control Systems Magazine}}},
+  keywords = {Clutter,Particle filters,Particle tracking,Probability,Radar detection,Radar tracking,Sonar,State estimation,Statistics,Target tracking},
+  file = {/Users/mannannlegur/Zotero/storage/KWLDDFQB/5338565.html}
+}
+
 @inproceedings{bulutProcessMeasurementNoise2011,
   title = {Process and {{Measurement Noise Estimation}} for {{Kalman Filtering}}},
   booktitle = {Structural {{Dynamics}}, {{Volume}} 3},
@@ -71,6 +102,22 @@
   eventtitle = {2006 9th {{International Conference}} on {{Information Fusion}}},
   keywords = {Closed-form solution,data association,Dedecius,Density measurement,Filtering,Filters,Gaussian noise,ltering,PHD lter,Radar tracking,random sets,Recursive estimation,State estimation,Target tracking,Tracking,Trajectory},
   file = {/Users/mannannlegur/Zotero/storage/J5S3YM9Y/Clark et al. - 2006 - The GM-PHD Filter Multiple Target Tracker.pdf;/Users/mannannlegur/Zotero/storage/YV7BQX43/4086095.html}
+}
+
+@article{coxEfficientImplementationReid1996,
+  title = {An Efficient Implementation of {{Reid}}'s Multiple Hypothesis Tracking Algorithm and Its Evaluation for the Purpose of Visual Tracking},
+  author = {Cox, I.J. and Hingorani, S.L.},
+  date = {1996-02},
+  journaltitle = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume = {18},
+  number = {2},
+  pages = {138--150},
+  issn = {1939-3539},
+  doi = {10.1109/34.481539},
+  abstract = {An efficient implementation of Reid's multiple hypothesis tracking (MHT) algorithm is presented in which the k-best hypotheses are determined in polynomial time using an algorithm due to Murly (1968). The MHT algorithm is then applied to several motion sequences. The MHT capabilities of track initiation, termination, and continuation are demonstrated together with the latter's capability to provide low level support of temporary occlusion of tracks. Between 50 and 150 corner features are simultaneously tracked in the image plane over a sequence of up to 51 frames. Each corner is tracked using a simple linear Kalman filter and any data association uncertainty is resolved by the MHT. Kalman filter parameter estimation is discussed, and experimental results show that the algorithm is robust to errors in the motion model. An investigation of the performance of the algorithm as a function of look-ahead (tree depth) indicates that high accuracy can be obtained for tree depths as shallow as three. Experimental results suggest that a real-time MHT solution to the motion correspondence problem is possible for certain classes of scenes.},
+  eventtitle = {{{IEEE Transactions}} on {{Pattern Analysis}} and {{Machine Intelligence}}},
+  keywords = {Image sequences,Layout,Motion analysis,Nearest neighbor searches,Parameter estimation,Polynomials,Robustness,Tracking,Tree graphs,Uncertainty},
+  file = {/Users/mannannlegur/Zotero/storage/9MSZBJW6/481539.html}
 }
 
 @article{fantacciRobustFusionMultisensor2018,
@@ -134,6 +181,19 @@
   eventtitle = {{{IEEE Transactions}} on {{Signal Processing}}},
   keywords = {Approximation methods,Bayes methods,CPHD filter,Current measurement,Dedecius,Kullback-Leibler divergence,Mathematical model,Minimization,multiple target tracking,PHD filter,Radar tracking,Random finite sets,Target tracking},
   file = {/Users/mannannlegur/Zotero/storage/XUEI5596/García-Fernández and Vo - 2015 - Derivation of the PHD and CPHD Filters Based on Di.pdf}
+}
+
+@article{garcia-fernandezDerivationPHDCPHD2015a,
+  title = {Derivation of the {{PHD}} and {{CPHD Filters Based}} on {{Direct Kullback}}–{{Leibler Divergence Minimization}}},
+  author = {García-Fernández, Ángel and Vo, Ba-Ngu},
+  date = {2015-11-01},
+  journaltitle = {Signal Processing, IEEE Transactions on},
+  shortjournal = {Signal Processing, IEEE Transactions on},
+  volume = {63},
+  pages = {5812--5820},
+  doi = {10.1109/TSP.2015.2468677},
+  abstract = {In this paper, we provide novel derivations of the probability hypothesis density (PHD) and cardinalised PHD (CPHD) filters without using probability generating functionals or functional derivatives. We show that both the PHD and CPHD filters fit in the context of assumed density filtering and implicitly perform Kullback–Leibler divergence (KLD) minimizations after the prediction and update steps. We perform the KLD minimizations directly on the multitarget prediction and posterior densities.},
+  file = {/Users/mannannlegur/Zotero/storage/MWGBJGEY/García-Fernández and Vo - 2015 - Derivation of the PHD and CPHD Filters Based on Di.pdf}
 }
 
 @article{garcia-fernandezPoissonMultiBernoulliMixture2018,
@@ -251,6 +311,22 @@
   file = {/Users/mannannlegur/Zotero/storage/XTVB2CDY/A-New-Approach-to-Linear-Filtering-and-Prediction.html}
 }
 
+@article{mahlerMultitargetBayesFiltering2003,
+  title = {Multitarget {{Bayes}} Filtering via First-Order Multitarget Moments},
+  author = {Mahler, R.P.S.},
+  date = {2003-10},
+  journaltitle = {IEEE Transactions on Aerospace and Electronic Systems},
+  volume = {39},
+  number = {4},
+  pages = {1152--1178},
+  issn = {1557-9603},
+  doi = {10.1109/TAES.2003.1261119},
+  abstract = {The theoretically optimal approach to multisensor-multitarget detection, tracking, and identification is a suitable generalization of the recursive Bayes nonlinear filter. Even in single-target problems, this optimal filter is so computationally challenging that it must usually be approximated. Consequently, multitarget Bayes filtering will never be of practical interest without the development of drastic but principled approximation strategies. In single-target problems, the computationally fastest approximate filtering approach is the constant-gain Kalman filter. This filter propagates a first-order statistical moment - the posterior expectation - in the place of the posterior distribution. The purpose of this paper is to propose an analogous strategy for multitarget systems: propagation of a first-order statistical moment of the multitarget posterior. This moment, the probability hypothesis density (PHD), is the function whose integral in any region of state space is the expected number of targets in that region. We derive recursive Bayes filter equations for the PHD that account for multiple sensors, nonconstant probability of detection, Poisson false alarms, and appearance, spawning, and disappearance of targets. We also show that the PHD is a best-fit approximation of the multitarget posterior in an information-theoretic sense.},
+  eventtitle = {{{IEEE Transactions}} on {{Aerospace}} and {{Electronic Systems}}},
+  keywords = {Contracts,Density measurement,Filtering,Nonlinear filters,Probability,Random number generation,Sensor systems,State-space methods,Terrorism,Virtual colonoscopy},
+  file = {/Users/mannannlegur/Zotero/storage/9INZRX6S/Mahler - 2003 - Multitarget Bayes filtering via first-order multit.pdf}
+}
+
 @book{mahlerStatisticalMultisourcemultitargetInformation2007,
   title = {Statistical Multisource-Multitarget Information Fusion},
   author = {Mahler, Ronald P. S.},
@@ -304,6 +380,22 @@
   eventtitle = {2007 10th {{International Conference}} on {{Information Fusion}}},
   keywords = {bearing and range tracking,Convergence,Data mining,Filters,Fuses,Gaussian mixture probability hypothesis density,Monte Carlo methods,Particle tracking,Random finite set,Sensor fusion,Sensor phenomena and characterization,Sliding mode control,speaker tracking,State estimation},
   file = {/Users/mannannlegur/Zotero/storage/LX3RM66H/Pham et al. - 2007 - Multiple sensor multiple object tracking with GMPH.pdf}
+}
+
+@article{reidAlgorithmTrackingMultiple1979,
+  title = {An Algorithm for Tracking Multiple Targets},
+  author = {Reid, D.},
+  date = {1979-12},
+  journaltitle = {IEEE Transactions on Automatic Control},
+  volume = {24},
+  number = {6},
+  pages = {843--854},
+  issn = {1558-2523},
+  doi = {10.1109/TAC.1979.1102177},
+  abstract = {An algorithm for tracking multiple targets in a cluttered enviroment is developed. The algorithm is capable of initiating tracks, accounting for false or missing reports, and processing sets of dependent reports. As each measurement is received, probabilities are calculated for the hypotheses that the measurement came from previously known targets in a target file, or from a new target, or that the measurement is false. Target states are estimated from each such data-association hypothesis using a Kalman filter. As more measurements are received, the probabilities of joint hypotheses are calculated recursively using all available information such as density of unknown targets, density of false targets, probability of detection, and location uncertainty. This branching technique allows correlation of a measurement with its source based on subsequent, as well as previous, data. To keep the number of hypotheses reasonable, unlikely hypotheses are eliminated and hypotheses with similar target estimates are combined. To minimize computational requirements, the entire set of targets and measurements is divided into clusters that are solved independently. In an illustrative example of aircraft tracking, the algorithm successfully tracks targets over a wide range of conditions.},
+  eventtitle = {{{IEEE Transactions}} on {{Automatic Control}}},
+  keywords = {Air traffic control,Clustering algorithms,Land vehicles,Marine vehicles,Military aircraft,Probability,Radar detection,Radar tracking,Sea measurements,Target tracking},
+  file = {/Users/mannannlegur/Zotero/storage/DJZXGEKV/1102177.html}
 }
 
 @book{risticKalmanFilterParticle2004,
@@ -489,6 +581,22 @@
   file = {/Users/mannannlegur/Zotero/storage/VR6LEG29/Vo et al. - 2019 - Multi-Sensor Multi-Object Tracking With the Genera.pdf}
 }
 
+@inbook{voMultitargetTracking2015,
+  title = {Multitarget {{Tracking}}},
+  booktitle = {Wiley {{Encyclopedia}} of {{Electrical}} and {{Electronics Engineering}}},
+  author = {Vo, Ba-ngu and Mallick, Mahendra and Bar-shalom, Yaakov and Coraluppi, Stefano and Osborne, Richard and Mahler, Ronald and Vo, Ba-tuong},
+  date = {2015-09-15},
+  pages = {1--15},
+  publisher = {{John Wiley \& Sons, Inc.}},
+  location = {{Hoboken, NJ, USA}},
+  doi = {10.1002/047134608X.W8275},
+  url = {https://onlinelibrary.wiley.com/doi/10.1002/047134608X.W8275},
+  urldate = {2023-04-17},
+  bookauthor = {Webster, John G.},
+  isbn = {978-0-471-34608-1},
+  langid = {english}
+}
+
 @inproceedings{wanUnscentedKalmanFilter2000,
   title = {The Unscented {{Kalman}} Filter for Nonlinear Estimation},
   booktitle = {Proceedings of the {{IEEE}} 2000 {{Adaptive Systems}} for {{Signal Processing}}, {{Communications}}, and {{Control Symposium}} ({{Cat}}. {{No}}.{{00EX373}})},
@@ -518,6 +626,19 @@
   eventtitle = {2016 {{International Conference}} on {{Control}}, {{Automation}} and {{Information Sciences}} ({{ICCAIS}})},
   keywords = {association map,Automation,centralized,Clutter,Estimation,Radar tracking,Radio frequency,Robot sensing systems,sensor network,Target tracking,δ-GLMB},
   file = {/Users/mannannlegur/Zotero/storage/HNIKKE35/Wei et al. - 2016 - Centralized multi-sensor multi-target tracking wit.pdf}
+}
+
+@inproceedings{werthmannStepbystepDescriptionComputationally1992,
+  title = {Step-by-Step Description of a Computationally Efficient Version of Multiple Hypothesis Tracking},
+  author = {Werthmann, John R.},
+  editor = {Drummond, Oliver E.},
+  date = {1992-08-25},
+  pages = {288--300},
+  location = {{Orlando, FL}},
+  doi = {10.1117/12.139379},
+  url = {http://proceedings.spiedigitallibrary.org/proceeding.aspx?articleid=991282},
+  urldate = {2023-04-17},
+  eventtitle = {Aerospace {{Sensing}}}
 }
 
 @book{woodburyInvertingModifiedMatrices1950,
