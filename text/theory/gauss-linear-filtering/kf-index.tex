@@ -1,0 +1,47 @@
+The Kalman filter is one of the most well-known and widely used algorithms in 
+signal processing and control theory. It is a recursive algorithm that allows 
+the estimation of internal states of entities in dynamic systems from a set of 
+measurements that may be noisy or missing at some time steps. The filter was 
+proposed by Rudolf Kalman in 1960 \cite{kalmanNewApproachLinear1960} and has 
+since been pervasively used to control a vast array of consumer, health, 
+commercial, and defense products \cite{grewalApplicationsKalmanFiltering2010}.
+
+The development of the filter was motivated by the need to improve aerospace 
+technology in the United States during the Cold War between the Soviet Block 
+and the North American Treaty Organization. Because the Soviet Union managed to 
+launch its artificial satellites and successfully send a human to space, the 
+federal government of the United States supported research into new 
+technologies in the aerospace area.
+
+The Kalman filter is an example of a general Bayes filter that was introduced 
+earlier. This means that the filter estimates the posterior distribution of the 
+internal state at discrete time steps using prior information about the 
+observed object's state and a set of noisy measurements. As briefly mentioned 
+in Section \ref{sec:state-space}, the Kalman filter works on state-space linear 
+models with Gaussian noise and a Gaussian prior of the state. The predict-
+update loop in the Kalman filter is the same as in the Bayes filter, and the 
+same Chapman-Kolmogorov equation defined in \ref{theorem:chapman-kolmogorov} 
+and the update equation defined in \ref{theorem:bayes-filter-update} are 
+incorporated.
+
+The main advantage of the Kalman filter is that it allows for the estimation of 
+the state of a system in real-time. It handles noisy measurements well and is 
+fast; however, it is sensitive to initial parameter settings, such as the noise 
+covariance matrices \cite{gePerformanceAnalysisKalman2016}. Nonetheless, there 
+are new methods being developed that propose mechanisms to overcome this 
+drawback, as in \cite{matiskoNoiseCovariancesEstimation2010} and 
+\cite{yuenOnlineEstimationNoise2013}.
+
+One of the main drawbacks of the Kalman filter is its Gaussian-linear 
+assumption. In real-world applications, many systems exhibit non-linearity, and 
+the Kalman filter may be ineffective. Nonetheless, several extensions of the 
+filter have been proposed that address this. Two well-known algorithms are the 
+Unscented Kalman Filter (UKF) and the Extended Kalman filter (EKF). The UKF is 
+an algorithm that uses a set of carefully chosen sigma points to capture the 
+true mean and covariance of the predicted and updated distributions without 
+the need for linearization \cite{wanUnscentedKalmanFilter2000}. The EKF, on 
+the other hand, linearizes the nonlinear motion and measurement models using a 
+first-order Taylor expansion \cite{smithApplicationStatisticalFilter1962}. 
+These methods have been proven to be effective in many applications, including 
+the PHD filter. However, they are beyond the scope of this thesis and will not 
+be covered in detail.

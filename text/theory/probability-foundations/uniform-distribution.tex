@@ -1,0 +1,21 @@
+The uniform distribution is a continuous probability distribution and it
+describes such random variables which outcomes on some interval $[a, b]$
+are possible with equal probability. This distribution is parameterized by
+$a$ and $b$ and its pdf, $E[X]$ and $\operatorname{Var}[X]$ are:
+
+$$
+\begin{aligned}
+    p(x)
+        =\operatorname{Uniform}(x; [a, b])
+        &= \begin{cases}
+            \frac{1}{b-a} & \text { if } a \leq x \leq b, \\
+            0 & \text { otherwise, }
+        \end{cases} \\
+    E[X] &= \frac{a + b}{2}, \\
+    \operatorname{Var}[X] &= \frac{(b - a)^2}{12}.
+\end{aligned}
+$$
+
+The uniform distribution is generally used to represent the uncertainty when
+all outcomes are equally possible. In this work, we use the uniform distribution
+to model positions of clutter measurements at some time step $k$.

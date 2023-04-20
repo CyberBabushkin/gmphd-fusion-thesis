@@ -1,0 +1,45 @@
+The Bernoulli random finite sets is one of the simplest and straightforward RFS pdfs. Recall that the Bernoulli distribution is a discrete distribution that models the probability of the positive outcome. In multi-target tracking, Bernoulli RFSs are used to model the existence of one object. That is, the cardinality distribution takes values either one or zero (either an object exists or not) with some probability $r$. The state distribution of the object can be arbitrary. Formally, the Bernoulli RFS is defined as follows:
+
+\begin{definition}[Bernoulli RFS]
+    Let $\mathbf{x}$ be a random variable with the pdf $p(\mathbf{x})$, and let $0 \leq r \leq 1$ be some number. Then, the Bernoulli RFS $\Xi$ has the following pdf:
+
+    \begin{equation}
+        p_\Xi(X) =
+        \begin{cases}
+            1 - r, & \textup{if } X = \emptyset, \\
+            r p(\mathbf{x}), & \textup{if } X = \{\mathbf{x}\}, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+
+    The cardinality of the Bernoulli RFS has the Bernoulli distribution, that is:
+
+    \begin{equation}
+        \Pr{|\Xi| = k} = \begin{cases}
+            1 - r, & \textup{if } k = 0, \\
+            r, & \textup{if } k = 1, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+The Poisson RFS is also a widely used multi-target pdf. It is commonly used to model clutter, since it has a parameter $\lambda$ that represents the intensity, or the expected number of noise measurements.
+
+\begin{definition}[Poisson RFS]
+    Let $\mathbf{x}$ be a random variable with the pdf $p(\mathbf{x})$, and let $\lambda(x)$ be the intensity function\footnote{Note that the intensity function can be an arbitrary function depending on the domain of the Poisson RFS.}. Then, the multi-target pdf of the Poisson RFS $\Xi$ is:
+
+    \begin{equation}\label{eq:poisson-rfs-pdf}
+        p_\Xi(X) = \exp\left(-\int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}\right)
+        \prod_{\mathbf{x} \in \Xi} \lambda(\mathbf{x}).
+    \end{equation}
+
+    The cardinality pmf of the Poisson RFS is Poisson-distributed with the rate parameter $\hat{\lambda} = \int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}$ is the following:
+
+    \begin{equation}
+        \Pr{|\Xi| = k} = \operatorname{Poisson}(k; \hat{\lambda}).
+    \end{equation}
+\end{definition}
+
+Intuitively, the Poisson RFS pdf represents the probability of observing any finite set of objects anywhere in the area, given that objects appear over it independently. In contrast to the Bernoulli distribution, the Poisson RFS cannot be used to model the target existence, since there is no way to limit the cardinality. However, when the location of the points is random through the whole surveillance area, and the number of these points is Poisson-distributed, the Poisson RFS is a good choice.
+
+Both the Bernoulli RFS and the Poisson RFS are examples of so-called point processes, also called the Bernoulli process and the Poisson Point Process (PPP), respectively. Generally, a point process is a mathematical model that describes the random spatial distribution of points. In target tracking, point processes model various events, such as object appearance, disappearance, or movement. In particular, the PDF filter uses the PPP to model clutter, where clutter measurements are independent and appear uniformly over the whole surveillance area. For more information about point processes, the reader is referred to the classical textbook on the topic \cite{streitPoissonPointProcesses2010}.

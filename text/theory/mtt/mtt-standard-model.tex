@@ -1,0 +1,89 @@
+We have now reached the final fundamental theoretical section where we will give a formal definition to the multi-target tracking problem. We have already mentioned that the multi-target transition density includes more than a standard motion model; more specifically, it describes not only the dynamics of all underlying objects in the current state set but also the birth and death of objects. In this section, we will cover in detail how new objects are born, the survival probability, and how we can model clutter. These concepts are fundamental for building the PHD filter.
+
+Let $\mathcal{X}$ be the state space and $\mathcal{Z}$ be the measurement space. Elements of $\mathcal{X}$ are state vectors of one object, and $\mathcal{Z}$ contains elements that are measurement vectors. For instance, for the CV model covered in Section \ref{sec:cv-model}, the state space is $\mathbb{R}^4$, and the measurement space is $\mathbb{R}^2$. Assume that at time $k$, the number of targets is $M(k)$. This number varies at every time step since new targets may appear or disappear. The \textit{multi-target state set} at time $k$ is therefore $X_k = \{\svecat{x}{k}{1}, \ldots, \svecat{x}{k}{M(k)}\} \in \mathcal{F}(\mathcal{X})$. Also, at every time step, we get a measurement set. Let us denote the number of measurements at time $k$ as $N(k)$. Thus, the \textit{multi-target observation set} at time $k$ is $Z_k = \{\svecat{z}{k}{1}, \ldots, \svecat{z}{k}{M(k)}\} \in \mathcal{F}(\mathcal{Z})$. The order of elements in both sets is not significant. The measurement set contains not only those measurements that come from real objects but also clutter, and those noise vectors are indistinguishable from those coming from targets. The goal of the multi-target tracker is to filter out the clutter and to find the best mapping between the objects and measurements.
+
+Existing targets either move according to their underlying dynamics model to the next state or die (disappear). The transition from the state $\vecat{x}{k-1} \in X_{k-1}$ to $\vecat{x}{k} \in X_{k}$ happens according to the specified motion model of the target, $f_{k|k-1}(\vecat{x}{k} | \vecat{x}{k-1})$. The death of one target happens with the probability $1 - P_{S,k}(\vecat{x}{k-1})$, and the target survives with the probability $P_{S,k}(\vecat{x}{k-1})$. This probability is referred to as the \textit{survival probability}. In terms of RFSs, the survival of a target with the state $\vecat{x}{k-1}$ is modeled using the survival function on an RFS $S_{k|k-1}$:
+
+\begin{equation}
+    S_{k|k-1}(\vecat{x}{k-1}) = \begin{cases}
+        \{\vecat{x}{k}\}, & \text{if the target survives}, \\
+        \emptyset, & \text{otherwise}.
+    \end{cases}
+\end{equation}
+
+At every time step, new targets may appear (be born). The birth process is considered spontaneous, and the exact distribution of newborn targets is domain-dependent. In general, the target birth distribution includes the location where new targets appear and their intensity. For instance, the birth process may be modeled by the Poisson Point Process, as in \cite{garcia-fernandezPoissonMultiBernoulliMixture2018}, or the Gaussian mixture for Gaussian-linear cases, as we will later see. In terms of FISST, the birth of new targets is a random set $B_{k|k-1}(\cdot)$ that contains newly born targets when the transition from the multi-target state $X_{k-1}$ to the state $X_{k}$ occurs.
+
+Given that we have the relations for both the transition from the current multi-target state and the birth set, and assuming that the multi-target state at the previous time step $k-1$ is $X_{k-1}$, we can derive the following expression for the multi-target state $X_k$, assuming that the survival and birth processes are independent of each other\footnote{
+Note that, in addition to the survival set and the birth process, \cite{voGaussianMixtureProbability2006} assumes the existence of the spawning process $\bigcup_{\zeta \in X_{k-1}} B_{k|k-1}(\zeta)$, i.e., that the existing targets may randomly spawn new targets in the same location. While this is important in the defense area, such as when a fighter takes off from an aircraft carrier, we do not include this process in this work. Fundamentally, the underlying mathematics does not change.}:
+
+If we apply the convolution formula from Definition \ref{def:rfs-convolution}, and introduce the simplified notation $S_{k|k-1}^i = S_{k|k-1}(\svecat{x}{k-1}{i})$, the complete multi-target motion model $f_{k|k-1}(X_k | X_{k-1})$ has the following form:
+
+\begin{equation}
+    f_{k|k-1}(X_k | X_{k-1}) = 
+    \sum_{
+        \Gamma_k \uplus S_{k|k-1}^1 \ldots \uplus S_{k|k-1}^{M(k-1)} = X_{k-1}
+    }
+    \gamma_k(\Gamma_k)
+    \prod_{i=1}^{M(k-1)}
+    s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i}),
+\end{equation}
+
+\noindent where $\gamma_k(\cdot)$ is the intensity function of the birth process, which can be a Poisson RFS pdf defined in Equation \ref{eq:poisson-rfs-pdf}, and $s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i})$ is the multi-target transition density defined as:
+
+\begin{equation}
+    s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i}) = \begin{cases}
+        P_{S,k}(\svecat{x}{k-1}{i})
+            f_{k|k-1}(\vecat{x}{k} | \svecat{x}{k-1}{i}) & \text{if } S_{k|k-1}^i = \{\vecat{x}{k}\}, \\
+            1 - P_{S,k}(\svecat{x}{k-1}{i}), & \text{if } S_{k|k-1}^i = \emptyset.
+    \end{cases}
+\end{equation}
+
+The multi-target measurement model, or the multi-target likelihood, also consists of several parts. At time $k$, a target may generate a new measurement with probability $P_{D,k}(\vecat{x}{k})$, and there will be a misdetection with probability $1 - P_{D,k}(\vecat{x}{k})$. A measurement is generated according to the measurement model, $g_{k}(\vecat{z}{k} | x_{k})$. Thus, the measurement RFS at time $k$ is:
+
+\begin{equation}
+    \Theta_k(\vecat{x}{k}) = \begin{cases}
+        \{\vecat{z}{k}\}, & \text{if target is detected}, \\
+        \emptyset, & \text{otherwise}.
+    \end{cases}
+\end{equation}
+
+Additionally, at every time step, false measurements are generated by a sensor. The RFS with clutter is denoted as $K_k$. Both $\Theta_k(\vecat{x}{k})$ and $K_k$ create the multi-target measurement set $Z_k$:
+
+\begin{equation}
+    Z_k = K_k \cup \left[ \bigcup_{\vecat{x}{k} \in X_k} \Theta_k(\vecat{x}{k}) \right].
+\end{equation}
+
+As we did for the multi-target transition density, we denote $\Theta_k^i = \Theta_k(\svecat{x}{k}{i})$ and apply the set convolution formula to get the multi-target measurement likelihood:
+
+\begin{equation}
+    p_k(Z_k | X_k) = \sum_{
+        K_k \uplus \Theta_{k}^1 \ldots \uplus \Theta_{k}^{M(k)} = X_{k}
+    }
+    \kappa_k(K_k)
+    \prod_{i=1}^{M(k)}
+    \theta_{k}(\Theta_{k}^i | \svecat{x}{k}{i}),
+\end{equation}
+
+\noindent where $\kappa_k(K_k)$ is the clutter intensity function, which is often modeled as a Poisson RFS, and $\theta_{k}(\Theta_{k}^i | \svecat{x}{k}{i})$ is the multi-target measurement density defined as:
+
+\begin{equation}
+    \theta_k(\Theta_{k}^i | \svecat{x}{k}{i}) = \begin{cases}
+        P_{D,k}(\svecat{x}{k}{i})
+            g_k(\vecat{z}{k} | \svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \{\vecat{z}{k}\}, \\
+            1 - P_{D,k}(\svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \emptyset.
+    \end{cases}
+\end{equation}
+
+In general, multi-target trackers are built on top of several general assumptions about the problem. These assumptions form the Standard Model of Multi-target tracking \cite[311--313]{mahlerStatisticalMultisourcemultitargetInformation2007}. We will enumerate these assumptions, which summarize this section, in the following list:
+
+\begin{enumerate}
+    \item The clutter process is Poisson-distributed in time and uniformly distributed in space.
+    \item The clutter process, target motions, and observations are statistically independent.
+    \item The transition density and the measurement likelihood are Markovian, that is once $\vecat{x}{k-1}$ is known, then $\vecat{x}{k}$ is independent of $\vecat{x}{k-2}$, $\vecat{x}{k-3}$, etc.
+    \item Existing targets survive from time $k-1$ to $k$ with the probability $P_{S,k}(\cdot)$ and move to the next state with the motion model $f_k(\vecat{x}{k} | \vecat{x}{k-1})$.
+    \item A target generates a measurement with probability $P_{D,k}(\cdot)$ with the measurement model $g(\vecat{z}{k} | \vecat{x}{k})$.
+    \item A target generates no more than one measurement at a time.
+    \item The birth process is Poisson-distributed in time.
+\end{enumerate}
+
+The PHD filter also relies on these main assumptions. In the following sections, we present the PHD filter, which is based on the propagation of the first-order multi-target moment, or the PHD function, in time instead of the full posterior distribution. Next, we will derive relations for the Gaussian-linear case to get equations of the GM-PHD filter. Finally, we present the way how we can input additional information into the filter to get better tracking results.

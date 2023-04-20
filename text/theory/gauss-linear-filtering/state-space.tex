@@ -1,4 +1,3 @@
-
 In the previous section, we established the relationships between prior and 
 posterior distributions and learned about recursive Bayesian estimation of the 
 posterior. Now, we will explore these concepts in the context of object 
@@ -61,7 +60,7 @@ can be generally expressed as:
         &= h_t(\vecat{x}{k}, \vecat{v}{k}),
 \end{align*}
 
-where $f_t$ and $h_t$ are functions, $\vecat{x}{k-1}$ is the estimated state 
+\noindent where $f_t$ and $h_t$ are functions, $\vecat{x}{k-1}$ is the estimated state 
 from time step $k-1$, $\vecat{u}{k}$ is called the input (or control) vector, 
 and $\vecat{w}{k}$ and $\vecat{v}{k}$ are zero-mean noise random variables.
 
@@ -86,7 +85,7 @@ linear state-space model has the following representation:
     p(\vecat{x}{0}) &\sim \mathscr{N}(\vecat{\hat{x}}{0}), \vecat{P}{0}),&
 \end{align}
 
-where:
+\noindent where:
 
 \begin{itemize}
     \item $\mathbf{F}$ is the \textit{transition matrix},
@@ -114,62 +113,3 @@ The notation above may be inconvenient in some cases. In this work, we will ofte
         &\sim \mathscr{N}(\vecat{x}{0}; \vecat{\hat{x}}{0}, \vecat{P}{0}).
         \label{eq:prior-x0}
 \end{align}
-
-\subsubsection{Constant Velocity Model}\label{sec:cv-model}
-
-The Constant Velocity (CV) model is one of the most commonly used motion and measurement models in the context of object tracking. It describes the kinematics of objects in a 2D space that move with a constant velocity. The state vector comprises a position vector and a velocity vector, and while the position vector contains the coordinates of the object in the space, the velocity vector contains the object's speed in the direction of each axis.
-
-The CV model is linear and one of the simplest models. It assumes that the speed of objects remains unchanged during tracking, with only small deviations from the constant. This model can be reasonably utilized in scenarios where objects do not change their speed or direction, such as vehicles on highways or planes in the sky. Since the state vector contains only four variables, the use of this model does not increase the computational burden on tracking algorithms.
-
-The motion equation for the CV model is given by \ref{eq:motion-model}, and the state vector $\vecat{x}{k}$, the state transition matrix $\mathbf{F}$, and the process noise matrix $\mathbf{Q}$ can be defined as:
-
-\begin{equation}
-    \vecat{x}{k} =
-    \begin{bmatrix}
-        x_{1,k} \\ 
-        x_{2,k} \\ 
-        v_{x_1,k} \\ 
-        v_{x_2,k}
-    \end{bmatrix};
-    \quad
-    \mathbf{F} =
-    \begin{bmatrix}
-       1 & 0 & dt & 0 \\
-       0 & 1 & 0 & dt \\
-       0 & 0 & 1 &  0 \\
-       0 & 0 & 0 &  1 
-    \end{bmatrix};
-    \quad
-    \mathbf{Q} = q^2 \cdot
-    \begin{bmatrix}
-        \frac{dt^3}{3}    & 0                 & \frac{dt^{2}}{2}  & 0  \\
-        0                 & \frac{dt^3}{3}    & 0                 & \frac{dt^{2}}{2} \\
-        \frac{dt^{2}}{2}  & 0                 & dt                & 0 \\
-        0                 & \frac{dt^{2}}{2}  & 0                 & dt
-    \end{bmatrix},
-\end{equation}
-
-where $dt$ is the change in time between the last estimation and the newly computed one, and $q$ is the motion noise parameter, which represents the uncertainty in the state transition.
-
-The measurement model transforms a state vector from the state space into the measurement space. Since the vanilla Kalman filter, which we will derive soon, works only with linear models, the measurement model for the CV model assumes sensors measurements in the same 2D space as in the state vectors. The measurement equation is given by \ref{eq:measurement-model}, and the measurement matrix $\mathbf{H}$ and the measurement noise matrix $\mathbf{R}$ can be defined as:
-
-\begin{equation}
-    H =
-    \begin{bmatrix}
-        1 & 0 &0 & 0 \\
-        0 & 1 &0 & 0
-    \end{bmatrix};
-    \quad
-    R =
-    r^{2}\cdot
-    \begin{bmatrix}
-        1 & 0 \\
-        0 & 1
-    \end{bmatrix},
-\end{equation}
-
-where $r$ is the measurement noise parameter, which determines the variance of the measurement noise.
-
-We need to describe the choice of parameters $q$ and $r$ in more detail. These parameters are crucial in obtaining good estimates from a filter. These parameters are not known a priori and their values should be chosen carefully by the means of trial and error, or using automated methods like, for instance, in \cite{bulutProcessMeasurementNoise2011}. However, selecting appropriate values often involves a trade-off between tracking accuracy and computational complexity, and the use of exact methods depends on the application and one's requirements.
-
-The CV model can be extended with additional information, such as change of speed. In this way we will come to the constant acceleration model. However, it will not be used in this work and, therefore, we will not leave formal definition of this model here.

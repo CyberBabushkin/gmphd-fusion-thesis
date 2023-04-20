@@ -1,0 +1,28 @@
+The Gaussian distribution, also known as the normal distribution, is a 
+continuous probability distribution that is widely used in many branches
+of statistics, including Bayesian filtering. It is typically used to model
+a large number of independent and identically distributed (i.i.d.) random variables.
+
+The Gaussian distribution is characterized by two parameters: the mean 
+$\mu$ and the variance $\sigma^2$. Its probability density function (pdf), 
+expected value, and variance are given by:
+
+$$
+\begin{aligned}
+    p(x)
+        =\mathscr{N}\left(x ; \mu, \sigma^2\right)
+        &=\frac{1}{\sqrt{2 \pi} \sigma} \exp \left(\frac{(x-\mu)^2}{2 \sigma^2}\right), \\
+    E[X] &= \mu, \\
+    \operatorname{Var}[X] &= \sigma^2.
+\end{aligned}
+$$
+
+In the notation $\mathscr{N}\left(x ; \mu, \sigma^2\right)$, the first 
+parameter $x$ means ``evaluated at.''
+Despite the cdf of the Gaussian distribution not having a closed-form 
+representation, the distribution possesses several desirable properties that 
+allow for closed-form solutions in many applications, including object 
+tracking. Although it may be too simple to model certain scenarios, it 
+represents the approximate average position of objects and their uncertainty 
+quite well. This work utilizes mixtures of Gaussians, which will be discussed 
+in more detail later.

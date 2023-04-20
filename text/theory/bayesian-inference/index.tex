@@ -1,0 +1,52 @@
+% Bayesian inference
+    % - [x] Overview of Bayesian inference and its advantages over frequentist methods
+    % - [x] Sequential application
+% Estimators
+    % - [x] MLE and MAP
+    % - [x] What is better and why
+
+In statistics, there are two ways to understand the uncertainty. The first one,
+called \textit{frequentist}, assumes that the source of uncertainty lays in the
+nature of events. If we modeled a random process following this approach, we 
+would calculate parameters of the model using their maximum likelihood 
+estimation, which in fact is the probability density function if the parameter 
+evaluated at the observed data (we will talk more about estimators in Section 
+\ref{sec:estimators}). In addition to the estimated parameter 
+value, we could also calculate confidence intervals, which would give us a 
+range where a possible true value of the parameter can lay considering some 
+probability of possible error.
+
+The \textit{Bayesian} approach has a different philosophy. It main
+assumption is that the uncertainty origin is in the modeling itself and that
+this are we who have limited knowledge about the ground true model. This
+difference leads to a completely distinct path of estimating values of a model.
+At the beginning, we give parameters a \textit{prior distribution}, our
+initial belief where true values of parameters may lay. Next, after every new
+data piece we update the distribution using the Bayes' rule. Using the
+\textit{likelihood function}, which represents our updated beliefs about the
+parameter after observing the data, and the prior, we compute the
+\textit{posterior distribution}, the updated belief about the value of the
+parameter. And, in an every subsequent step, the posterior becomes a new prior.
+
+One of the main differences, however, in these two approaches is the output of 
+such estimation. While in the frequentist statistics we get values of 
+parameters, the Bayesian approach will give us a full posterior distribution of 
+parameter values. From such a distribution, we can extract information for our 
+needs, such as an estimation of a value or some uncertainty measure.
+
+In object tracking, the Bayesian approach to estimation has several advantages. 
+Firstly, we can estimate the posterior as time passes, one measurement at a 
+time. This is good because rarely do we have all measurements in advance, and 
+often we want our systems to work in an online manner. Secondly, full 
+posteriors allow us to work with the uncertainty of estimation and implement 
+techniques to reduce the number of new hypotheses using merging 
+techniques.\footnote{
+    As we will see later, the GM-PHD filter uses the Mahalanobis distance 
+    between Gaussians to decide what hypotheses should be merged into one. The 
+    computation of Mahalanobis distance includes the covariance matrix.
+}
+
+Last but not least, the Bayesian approach allows us to incorporate prior 
+knowledge about the motion models of objects and their birth positions. All of 
+the above helps to improve tracking performance and reduce the impact of noisy 
+measurements.

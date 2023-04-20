@@ -1,0 +1,17 @@
+We have now introduced the main principles of Bayesian inference. Now, we can
+turn to the Kalman filter, a popular and widely used algorithm for state 
+estimation. The Kalman filter (KF, for short) is a recursive algorithm that uses
+Bayesian inference to estimate the state of a dynamic system based on a sequence
+of noisy measurements.
+
+The key feature of the KF is the ability to predict future states of the system.
+This is essential for applications that require to foresee the behavior of
+tracked objects before the state of these objects is measured. Examples of such
+systems may include autonomous driving or air defence systems. The prediction 
+ability helps also to overcome situations when a sensor fails to measure the
+position of an object (a so-called misdetection).
+
+In the following subsections, we will introduce the state-space models, give
+a formal definition of a general Bayes filter, infer the Kalman filter formulas
+and discuss the Constant Velocity (CV) model, a common motion model used in the
+Kalman filter.

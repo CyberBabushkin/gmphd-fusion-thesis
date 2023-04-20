@@ -148,7 +148,7 @@
 \include{text/declaration}
 \printabstractpage % do not remove this command
 \include{text/summary}
-\include{text/acronyms}
+\chapter{List of Acronyms}\include{text/acronyms}
 
 %%%%%%%%%%%%%%%%%%%
 % THE THESIS
@@ -161,6 +161,7 @@
 \newcommand{\varat}[2]{\relax\ifmmode{#1}_{#2}\else ${#1}_{#2}$\fi}
 \newcommand{\vecat}[2]{\relax\ifmmode\mathbf{#1}_{#2}\else $\mathbf{#1}_{#2}$\fi}
 \newcommand{\svecat}[3]{\relax\ifmmode\vecat{#1}{#2}^{#3}\else $\vecat{#1}{#2}^{#3}$\fi}
+\renewcommand{\Pr}[1]{\operatorname{Pr}\{#1\}}
 
 \graphicspath{figures}
 \mainmatter\mainmatterinit % do not remove these two commands
@@ -180,12 +181,68 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theoretical background
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Theoretical background}\input{text/theory/index}
-\section{Probability theory foundations}\input{text/theory/probability-foundations}
-\section{Bayesian inference}\input{text/theory/inference}
-\section{Gaussian-linear Bayesian filtering}\input{text/theory/kalman}
-\section{Multi-object tracking}\input{text/theory/mot}
-% - Gaussian mixtures
+\chapter{Theoretical background}\label{ch:theory}
+    \section{Probability theory foundations}\label{sec:prob-foundations}
+        \input{text/theory/probability-foundations/index}
+        \subsection{Probability distributions}\label{sec:prob-distributions}
+            \input{text/theory/probability-foundations/probability-distributions}
+            \subsubsection{Bernoulli distribution}\label{sec:bernoulli-distribution}
+                \input{text/theory/probability-foundations/bernoulli-distribution}
+            \subsubsection{Binomial distribution}\label{sec:binomial-distribution}
+                \input{text/theory/probability-foundations/binomial-distribution}
+            \subsubsection{Poisson distribution}\label{sec:poisson-distribution}
+                \input{text/theory/probability-foundations/poisson-distribution}
+            \subsubsection{Uniform distribution}\label{sec:uniform-distribution}
+                \input{text/theory/probability-foundations/uniform-distribution}
+            \subsubsection{Gaussian distribution}\label{sec:gaussian-distribution}
+                \input{text/theory/probability-foundations/gaussian-distribution}
+    \section{Bayesian inference}\label{sec:bayesian-inference}
+        \input{text/theory/bayesian-inference/index}
+        \subsection{Bayes' rule in terms of pdfs}\label{sec:bayes-rule-pdf}
+            \input{text/theory/bayesian-inference/bayes-rule-pdf}
+        \subsection{Estimators}\label{sec:estimators}
+            \input{text/theory/bayesian-inference/estimators}
+    \section{Gaussian-linear Bayesian filtering}\label{sec:gauss-linear-filtering}
+        \input{text/theory/gauss-linear-filtering/index}
+        \subsection{Multivariate Gaussian Distribution}\label{sec:multivariate-gaussian}
+            \input{text/theory/gauss-linear-filtering/multivariate-gaussian}
+            \subsubsection{Gaussian mixtures}\label{sec:gaussian-mixtures}
+                \input{text/theory/gauss-linear-filtering/gaussian-mixtures}
+        \subsection{State-space model}\label{sec:state-space}
+            \input{text/theory/gauss-linear-filtering/state-space}
+            \subsubsection{Constant Velocity Model}\label{sec:cv-model}
+                \input{text/theory/gauss-linear-filtering/cv-model}
+        \subsection{The Bayes filter}\label{sec:bayes-filter}
+            \input{text/theory/gauss-linear-filtering/bayes-filter}
+        \subsection{The Kalman filter}\label{sec:kf-index}
+            \input{text/theory/gauss-linear-filtering/kf-index}
+            \subsubsection{The Gaussian identity}\label{sec:gaussian-identity}
+                \input{text/theory/gauss-linear-filtering/gaussian-identity}
+            \subsubsection{The Kalman filter algorithm}\label{sec:kf-algorithm}
+                \input{text/theory/gauss-linear-filtering/kf-algorithm}
+
+\chapter{Multi-target tracking}\label{ch:mtt}
+    \input{text/theory/mtt/index}
+    \section{Overview of target tracking methods}\label{sec:tt-overview}
+        \input{text/theory/mtt/tt-overview}
+    \section{Random Finite Sets}\label{sec:fisst}
+        \input{text/theory/fisst/fisst}
+        \subsection{RFS formal definition}\label{sec:rfs-definition}
+            \input{text/theory/mtt/rfs-definition}
+        \subsection{Set integral and the convolution formula}\label{sec:rfs-integral-convolution}
+            \input{text/theory/mtt/rfs-integral-convolution}
+        \subsection{Bernoulli and Poisson RFS}\label{sec:bernoulli-poisson-rfs}
+            \input{text/theory/mtt/bernoulli-poisson-rfs}
+        \subsection{Bayes filter in terms of RFSs}\label{sec:bayes-filter-rfs}
+            \input{text/theory/mtt/bayes-filter-rfs}
+        \subsection{Multi-target tracking standard model}\label{sec:mot-standard-model}
+            \input{text/theory/fisst/mot-problem-definition}
+    \section{The PHD filter}\label{sec:phd-filter}
+        \input{text/theory/phd/index}
+        \subsubsection{The PHD function}
+        \subsection{Modeling clutter}
+        \subsection{Target birth and survival}
+
 % - PHD filter
 % - GM-PHD filter
 % - Inclusion of external information, Gaussian fusion
@@ -223,7 +280,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \appendix\appendixinit
-\input{text/appendices/appendix}
+\chapter{Appendix 1}\input{text/appendices/appendix}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % References
@@ -236,6 +293,6 @@
 % USB/CD file tree
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{text/medium}
+\chapter{Obsah přiloženého média}\input{text/medium}
 
 \end{document}

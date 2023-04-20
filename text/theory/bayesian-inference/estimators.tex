@@ -1,0 +1,37 @@
+As mentioned before, the output of the Bayesian inference is always a
+distribution. However, we are often interested in obtaining an estimated value
+of the parameter we are estimating. \textit{Estimators} do exactly that.
+Strictly speaking, estimators take a set of observations and produce an 
+estimate of the value of an unknown parameter of a distribution. We denote an
+estimate of an unknown parameter $x$ as $\hat{x}$. There are several known 
+estimators but we are interested in two of them: ML and MAP.
+
+The \textit{Maximum Likelihood (ML)} estimator finds the value of the parameter 
+such that it maximizes the likelihood function. Formally:
+
+$$
+\hat{x}_{\mathrm{ML}} = \arg \max_x p(z|x).
+$$
+
+The ML estimator is a point estimator that finds the parameter value that 
+makes the observed data most probable. For instance, the frequentist approach
+uses this estimator to find the parameter value. The MLE does not take the 
+prior distribution into account and is more sensitive to outliers. 
+\todo{Citation needed}
+
+The \textit{Maximum A Posteriori (MAP)} estimator, on the other hand, finds the 
+value of the parameter that maximizes the posterior distribution. In formal 
+notation:
+
+$$
+\hat{x}_{\mathrm{MAP}} = \arg \max_x p(x|z) = \arg \max_x p(z|x)p(x).
+$$
+
+The MAP estimator finds the most probable value of the parameter given the 
+observed data. Comparing to the MLE, MAP uses prior information and more robust
+when the data is noisy or incomplete. That is the reason why MAP is often used
+in Bayesian inference.\footnote{
+    In this work, we use Gaussian posterior distributions and MAP estimates are 
+    equal to posterior mean estimates, or MMSE-estimates. However, for general 
+    distributions, it will rarely be the case.
+}

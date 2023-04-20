@@ -1,0 +1,87 @@
+In the definition above, we have used an integral on sets. For a set-valued function $f$, it is defined as:
+
+\begin{equation}\label{eq:set-integral}
+    \int_\mathcal{S} f(X) \delta X =
+        \sum_{n=0}^{\infty} \frac{1}{n !}
+        \int_{\mathcal{S} \times \ldots \times \mathcal{S}}
+            f\left(\left\{\mathbf{x}^1, \ldots, \mathbf{x}^n\right\}\right) \mathrm{d} \mathbf{x}^1 \ldots \mathrm{d} \mathbf{x}^n.
+\end{equation}
+
+We can build the intuition for the set integral by understanding what integrated values really are. When we compute an integral over real values, we, in simple words, compute the value of the integrand for all possible values. The set integral is conceptually the same, however, the integrated value is a random set and there are two variables incorporated--the cardinality of the set, and the values. That means, that we sum up the function values for all possible cardinalities, from the empty set until infinity, and all possible elements in the set. The term $\frac{1}{n !}$ refers to the fact that for any two values $a, b$, sets $\{a, b\}$ and $\{b, a\}$ are equal, because sets are invariant to order. That means that any permutation of elements in the set leads to the same set, and the number of possible permutations is equal to $n!$.
+
+The set integral is important for computing the posterior distribution in Bayesian inference. The Chapman-Kolmogorov equation is defined the same way for RFSs, as we will see later in this section, and it uses the total probability theorem where we compute the integral over all states from the previous time step. In case when the state is represented by a random set, the set integral is used.
+
+In addition to the set integral, we are often interested in basic operations on sets, like union or intersection. For instance, if we have two random finite sets with two different distributions, what is the distribution of their union? To answer this question and to build the intuition, we shall return to a simpler case, discrete-valued random variables.
+
+If we have two integer-valued random variables $X, Y$ with pmfs $p_X(x)$ and $p_Y(y)$, respectively, and their sum $Z = X + Y$, the probability that a realization of $Z$ is equal to the exact value $z$ is described using the so-called convolution formula:
+
+\begin{equation}
+    \Pr{Z = z} = \sum_{v = -\infty}^{+\infty} p_X(v) p_Y(z - v).
+\end{equation}
+
+The main idea behind the convolution is simple: we have an infinite number of possibilities how we can sum up two values and get the result equal to $z$. If we take a value $v$, then the second value is $z-v$, for all $v$. And the result is obtained by summing the probabilities of this pair of numbers.
+
+The convolution over sets has the same idea, where we sum over all possible pairs of values that add up to a particular value. If $\Xi$ and $\Gamma$ are two random finite sets with multi-object probability density functions $p_\Xi(X)$ and $p_\Xi(Y)$, and $\Sigma = \Xi \cup \Gamma$, the probability that a realization of $\Sigma$ equals to the exact set $X$ is:
+
+\begin{equation}
+    p_\Sigma(Y) = \sum_{X \subseteq Y} p_\Xi(X) p_\Gamma(Y \setminus X),
+\end{equation}
+
+Simply speaking, we take some values (or none at all) from $X$ and create a set $Y$ containing these values, and the rest are assigned to the other set, $Y \setminus X$. Then, the probability of this assignment is evaluated and we take the sum of probabilities of all such assignments. Having understood the main concept, we are ready to define the set convolution for general cases.
+
+\begin{definition}[Set convolution]\label{def:rfs-convolution}
+    Let $\Xi$ be a random finite set and $\Xi_1 \cup \ldots \cup \Xi_n = \Xi$ be statistically independent subsets with multi-target probability density functions $p_{\Xi_1}(X), \ldots, p_{\Xi_n}(X)$, respectively. The multi-target pdf for $\Xi$ is then defined as:
+
+    \begin{equation}
+        p_\Xi(Y) = \sum_{X_1 \uplus \ldots \uplus X_n = Y} \prod_{i=1}^{n} p_{\Xi_i}(X_i),
+    \end{equation}
+    
+    where the expression $X_1 \uplus \ldots \uplus X_n = Y$ represents the union of mutually disjoint (and possibly empty) subsets of $Y$ such that $X_1 \cup \ldots \cup X_n = Y$ \cite[385--386]{mahlerStatisticalMultisourcemultitargetInformation2007}.
+\end{definition}
+
+The convolution formula is a fundamental concept in FISST and multi-target tracking. In many filters, like, for instance, the Poisson Multi-Bernoulli Mixture filter \cite{garcia-fernandezPoissonMultiBernoulliMixture2018}, we model existing targets as a Bernoulli RFS, and the clutter as the Poisson RFS. Measurements at every time step contain a random permutation of true measurements and clutter, and in order to calculate the posterior density we model them as a union of two RFSs. The PHD filter, the filter covered in detail later in this work, also uses unions of several RFSs.
+
+Last but not least, we should define the expected value of a RFS pdf and the cardinality distribution. The expected value is defined in almost the same way like for vector- or scalar-valued pdfs, however, there is one important difference, as the sum of RFSs is not defined, the average is not defined too, and we cannot calculate the expected value directly. However, if we define a function that maps a RFS into a space where the addition is defined, we can compute the expected value using this formula:
+
+\begin{definition}[Expected value of a multi-target pdf]
+    Let $\Xi$ be a RFS and $p_\Xi(X)$ be its multi-target pdf. Let $f: \mathcal{F}(D) \rightarrow \mathbb{R}$ be some function that maps a RFS into a real number\footnote{$\mathcal{F}(D)$ is a special function that creates a so-called power set, or all possible subsets of the set $D$.}. Then, the expected value is defined as follows:
+
+    \begin{equation}
+        E[f(\Xi)] = \int f(X)p_\Xi(X) \delta X
+        = \sum_{n=0}^\infty \frac{1}{n !}
+        \int f(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^n.
+    \end{equation}
+\end{definition}
+
+The expected value of a multi-target pdf is used when calculating the Chapman-Kolmogorov equation for RFSs describe in Section \ref{sec:bayes-filter-rfs}.
+
+The cardinality distribution of a random finite set is a discrete distribution that has the probability mass function describing the probability of the set having the exact number of elements. 
+
+\begin{definition}[Cardinality distribution of a RFS]
+    Let $\Xi$ be a RFS and $p_\Xi(X)$ be its multi-target pdf and let the Kronecker delta function be denoted $\delta_y$ defined by:
+
+    \begin{equation}
+        \delta_y = \begin{cases}
+            1, & \textup{if } y = 0, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+    
+    Then, the cardinality pmf is defined as:
+
+    \begin{align}
+        \Pr{|\Xi| = k}
+        &= E[\delta_{k - |\Xi|}] \\
+        &= \sum_{n=0}^\infty \frac{1}{n !}
+        \int \delta_{k - n}
+        p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^n \\
+        &= \frac{1}{k !}
+        \int p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^k\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^k.
+    \end{align}
+\end{definition}
+
+Before we proceed to the use of random finite sets in Bayesian inference and multi-target tracking, we should describe several known RFSs and their pdfs. In the next sections, we will describe set distributions that are already known to us: the Bernoulli RFS and the Poisson RFS. The latter has a direct relation to the important mathematical concept used in target-tracking, the point processes.

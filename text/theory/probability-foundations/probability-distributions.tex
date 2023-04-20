@@ -1,0 +1,108 @@
+Events and their probabilities are not sufficient for our purposes;
+we need a framework that allows us to obtain a formal, general description of a set
+of events from some outcome space. Specifically, we need an abstraction around events,
+which is some function that maps the outcome space $\Omega$ to some other space,
+typically $\mathbb{R}$ (but not necessarily). This abstraction is called a
+\textit{random variable} and one outcome of it is called a \textit{realization}.
+
+\begin{definition}[Random variable and its realization]
+    Let $\Omega$ be a set of possible events, $\omega \in \Omega$ is some event,
+    and $\mathbb{O}$ be another space. A function $X: \Omega \rightarrow \mathbb{O}$
+    is called a random variable and $x = X(\omega)$ is called a realization of $X$.
+\end{definition}
+
+The above definition provides a general framework for understanding random variables.
+However, for the purposes of Bayesian statistics, we will simplify the discussion by
+focusing on scalar, continuous-valued random variables, represented
+by $\mathbb{O} = \mathbb{R}$. In practice, it is often impractical to calculate the
+probability of every possible event from the outcome space $\Omega$, especially for
+continuous random variables with uncountably infinite outcomes. Instead, it may suffice
+to work with intervals on the outcome space and their probabilities. We call such a
+probability distribution a \textit{cumulative distribution function (cdf)} of $X$,
+and the first-order derivative of the cdf is called a \textit{probability density
+function (pdf)}.\footnote{
+    For discrete random variables, the corresponding distribution function is
+    called a \textit{probability mass function (pmf)}.
+}
+
+\begin{definition}[Cumulative distribution function (cdf)]
+    Given a scalar real-valued random variable $X \in \mathbb{R}$ and $x$ as a
+    realization of $X$, we define the probability $\Pr{X \in (-\infty, x)} = \Pr{X < x}$
+    as the cumulative distribution function of random variable $X$ and denote it as $P(x)$.
+\end{definition}
+
+\begin{definition}[Probability density function (pdf)]
+    The probability density function $p(x)$ of a scalar real-valued random variable $X$
+    is defined as:
+    $$
+    p(x) = \frac{\partial P(x)}{\partial x}.
+    $$
+\end{definition}
+
+Probability distributions are fundamental in Bayesian statistics and provide a way
+to model and analyze the behavior of random variables. In the next section,
+we will discuss some common probability distributions used in Bayesian filters,
+including the Gaussian distribution and the Poisson distribution.
+
+Probability distributions are fundamental in Bayesian statistics and provide a way
+to model and analyze the behavior of random variables. Cdfs and pdfs (as well as pmfs
+for discrete cases) are used to specify the probability distribution of a random
+variable, providing a formal description of the relationship
+between events and probabilities. In addition to this formal description, we also
+need to know several statistical properties of probability distributions to fully
+understand their behavior. Two main properties of probability distributions are
+the expected value, $E[X]$, and the variance, $\operatorname{Var}[X]$:
+
+$$
+\begin{aligned}
+E[X]&=\int_{-\infty}^{\infty} x p(x) d x, \\
+\operatorname{Var}[X]
+    &= E\left[(X-E[X])^2\right]
+    =\int_{-\infty}^{\infty}(x-E[X])^2 p(x) d x.
+\end{aligned}
+$$
+
+The expected value, or the first moment, represents the most probable value of
+a random variable. The variance, or the second central moment, is a measure of the
+variability of a random variable and is often denoted as $\operatorname{Var}[X] = \sigma^2$.
+Furthermore, we often study the relationship between two random variables, say $X$ and
+$Y$, and measure their joint variability, which we call a \textit{covariance}:
+
+$$
+\operatorname{Cov}[X, Y]
+    = E\left[(X-E[X])(Y-E[Y])\right]
+    =\int_{-\infty}^{\infty}(x-E[X])(y-E[Y]) p(x, y) d x d x.
+$$
+
+For vector-valued random variables, that is $X, Y \in \mathbb{R}^k$ and $\mathbf{x}$
+is the realization of $X$, the formulas are the following. It is worth noting that
+the covariance in the vector case becomes a matrix and is called a \textit{covariance
+matrix}:
+
+$$
+\begin{aligned}
+E[X]
+    &=\int_{-\infty}^{\infty} \mathbf{x} p(\mathbf{x}) d \mathbf{x}, \\
+\operatorname{Var}(X)
+    &= E\left[\left(X-E[X]\right)\left(X-E[X]\right)^\intercal\right]
+    \\&=\int_{-\infty}^{\infty}
+        \left(\mathbf{x}-E[X]\right)
+        \left(\mathbf{x}-E[X]\right)^\intercal
+        p(\mathbf{x})
+        d \mathbf{x}, \\
+\operatorname{Cov}[X, Y]
+    &= E\left[\left(X-E[X]\right)\left(Y-E[Y]\right)^\intercal\right]
+    \\&=\int_{-\infty}^{\infty}
+        \left(\mathbf{x}-E[X]\right)
+        \left(\mathbf{y}-E[Y]\right)^\intercal
+        p(\mathbf{x}, \mathbf{y})
+        d \mathbf{x} d \mathbf{y}.
+\end{aligned}
+$$
+
+Probability distributions are fundamental in Bayesian statistics and
+provide a way to model and analyze the behavior of random variables. For
+the purpose of Bayesian filters, some common probability distributions
+are particularly useful. In this section, we will discuss some of these
+distributions and their main properties. We shall start from discrete
+cases and go on to the continuous variables.  % uniform, bernoulli, poisson, gaussian

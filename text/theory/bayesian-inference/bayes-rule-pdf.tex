@@ -1,0 +1,90 @@
+In Bayesian object tracking, probability distributions are used instead of pure 
+probabilities. Therefore, Bayes' rule must be defined using distributions. 
+Fortunately, this is straightforward after we define the conditional probability in terms of pdfs.
+
+\begin{definition}[Conditional probability for pdfs]\label{def:cond-prob-pdf}
+    Let $x$ and $y$ be random variables with pdfs $p(x)$ and $p(y)$, respectively, and the joint distribution $p(x,y)$. Then the conditional probability of $x$ given $y$ is defined as:
+    \begin{equation*}
+        p(x|y) = \frac{p(x,y)}{p(y)}.
+    \end{equation*}
+\end{definition}
+
+\begin{definition}[Bayes' rule for pdfs]
+    Let $z$ and $x$ be random variables with densities $p(z | x)$ and $p(x)$, 
+    respectively, and let $p(z, x)$ be their joint distribution. The Bayes' rule
+    for 
+    $p(x | z)$ is defined as follows:
+
+    $$
+    p(x | z)
+        = \frac{p(z | x) p(x)}{p(z)}
+        = \frac{p(z | x) p(x)}{\int p(z | x) p(x) dx}.
+    $$
+\end{definition}
+
+The distribution $p(x | z)$ is the posterior distribution, $p(z | x)$ is the 
+likelihood, $p(x)$ is the prior, and $p(z)$ is called \textit{evidence}.
+
+Evidence here is only the normalization constant for the distribution so
+that the integral of the posterior equals to one. It is therefore convenient
+to omit this denominator in the text and write the posterior only in terms of
+prior and likelihood. Since it is not already the equality, we use the
+proportionality symbol:
+
+$$
+p(x | z) \propto p(z | x) p(x).
+$$
+
+We can use the rule defined above to compute the posterior of some parameter
+based on all the data. However, in many real-world applications, measurements
+do not arrive all at once, but rather sequentially over time. In the context of 
+object tracking, sensors generate measurements in a discrete manner, once per
+some predefined time interval, and the goal of the tracking algorithm to 
+estimate targets' state at each time step. Fortunately, the construction of the
+Bayes' rule allows us to define the sequential data update in a very 
+straightforward manner.
+
+\begin{theorem}[Sequential Bayes' rule]
+    Let $z_k$ be an observed random variable at discrete time steps
+    $k = 1, 2, \ldots$ and let $z_{1:k-1}$ represent the realizations of $z_k$ 
+    obtained from the time step $k = 1$ up to $(k-1)$, that is $z_{1:k-1} = 
+    \{z_1, z_2,\ldots, z_{k-1}\}$. Let $p(x_k | z_{1:k-1})$ denote the posterior 
+    distribution obtained at time $k-1$ using all the measurements up to $k-1$ 
+    and $p(z_k | x_k)$ be the likelihood of the new measurement $z_k$. The 
+    posterior distribution $p(x_k | z_{1:k})$ at time step $k$ is:
+    \todo{The alignment of the formula is awful. Check later}
+    $$
+    p(x_k | z_{1:k}) 
+        = \frac
+            { p(z_k | x_k) p(x_k | z_{1:k-1}) }
+            { p(z_k | x_k) p(x_k | z_{1:k-1}) dx_k }
+        \propto p(z_k | x_k) p(x_k | z_{1:k-1}).
+    $$
+\end{theorem}
+
+It should be mentioned that $x_k$ and $z_k$ must not always be scalars. As we
+will later see, they can be vectors, denoted as $\mathbf{x}_k$ and 
+$\mathbf{z}_k$, or even sets, denoted $X_k$ and $Z_k$. The Bayes' rule will
+have the same form in any case.
+
+The application of the Bayes' rule has one big disadvantage. In practice, 
+calculating the posterior can be challenging or even intractable. The evidence 
+term in the denominator contains the integral of the product of the likelihood 
+and the prior over the whole measurement space. This product may (and often 
+will) produce functions whose integration cannot be expressed in a closed-form 
+solution.
+
+However, we can obtain a tractable solution by choosing a prior distribution 
+from a set of \textit{conjugate distributions} with respect to the likelihood. 
+In this case, the posterior will be in the same form as the prior and we obtain 
+an explicit closed-form solution. A conjugate prior for a given likelihood 
+function is a prior distribution that, when used in combination with the 
+likelihood, leads to a posterior distribution that is in the same family as the 
+prior.
+
+For example, if the likelihood is expressed using the Bernoulli distribution 
+and the prior is the Beta distribution, the posterior will also be a Beta 
+distribution. The same applies for the Gaussian distribution, where if both the 
+prior and the likelihood are Gaussian, the posterior is also Gaussian. This is 
+particularly useful in practice, as many distributions have well-known 
+conjugate priors. The latter case is used, for instance, in the GM-PHD filter.

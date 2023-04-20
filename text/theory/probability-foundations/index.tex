@@ -1,0 +1,52 @@
+When we are dealing with probability of an event, we assume that there is a possibility
+of that event occurring and we measure it using a number between 0 and 1 or a percentage
+between 0\% and 100\%. In other words, we use the probability theory framework to assign
+numerical values to arbitrary events. This section covers several fundamental concepts of
+probability theory, which serve as the basis for this work.
+
+The \textit{event}, which we formally denote as $E$, comes from some space of all possible
+events, the \textit{outcome space} $\Omega$. We also denote the \textit{probability} of the
+event $E$ as $\Pr{E}$. This probability is a real non-negative number,
+that is $\Pr{E} \in \mathbb{R}, \Pr{E} \geq 0$. The outcome
+space covers all possible events, that is $\Pr{\Omega} = 1$. It then follows
+that the probability of disjoint events from the outcome space $\Omega$ is the sum of
+probabilities of these events, that is for
+$E_1, \ldots, E_n \in \Omega, \Pr{\bigcup_{i=1}^n E_i} = \sum_{i=1}^n \Pr{E_i}$.
+
+We have defined three main axioms of probability theory. In addition to these axioms, several
+crucial concepts illustrate the relationship between events. Given two events, $E_1$ and $E_2$,
+the \textit{conditional probability} of $E_1$ given $E_2$ is defined as
+
+$$
+\Pr{E_1 \mid E_2} = \frac{\Pr{E_1 \cap E_2}}{\Pr{E_2}}.
+$$
+
+If the events are \textit{independent} of each other, the probability of them occurring
+simultaneously is given by
+
+$$
+\Pr{E_1 \cap E_2} = \Pr{E_1}\Pr{E_2}.
+$$
+
+These relationships allow us to define the \textit{law of total probability}
+\cite[31]{zwillingerCRCStandardProbability2000}, which is a key component of Bayes' rule.
+Let $A$ be an event, $A \int \Omega$, and $\{B_n : n = 1, 2, \ldots\}$ be a countable
+partition of the space $\Omega$. Then, we have:
+
+$$
+\Pr{A} = \sum_n \Pr{A \mid B_n} \Pr{B_n}.
+$$
+
+Now, we can deduce the following rule:
+
+\begin{definition}[Bayes' rule]
+Let $A$ and $B$ be two events from the outcome space $\Omega$. Then the following applies:
+
+$$
+\Pr{A \mid B} = \frac{\Pr{B \mid A}}{\Pr{B}}
+    = \frac{\Pr{B \mid A}}{\sum_n \Pr{B \mid A_n}\Pr{A_n}}.
+$$
+\end{definition}
+
+Bayes' rule plays a crucial role in Bayesian inference and serves as the basis for
+Bayesian filters, including the PHD filter.

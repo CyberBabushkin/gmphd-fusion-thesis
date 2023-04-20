@@ -1,0 +1,220 @@
+Before we introduce the actual formulas of the Kalman filter, we should introduce a new fundamental theorem in object tracking and then deduce a corollary from it. These will also be used later when we infer formulas for the the GM-PHD filter. We define this theorem using a general notation without any meaning for Bayesian filters to avoid the confusion of variables when we use this theorem in different parts of different filters.
+\todo{when finished, make the notation bold}
+
+\begin{theorem}[The Gaussian product identity]\label{theorem:gaussian-identity}
+    Given matrices and vectors $A, U, m, d$, and $V$ of appropriate dimensions, and that $U$ and $V$ are positive definite, the following identity applies:
+
+    \begin{equation}\label{eq:gid}
+        \mathscr{N}(x ; A y + d, U) \mathscr{N}(y ; m, V)=\mathscr{N}(x ; A m + d, U + A V A^\intercal) \mathscr{N}(y ; \hat{m}, \hat{V}),
+    \end{equation}
+
+    where
+    \begin{align}
+        \hat{m} & = m + K (y - Am - d), \\ 
+        \hat{V} & = (I - K A) V, \\
+        K &= V A^\intercal (U + A V A^\intercal)^{-1}.
+    \end{align}
+\end{theorem}
+
+\begin{proof}\label{proof:gaussian-identity}
+    The proof of Theorem \ref{theorem:gaussian-identity} presented here follows similar proofs in \cite{mahlerStatisticalMultisourcemultitargetInformation2007} (Appendix D) and \cite{risticKalmanFilterParticle2004} (Section 3.8). However, the main idea of using algebraic manipulation of matrices was taken from \cite{tokleMultiTargetTracking2018}.
+    
+    The proof is based on the idea that both sides of \ref{eq:gid} represent the joint Gaussian distribution of two random variables, $p(x,y)$. From \ref{def:cond-prob-pdf}, we know that we can express this distribution as:
+    
+    \begin{equation}
+        p(x, y) = p(x|y)p(y) = p(y|x)p(x).
+    \end{equation}
+    
+    We claim that the left-hand side (LHS) of \ref{eq:gid} represents this equality, i.e.,
+    
+    \begin{equation}
+        p(x, y) = p(x|y)p(y) = \mathscr{N}(x ; A y + d, U) \mathscr{N}(y ; m, V).
+    \end{equation}
+
+    Next, we can express the product of two Gaussians in their quadratic forms, the same form as defined in \ref{eq:vec-gauss-def}, i.e.
+
+    \begin{align}
+        \mathscr{N}(x ; A y + d, U) \mathscr{N}(y ; m, V)
+        &= \frac{1}{(2\pi)^{n} \sqrt{|U| |V|}}
+        \exp \left(
+        -\frac{1}{2}
+        \bigg[(x - Ay - d)^\intercal U^{-1} (x - Ay - d) \right.\\
+        &\left.\qquad\qquad\qquad\qquad\qquad+ (y - m)^\intercal V^{-1} (y - m) \bigg] \right).
+        \label{eq:gid-proof:lhs-expanded}
+    \end{align}
+
+    If we introduce a small algebraic trick for matrices:
+
+    \begin{equation*}
+        \begin{bmatrix}
+            I & -A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            x - Am - d - Ay + Am \\
+            y - m \\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            x - Ay - d \\
+            y - m
+        \end{bmatrix},
+    \end{equation*}
+    
+    we can manipulate the exponent to obtain another quadratic form:
+
+    \begin{align}
+        &\phantom{=}
+        (x - Ay - d)^\intercal U^{-1} (x - Ay - d) + (y - m)^\intercal V^{-1} (y - m) 
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Ay - d \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            U^{-1} & 0 \\
+            0 & V^{-1}
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Ay - d \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            I & 0 \\
+            -A^\intercal & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            U^{-1} & 0 \\
+            0 & V^{-1}
+        \end{bmatrix}
+        \begin{bmatrix}
+            I & -A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}^\intercal
+        \left(
+        \begin{bmatrix}
+            I & A \\
+            0 & I
+        \end{bmatrix}
+        \begin{bmatrix}
+            U & 0 \\
+            0 & V
+        \end{bmatrix}
+        \begin{bmatrix}
+            I & 0 \\
+            A^\intercal & I
+        \end{bmatrix}
+        \right)^{-1}
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}
+        \nonumber \\
+        &=
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}^\intercal
+        \begin{bmatrix}
+            U + A V A^\intercal & A V \\
+            V A^\intercal & V
+        \end{bmatrix}^{-1}
+        \begin{bmatrix}
+            x - Am - d \\
+            y - m
+        \end{bmatrix}. \label{eq:gid-proof-quadratic-form}
+    \end{align}
+
+    This expression is also a joint Gaussian distribution $p(x,y)$, but it cannot be split into two independent Gaussians due to the fact that the matrix is not block-diagonal. Therefore, to conclude the proof, we need to infer two other distributions, $p(y|x)$ and $p(x)$, from the derived distribution $p(x, y)$.
+    
+    Notice that this is also a quadratic form, and it expresses a dependency on both $x$ and $y$. Therefore, his expression is also a joint Gaussian distribution $p(x,y)$, but it cannot be split into two independent Gaussians due to the fact that the covariance matrix in \ref{eq:gid-proof-quadratic-form} is not block-diagonal. Therefore, to conclude the proof, we need to infer two other distributions, $p(y|x)$ and $p(x)$, from the derived distribution $p(x, y)$.
+    
+    We are going to obtain the $p(y|x)$ distribution by conditioning on the joint distribution, i.e. using the formula that was presented in Theorem \ref{theorem:gauss-marg}. For completeness and simplicity, we will write the joint distribution the same way that it is presented in the theorem:
+
+    \begin{equation}
+        p(x,y) = 
+        \mathscr{N}\left(
+            \begin{bmatrix}
+                x \\
+                y
+            \end{bmatrix}
+            ;
+            \begin{bmatrix}
+                Am + d \\
+                m
+            \end{bmatrix}
+            ,
+            \begin{bmatrix}
+                U + A V A^\intercal & A V \\
+                V A^\intercal & V
+            \end{bmatrix}
+        \right).
+    \end{equation}
+
+    Now, using equations \ref{eq:gauss-cond} and \ref{eq:gauss-cond-params}, we will infer:
+
+    \begin{align}
+        \mu_{y|x}
+        &= \mu_y + \Sigma_{yx} \Sigma_{xx}^{-1}(x - \mu_x) \nonumber \\
+        &= m + V A^\intercal (U + A V A^\intercal)^{-1}(x - Am - d), \\
+        \Sigma_{y|x}
+        &= \Sigma_{yy} - \Sigma{yx}\Sigma_{xx}^{-1}\Sigma_{yx} \nonumber \\
+        &= V - V A^\intercal (U + A V A^\intercal)^{-1} A V \nonumber \\
+        &= (I - V A^\intercal (U + A V A^\intercal)^{-1} A) V, \\
+        p(y|x)
+        &= \mathscr{N}\left(y; \mu_{y|x}, \Sigma_{y|x}\right).
+    \end{align}
+
+    Using Theorem \ref{theorem:gauss-marg}, we obtain the expression for $p(x)$:
+
+    \begin{equation}
+        p(x) = \mathscr{N}(x; Am + d, U + A V A^\intercal).
+    \end{equation}
+
+    If we introduce a new notation, $K = V A^\intercal (U + A V A^\intercal)^{-1}$, we obtain the exact same expressions for the Gaussians on the right-hand side (RHS) of the initial theorem. That confirms that both LHS and RHS are equal due to the equivalence of their quadratic forms. And that concludes the proof.
+\end{proof}
+
+From Theorem \ref{theorem:gaussian-identity} we can also derive a corollary, that we will also need.
+
+\begin{corollary}\label{theorem:gid-integral}
+    Given matrices and vectors $A, U, m, d$, and $V$ of appropriate dimensions, and that $U$ and $V$ are positive definite, the following identity applies:
+
+    \begin{equation}\label{eq:gid-integral}
+        \int \mathscr{N}(x ; A y + d, U) \mathscr{N}(y ; m, V) \mathrm{d}y=\mathscr{N}(x ; A m + d, U + A V A^\intercal).
+    \end{equation}
+\end{corollary}
+
+\begin{proof}
+    The proof of Corollary \ref{theorem:gid-integral} is straightforward:
+
+    \begin{align}
+        \int \mathscr{N}(x ; A y + d, U) \mathscr{N}(y ; m, V) \mathrm{d}y 
+        &= \int \mathscr{N}(x ; A m + d, U + A V A^\intercal) \mathscr{N}(y ; \hat{m}, \hat{V}) \mathrm{d}y \label{eq:git-int-proof-step1} \\
+        &= \mathscr{N}(x ; A m + d, U + A V A^\intercal) \underbrace{\int \mathscr{N}(y ; \hat{m}, \hat{V}) \mathrm{d}y}_{\text{=1}} \label{eq:git-int-proof-step2}\\
+        &= \mathscr{N}(x ; A m + d, U + A V A^\intercal). \label{eq:git-int-proof-step3}
+    \end{align}
+
+    In \ref{eq:git-int-proof-step1}, we applied Equation \ref{eq:gid} from Theorem \ref{theorem:gaussian-identity}, then, in \ref{eq:git-int-proof-step2} we notice that one of the integrands does not depend on the integration variable $y$ and we take it out from the integral. The integrand that is left under the integral is a Gaussian distribution probability density function, and it integrates to $1$. Equation \ref{eq:git-int-proof-step3} is the right-hand side of Equation \ref{eq:gid-integral}. It concludes the proof of Corollary \ref{theorem:gid-integral}.
+\end{proof}

@@ -1,0 +1,24 @@
+As we mentioned earlier, random finite sets allow us to model object states and the cardinality of the set as a single random variable. At each time step $k$, we have a set of object states with cardinality $n_k$. We also assume that states are vectors from some space, and without loss of generality, we assume that this space is $\mathbb{R}^n$. Formally, for every time step $k$, we have vectors ${\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}}$, where $\vecat{x}{k}^{i} \in \mathbb{R}^d$ for $\forall i$ and $\forall k$. We define the random finite set as follows:
+
+\begin{definition}[Random finite set]
+    Let $k$ be a time step and ${\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}}$ be vectors from $\mathbb{R}^d$, where $n_k$ is a random number with a known distribution. Then, $\Xi_k \subseteq \mathbb{R}^d$ is a random finite set with cardinality $|\Xi_k| = n_k$, and $X_k = \{\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}\}$ is called a realization of the RFS.
+\end{definition}
+
+
+It should be noted that the cardinality equal to zero is also valid, and in that case, the realization of an RFS is an empty set, i.e., $X_k = \emptyset$.
+
+As we already know, RFSs are random variables, and we need an analogous mechanism as for classical random variables defined on vectors that allows us to describe the behavior of the RFS. For vector-based random variables, we have cumulative distribution functions and their first-order derivatives probability density function. The analogy to a cdf for a random finite set is called the \textit{belief mass measure} and is defined as follows:
+
+\begin{definition}[Belief mass measure]
+    Let $\Xi \subseteq \mathbb{R}^d$ be a random finite set, and $\mathcal{S} \subseteq \mathbb{R}^d$ be some region of the set's space. The belief mass measure $\beta_\Xi$ of $\Xi$ is defined as:
+
+    \begin{equation}
+        \beta_\Xi(\mathcal{S})
+        = \Pr{\Xi \subseteq \mathcal{S}}
+        = \int_\mathcal{S} p_\Xi(X)\delta X,
+    \end{equation}
+
+    where $p_\Xi$ is a FISST density function, also called the multi-target pdf, and $\int_\mathcal{S} p_\Xi(X)\delta X$ is a set integral over all sets $X \subseteq \mathcal{S}$.
+\end{definition}
+
+In this work, we do not include the formal proof that $p_\Xi$ is indeed a pdf, i.e., $p_\Xi(X)$ for all $X$ and $\int_{\mathbb{R}^d} p_\Xi(X)\delta X = 1$. However, the reader may refer to the standard reference on FISST \cite{mahlerStatisticalMultisourcemultitargetInformation2007} to see the proofs. Here, we only emphasize that this function is a pdf for RFSs and it captures both the cardinality of a set and the distribution over elements in the set.

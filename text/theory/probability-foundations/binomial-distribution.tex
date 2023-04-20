@@ -1,0 +1,13 @@
+Binomial random variables are the generalization of Bernoulli random variables,
+representing the probability of $x$ positive outcomes after $n$ consecutive and
+independent trials. This distribution is parameterized by the probability of the
+positive outcome in one trial $r$ and the number of trials $n$. Its pmf, as well 
+as the expected value and the variance, are given by
+
+$$
+\begin{aligned}
+    p(x) &= \binom{n}{x} r^x (1-r)^{(n-x)}, \\
+    E[X] &= nr, \\
+    \operatorname{Var}[X] &= nr(1-r).
+\end{aligned}
+$$
