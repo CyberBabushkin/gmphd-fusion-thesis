@@ -100,7 +100,7 @@ computed using the standard Bayes' rule.
     \end{equation}
 \end{theorem}
 
-These two steps create a loop, and to use the filter, we first predict the next state using the Chapman-Kolmogorov equation, and then we update our guess with a measurement. Note, that we will often use the simplified notation to explicitly state the time step of the value. The notation $\vecat{\cdot}{k|k-1}$ represents the predicted value at time step $k$, and the notation $\vecat{\cdot}{k|k}$ represents the updated value at time step $k$ after incorporating a measurement.
+These two steps create a loop, and to use the filter, we first predict the next state using the Chapman-Kolmogorov equation, and then we update our guess with a measurement. Note, that we will often use the simplified notation to explicitly state the time step of the value. The notation $\vecat{\bullet}{k|k-1}$ represents the predicted value at time step $k$, and the notation $\vecat{\bullet}{k|k}$ represents the updated value at time step $k$ after incorporating a measurement.
 
 Now, having introduced the general Bayes filter, we will continue with 
 exploring the Kalman filter in detail, the popular and widely used tool for 
