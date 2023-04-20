@@ -1,11 +1,304 @@
-\subsection{Random Finite Sets}
+We have discussed one possible approach for evaluating the uncertainty between targets and measurements in multi-target tracking. Filters such as JPDA or MHT, in both variants, use a hypothesis-based approach where at each time step, a set of hypotheses is created to map all possible associations between new measurements and existing targets. However, these approaches do not model the uncertainty of the number of targets themselves. At any given moment, new targets may appear or disappear from the field of view, and the filters should be able to estimate tracks for every target.
+
+To illustrate this point, let's consider the scenario of a common surveillance camera tracking people in a large mall. At every moment, people enter the area covered by the camera, cross it, and then leave the area. The number of people can vary greatly at different times of the day or on different days of the week, and there is no simple solution for estimating the number of mall visitors at every moment.
+
+In the JPDA filter, the number of hypotheses is assumed to be known in advance, which is a rare case in real-world applications. In the MHT approach, object appearance events can be modeled by assuming that if two or more measurements have a high probability of being assigned to one target, this is probably because the number of objects in the vicinity of the target is greater than one. However, these approaches are not systematic nor optimal, and the exact estimation of the number of targets is rather a side effect \cite{challaFundamentalsObjectTracking2011}.
+
+This problem led to the development of the Random Finite Sets (RFSs) theory, a completely new approach to multi-target tracking. At each time step, a collection of objects that are present in the field of view of a sensor is modeled as a random finite set. Generally, a set is a collection of distinct objects without a specific order of the elements. In an RFS, the number of objects is only known to be finite, but the exact cardinality, or the number of elements in the set, is modeled using some probability distribution. Moreover, all elements in the set are probability distributions. Therefore, RFSs are random variables that model the uncertainty of every state and the number of states as a single entity. An outcome, or a realization, of such a random variable is a fixed set with an exact state, and measurements are considered to be outcomes of the unknown internal state.
+
+The RFS concept led to the development of a new branch in statistics called Finite Sets Statistics (FISST). In FISST, sets are random variables that have their probability distributions and probability density functions. Furthermore, FISST allows the use of RFSs for Bayesian inference, which leads to the need for defining basic algebraic operations on sets, such as integrals and derivatives. As we will soon see, the mathematics behind it becomes complex, and one way to simplify the notation is the introduction of a new way of expressing relations. This concept, called probability generating functionals (p.g.fls), significantly simplifies the notation in FISST. However, the underlying level of mathematical abstraction becomes much more difficult to understand.
+
+In this section, we will give a formal definition for a random finite set and also define the main formulas that are needed to understand the logic behind FISST and use it to infer the PHD filter. In this work, we will use standard notation that does not use p.g.fls. However, the reader may refer to the original work in \cite{mahlerMultitargetBayesFiltering2003} to learn about these concepts.
+
+\subsubsection{RFS formal definition}\label{sec:rfs-definition}
+
+As we mentioned earlier, random finite sets allow us to model object states and the cardinality of the set as a single random variable. At each time step $k$, we have a set of object states with cardinality $n_k$. We also assume that states are vectors from some space, and without loss of generality, we assume that this space is $\mathbb{R}^n$. Formally, for every time step $k$, we have vectors ${\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}}$, where $\vecat{x}{k}^{i} \in \mathbb{R}^d$ for $\forall i$ and $\forall k$. We define the random finite set as follows:
+
+\begin{definition}[Random finite set]
+    Let $k$ be a time step and ${\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}}$ be vectors from $\mathbb{R}^d$, where $n_k$ is a random number with a known distribution. Then, $\Xi_k \subseteq \mathbb{R}^d$ is a random finite set with cardinality $|\Xi_k| = n_k$, and $X_k = \{\vecat{x}{k}^{1}, \ldots, \vecat{x}{k}^{n_k}\}$ is called a realization of the RFS.
+\end{definition}
+
+
+It should be noted that the cardinality equal to zero is also valid, and in that case, the realization of an RFS is an empty set, i.e., $X_k = \emptyset$.
+
+As we already know, RFSs are random variables, and we need an analogous mechanism as for classical random variables defined on vectors that allows us to describe the behavior of the RFS. For vector-based random variables, we have cumulative distribution functions and their first-order derivatives probability density function. The analogy to a cdf for a random finite set is called the \textit{belief mass measure} and is defined as follows:
+
+\begin{definition}[Belief mass measure]
+    Let $\Xi \subseteq \mathbb{R}^d$ be a random finite set, and $\mathcal{S} \subseteq \mathbb{R}^d$ be some region of the set's space. The belief mass measure $\beta_\Xi$ of $\Xi$ is defined as:
+
+    \begin{equation}
+        \beta_\Xi(\mathcal{S})
+        = \Pr{\Xi \subseteq \mathcal{S}}
+        = \int_\mathcal{S} p_\Xi(X)\delta X,
+    \end{equation}
+
+    where $p_\Xi$ is a FISST density function, also called the multi-target pdf, and $\int_\mathcal{S} p_\Xi(X)\delta X$ is a set integral over all sets $X \subseteq \mathcal{S}$.
+\end{definition}
+
+In this work, we do not include the formal proof that $p_\Xi$ is indeed a pdf, i.e., $p_\Xi(X)$ for all $X$ and $\int_{\mathbb{R}^d} p_\Xi(X)\delta X = 1$. However, the reader may refer to the standard reference on FISST \cite{mahlerStatisticalMultisourcemultitargetInformation2007} to see the proofs. Here, we only emphasize that this function is a pdf for RFSs and it captures both the cardinality of a set and the distribution over elements in the set.
 
 \subsubsection{Set integral and the convolution formula}
 
-\subsubsection{The Bernoulli RFS}
+In the definition above, we have used an integral on sets. For a set-valued function $f$, it is defined as:
 
-\subsubsection{Poisson Point Processes}
+\begin{equation}\label{eq:set-integral}
+    \int_\mathcal{S} f(X) \delta X =
+        \sum_{n=0}^{\infty} \frac{1}{n !}
+        \int_{\mathcal{S} \times \ldots \times \mathcal{S}}
+            f\left(\left\{\mathbf{x}^1, \ldots, \mathbf{x}^n\right\}\right) \mathrm{d} \mathbf{x}^1 \ldots \mathrm{d} \mathbf{x}^n.
+\end{equation}
 
-\subsubsection{Bayesian inference in terms of RFSs}
+We can build the intuition for the set integral by understanding what integrated values really are. When we compute an integral over real values, we, in simple words, compute the value of the integrand for all possible values. The set integral is conceptually the same, however, the integrated value is a random set and there are two variables incorporated--the cardinality of the set, and the values. That means, that we sum up the function values for all possible cardinalities, from the empty set until infinity, and all possible elements in the set. The term $\frac{1}{n !}$ refers to the fact that for any two values $a, b$, sets $\{a, b\}$ and $\{b, a\}$ are equal, because sets are invariant to order. That means that any permutation of elements in the set leads to the same set, and the number of possible permutations is equal to $n!$.
 
-% PPP here
+The set integral is important for computing the posterior distribution in Bayesian inference. The Chapman-Kolmogorov equation is defined the same way for RFSs, as we will see later in this section, and it uses the total probability theorem where we compute the integral over all states from the previous time step. In case when the state is represented by a random set, the set integral is used.
+
+In addition to the set integral, we are often interested in basic operations on sets, like union or intersection. For instance, if we have two random finite sets with two different distributions, what is the distribution of their union? To answer this question and to build the intuition, we shall return to a simpler case, discrete-valued random variables.
+
+If we have two integer-valued random variables $X, Y$ with pmfs $p_X(x)$ and $p_Y(y)$, respectively, and their sum $Z = X + Y$, the probability that a realization of $Z$ is equal to the exact value $z$ is described using the so-called convolution formula:
+
+\begin{equation}
+    \Pr{Z = z} = \sum_{v = -\infty}^{+\infty} p_X(v) p_Y(z - v).
+\end{equation}
+
+The main idea behind the convolution is simple: we have an infinite number of possibilities how we can sum up two values and get the result equal to $z$. If we take a value $v$, then the second value is $z-v$, for all $v$. And the result is obtained by summing the probabilities of this pair of numbers.
+
+The convolution over sets has the same idea, where we sum over all possible pairs of values that add up to a particular value. If $\Xi$ and $\Gamma$ are two random finite sets with multi-object probability density functions $p_\Xi(X)$ and $p_\Xi(Y)$, and $\Sigma = \Xi \cup \Gamma$, the probability that a realization of $\Sigma$ equals to the exact set $X$ is:
+
+\begin{equation}
+    p_\Sigma(Y) = \sum_{X \subseteq Y} p_\Xi(X) p_\Gamma(Y \setminus X),
+\end{equation}
+
+Simply speaking, we take some values (or none at all) from $X$ and create a set $Y$ containing these values, and the rest are assigned to the other set, $Y \setminus X$. Then, the probability of this assignment is evaluated and we take the sum of probabilities of all such assignments. Having understood the main concept, we are ready to define the set convolution for general cases.
+
+\begin{definition}[Set convolution]\label{def:rfs-convolution}
+    Let $\Xi$ be a random finite set and $\Xi_1 \cup \ldots \cup \Xi_n = \Xi$ be statistically independent subsets with multi-target probability density functions $p_{\Xi_1}(X), \ldots, p_{\Xi_n}(X)$, respectively. The multi-target pdf for $\Xi$ is then defined as:
+
+    \begin{equation}
+        p_\Xi(Y) = \sum_{X_1 \uplus \ldots \uplus X_n = Y} \prod_{i=1}^{n} p_{\Xi_i}(X_i),
+    \end{equation}
+    
+    where the expression $X_1 \uplus \ldots \uplus X_n = Y$ represents the union of mutually disjoint (and possibly empty) subsets of $Y$ such that $X_1 \cup \ldots \cup X_n = Y$ \cite[385--386]{mahlerStatisticalMultisourcemultitargetInformation2007}.
+\end{definition}
+
+The convolution formula is a fundamental concept in FISST and multi-target tracking. In many filters, like, for instance, the Poisson Multi-Bernoulli Mixture filter \cite{garcia-fernandezPoissonMultiBernoulliMixture2018}, we model existing targets as a Bernoulli RFS, and the clutter as the Poisson RFS. Measurements at every time step contain a random permutation of true measurements and clutter, and in order to calculate the posterior density we model them as a union of two RFSs. The PHD filter, the filter covered in detail later in this work, also uses unions of several RFSs.
+
+Last but not least, we should define the expected value of a RFS pdf and the cardinality distribution. The expected value is defined in almost the same way like for vector- or scalar-valued pdfs, however, there is one important difference, as the sum of RFSs is not defined, the average is not defined too, and we cannot calculate the expected value directly. However, if we define a function that maps a RFS into a space where the addition is defined, we can compute the expected value using this formula:
+
+\begin{definition}[Expected value of a multi-target pdf]
+    Let $\Xi$ be a RFS and $p_\Xi(X)$ be its multi-target pdf. Let $f: \mathcal{F}(D) \rightarrow \mathbb{R}$ be some function that maps a RFS into a real number\footnote{$\mathcal{F}(D)$ is a special function that creates a so-called power set, or all possible subsets of the set $D$.}. Then, the expected value is defined as follows:
+
+    \begin{equation}
+        E[f(\Xi)] = \int f(X)p_\Xi(X) \delta X
+        = \sum_{n=0}^\infty \frac{1}{n !}
+        \int f(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^n.
+    \end{equation}
+\end{definition}
+
+The expected value of a multi-target pdf is used when calculating the Chapman-Kolmogorov equation for RFSs describe in Section \ref{sec:bayes-inference-rfs}.
+
+The cardinality distribution of a random finite set is a discrete distribution that has the probability mass function describing the probability of the set having the exact number of elements. 
+
+\begin{definition}[Cardinality distribution of a RFS]
+    Let $\Xi$ be a RFS and $p_\Xi(X)$ be its multi-target pdf and let the Kronecker delta function be denoted $\delta_y$ defined by:
+
+    \begin{equation}
+        \delta_y = \begin{cases}
+            1, & \textup{if } y = 0, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+    
+    Then, the cardinality pmf is defined as:
+
+    \begin{align}
+        \Pr{|\Xi| = k}
+        &= E[\delta_{k - |\Xi|}] \\
+        &= \sum_{n=0}^\infty \frac{1}{n !}
+        \int \delta_{k - n}
+        p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^n\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^n \\
+        &= \frac{1}{k !}
+        \int p_\Xi(\{\mathbf{x}^1, \ldots, \mathbf{x}^k\}
+        \mathrm{d}\mathbf{x}^1 \ldots \mathrm{d}\mathbf{x}^k.
+    \end{align}
+\end{definition}
+
+Before we proceed to the use of random finite sets in Bayesian inference and multi-target tracking, we should describe several known RFSs and their pdfs. In the next sections, we will describe set distributions that are already known to us: the Bernoulli RFS and the Poisson RFS. The latter has a direct relation to the important mathematical concept used in target-tracking, the point processes.
+
+\subsubsection{Bernoulli and Poisson RFS}
+
+The Bernoulli random finite sets is one of the simplest and straightforward RFS pdfs. Recall that the Bernoulli distribution is a discrete distribution that models the probability of the positive outcome. In multi-target tracking, Bernoulli RFSs are used to model the existence of one object. That is, the cardinality distribution takes values either one or zero (either an object exists or not) with some probability $r$. The state distribution of the object can be arbitrary. Formally, the Bernoulli RFS is defined as follows:
+
+\begin{definition}[Bernoulli RFS]
+    Let $\mathbf{x}$ be a random variable with the pdf $p(\mathbf{x})$, and let $0 \leq r \leq 1$ be some number. Then, the Bernoulli RFS $\Xi$ has the following pdf:
+
+    \begin{equation}
+        p_\Xi(X) =
+        \begin{cases}
+            1 - r, & \textup{if } X = \emptyset, \\
+            r p(\mathbf{x}), & \textup{if } X = \{\mathbf{x}\}, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+
+    The cardinality of the Bernoulli RFS has the Bernoulli distribution, that is:
+
+    \begin{equation}
+        \Pr{|\Xi| = k} = \begin{cases}
+            1 - r, & \textup{if } k = 0, \\
+            r, & \textup{if } k = 1, \\
+            0, & \textup{otherwise}.
+        \end{cases}
+    \end{equation}
+\end{definition}
+
+The Poisson RFS is also a widely used multi-target pdf. It is commonly used to model clutter, since it has a parameter $\lambda$ that represents the intensity, or the expected number of noise measurements.
+
+\begin{definition}[Poisson RFS]
+    Let $\mathbf{x}$ be a random variable with the pdf $p(\mathbf{x})$, and let $\lambda(x)$ be the intensity function\footnote{Note that the intensity function can be an arbitrary function depending on the domain of the Poisson RFS.}. Then, the multi-target pdf of the Poisson RFS $\Xi$ is:
+
+    \begin{equation}\label{eq:poisson-rfs-pdf}
+        p_\Xi(X) = \exp\left(-\int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}\right)
+        \prod_{\mathbf{x} \in \Xi} \lambda(\mathbf{x}).
+    \end{equation}
+
+    The cardinality pmf of the Poisson RFS is Poisson-distributed with the rate parameter $\hat{\lambda} = \int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}$ is the following:
+
+    \begin{equation}
+        \Pr{|\Xi| = k} = \operatorname{Poisson}(k; \hat{\lambda}).
+    \end{equation}
+\end{definition}
+
+Intuitively, the Poisson RFS pdf represents the probability of observing any finite set of objects anywhere in the area, given that objects appear over it independently. In contrast to the Bernoulli distribution, the Poisson RFS cannot be used to model the target existence, since there is no way to limit the cardinality. However, when the location of the points is random through the whole surveillance area, and the number of these points is Poisson-distributed, the Poisson RFS is a good choice.
+
+Both the Bernoulli RFS and the Poisson RFS are examples of so-called point processes, also called the Bernoulli process and the Poisson Point Process (PPP), respectively. Generally, a point process is a mathematical model that describes the random spatial distribution of points. In target tracking, point processes model various events, such as object appearance, disappearance, or movement. In particular, the PDF filter uses the PPP to model clutter, where clutter measurements are independent and appear uniformly over the whole surveillance area. For more information about point processes, the reader is referred to the classical textbook on the topic \cite{streitPoissonPointProcesses2010}.
+
+\subsubsection{Bayes filter in terms of RFSs}\label{sec:bayes-inference-rfs}
+
+In Section \ref{sec:bayes-filter}, we have discussed the prediction step, also known as the Chapman-Kolmogorov equation, and the update step in term of state vectors and motion and measurement models. In this section, we will derive similar formulas for Bayesian inference in the context of random finite sets.
+
+Since RFS pdfs are indeed densities, as we discussed in Section \ref{sec:rfs-definition}, the recursive relations for RFS have the same form, however, densities are multi-target densities that catch the motion of all objects at once, and arguments are sets.
+
+\begin{theorem}[The prediction step for RFS]{theorem:bayes-filter-predict-rfs}
+    Given sets of measurements $Z_{1:k-1} = \{Z_1,\allowbreak Z_2, \ldots, Z_{k-1}\}$, the current state RFS $X_{k-1}$, the multi-target transition density $f_{k|k-1}(X_k | X_{k-1})$, and the multi-target posterior density from the previous time step $p_{k-1}\left({X}_{k-1} | {Z}_{1:k-1}\right)$, the prediction step of the Bayes filter for RFSs is computed as follows:
+
+    \begin{equation}
+        p_{k|k-1}\left({X}_k | {Z}_{1:k-1}\right)
+        = \int
+            f_{k|k-1}\left( {X}_k | {X}_{k-1} \right)
+            p_{k-1}\left( {X}_{k-1} | {Z}_{1: k-1} \right)
+            \delta {X}_{k-1}.
+    \end{equation}
+\end{theorem}
+
+\begin{theorem}[The update step for RFS]\label{theorem:bayes-filter-update-rfs}
+    Given the predicted density $p_{k|k-1}\left({X}_k | {Z}_{1:k-1}\right)$, the observed set of measurements $Z_k$ and the multi-target likelihood $g_k(Z_k | X_k)$, the update step of the Bayes filter for RFS is computed as follows:
+    
+    \begin{align}
+        p_{k}\left({X}_k | {Z}_{1: k}\right)
+        &= \frac{
+            g_k\left({Z}_k | {X}_k\right) p_{k|k-1}\left({X}_k | {Z}_{1: k-1}\right)
+        }{
+            \int g_k\left({Z}_k | X\right) p_{k|k-1}\left(X | {Z}_{1: k-1}\right) \delta X
+        } \\
+        &\propto g_k\left({Z}_k | {X}_k\right) p_{k|k-1}\left({X}_k | {Z}_{1: k-1}\right).
+    \end{align}
+\end{theorem}
+
+Note that the multi-target transition density is not the same motion model that we used before. The same applies for the multi-target likelihood that plays the role of the measurement model but is a completely different relation. The transition density captures the motion of all objects in a set all at once, including the birth (appearance) of new objects, and the death (disappearance). The likelihood, on the other hand, models the transition from a set of object states to probable measurements. Arguments of both are now sets, and explicit forms can be derived from motion and measurement models using FISST. These derivations along with formal proofs of the Bayesian recursion defined above can be found in \cite{mahlerMultitargetBayesFiltering2003}.
+
+Even though the relations look similarly on the first glance, the underlying mathematics differs drastically. In comparison to the single-object tracking, states now represent the distribution of all objects simultaneously. Moreover, the multi-target transition density now captures much more information: not only it describes the transition of objects that are already in the current state set, but also the behavior of the change of the cardinality of the set. In the next section, we will explore how these relations can be applied to address the multi-target tracking problem. We will also examine the assumptions that must be made in order to develop Bayes filters based on FISST.
+
+\subsubsection{Multi-target tracking problem definition}
+
+We have now reached the final fundamental theoretical section where we will give a formal definition to the multi-target tracking problem. We have already mentioned that the multi-target transition density includes more than a standard motion model; more specifically, it describes not only the dynamics of all underlying objects in the current state set but also the birth and death of objects. In this section, we will cover in detail how new objects are born, the survival probability, and how we can model clutter. These concepts are fundamental for building the PHD filter.
+
+Let $\mathcal{X}$ be the state space and $\mathcal{Z}$ be the measurement space. Elements of $\mathcal{X}$ are state vectors of one object, and $\mathcal{Z}$ contains elements that are measurement vectors. For instance, for the CV model covered in Section \ref{sec:cv-model}, the state space is $\mathbb{R}^4$, and the measurement space is $\mathbb{R}^2$. Assume that at time $k$, the number of targets is $M(k)$. This number varies at every time step since new targets may appear or disappear. The \textit{multi-target state set} at time $k$ is therefore $X_k = \{\svecat{x}{k}{1}, \ldots, \svecat{x}{k}{M(k)}\} \in \mathcal{F}(\mathcal{X})$. Also, at every time step, we get a measurement set. Let us denote the number of measurements at time $k$ as $N(k)$. Thus, the \textit{multi-target observation set} at time $k$ is $Z_k = \{\svecat{z}{k}{1}, \ldots, \svecat{z}{k}{M(k)}\} \in \mathcal{F}(\mathcal{Z})$. The order of elements in both sets is not significant. The measurement set contains not only those measurements that come from real objects but also clutter, and those noise vectors are indistinguishable from those coming from targets. The goal of the multi-target tracker is to filter out the clutter and to find the best mapping between the objects and measurements.
+
+Existing targets either move according to their underlying dynamics model to the next state or die (disappear). The transition from the state $\vecat{x}{k-1} \in X_{k-1}$ to $\vecat{x}{k} \in X_{k}$ happens according to the specified motion model of the target, $f_{k|k-1}(\vecat{x}{k} | \vecat{x}{k-1})$. The death of one target happens with the probability $1 - P_{S,k}(\vecat{x}{k-1})$, and the target survives with the probability $P_{S,k}(\vecat{x}{k-1})$. This probability is referred to as the \textit{survival probability}. In terms of RFSs, the survival of a target with the state $\vecat{x}{k-1}$ is modeled using the survival function on an RFS $S_{k|k-1}$:
+
+\begin{equation}
+    S_{k|k-1}(\vecat{x}{k-1}) = \begin{cases}
+        \{\vecat{x}{k}\}, & \text{if the target survives}, \\
+        \emptyset, & \text{otherwise}.
+    \end{cases}
+\end{equation}
+
+At every time step, new targets may appear (be born). The birth process is considered spontaneous, and the exact distribution of newborn targets is domain-dependent. In general, the target birth distribution includes the location where new targets appear and their intensity. For instance, the birth process may be modeled by the Poisson Point Process, as in \cite{garcia-fernandezPoissonMultiBernoulliMixture2018}, or the Gaussian mixture for Gaussian-linear cases, as we will later see. In terms of FISST, the birth of new targets is a random set $B_{k|k-1}(\cdot)$ that contains newly born targets when the transition from the multi-target state $X_{k-1}$ to the state $X_{k}$ occurs.
+
+Given that we have the relations for both the transition from the current multi-target state and the birth set, and assuming that the multi-target state at the previous time step $k-1$ is $X_{k-1}$, we can derive the following expression for the multi-target state $X_k$, assuming that the survival and birth processes are independent of each other\footnote{
+Note that, in addition to the survival set and the birth process, \cite{voGaussianMixtureProbability2006} assumes the existence of the spawning process $\bigcup_{\zeta \in X_{k-1}} B_{k|k-1}(\zeta)$, i.e., that the existing targets may randomly spawn new targets in the same location. While this is important in the defense area, such as when a fighter takes off from an aircraft carrier, we do not include this process in this work. Fundamentally, the underlying mathematics does not change.}:
+
+If we apply the convolution formula from Definition \ref{def:rfs-convolution}, and introduce the simplified notation $S_{k|k-1}^i = S_{k|k-1}(\svecat{x}{k-1}{i})$, the complete multi-target motion model $f_{k|k-1}(X_k | X_{k-1})$ has the following form:
+
+\begin{equation}
+    f_{k|k-1}(X_k | X_{k-1}) = 
+    \sum_{
+        \Gamma_k \uplus S_{k|k-1}^1 \ldots \uplus S_{k|k-1}^{M(k-1)} = X_{k-1}
+    }
+    \gamma_k(\Gamma_k)
+    \prod_{i=1}^{M(k-1)}
+    s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i}),
+\end{equation}
+
+\noindent where $\gamma_k(\cdot)$ is the intensity function of the birth process, which can be a Poisson RFS pdf defined in Equation \ref{eq:poisson-rfs-pdf}, and $s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i})$ is the multi-target transition density defined as:
+
+\begin{equation}
+    s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i}) = \begin{cases}
+        P_{S,k}(\svecat{x}{k-1}{i})
+            f_{k|k-1}(\vecat{x}{k} | \svecat{x}{k-1}{i}) & \text{if } S_{k|k-1}^i = \{\vecat{x}{k}\}, \\
+            1 - P_{S,k}(\svecat{x}{k-1}{i}), & \text{if } S_{k|k-1}^i = \emptyset.
+    \end{cases}
+\end{equation}
+
+The multi-target measurement model, or the multi-target likelihood, also consists of several parts. At time $k$, a target may generate a new measurement with probability $P_{D,k}(\vecat{x}{k})$, and there will be a misdetection with probability $1 - P_{D,k}(\vecat{x}{k})$. A measurement is generated according to the measurement model, $g_{k}(\vecat{z}{k} | x_{k})$. Thus, the measurement RFS at time $k$ is:
+
+\begin{equation}
+    \Theta_k(\vecat{x}{k}) = \begin{cases}
+        \{\vecat{z}{k}\}, & \text{if target is detected}, \\
+        \emptyset, & \text{otherwise}.
+    \end{cases}
+\end{equation}
+
+Additionally, at every time step, false measurements are generated by a sensor. The RFS with clutter is denoted as $K_k$. Both $\Theta_k(\vecat{x}{k})$ and $K_k$ create the multi-target measurement set $Z_k$:
+
+\begin{equation}
+    Z_k = K_k \cup \left[ \bigcup_{\vecat{x}{k} \in X_k} \Theta_k(\vecat{x}{k}) \right].
+\end{equation}
+
+As we did for the multi-target transition density, we denote $\Theta_k^i = \Theta_k(\svecat{x}{k}{i})$ and apply the set convolution formula to get the multi-target measurement likelihood:
+
+\begin{equation}
+    p_k(Z_k | X_k) = \sum_{
+        K_k \uplus \Theta_{k}^1 \ldots \uplus \Theta_{k}^{M(k)} = X_{k}
+    }
+    \kappa_k(K_k)
+    \prod_{i=1}^{M(k)}
+    \theta_{k}(\Theta_{k}^i | \svecat{x}{k}{i}),
+\end{equation}
+
+\noindent where $\kappa_k(K_k)$ is the clutter intensity function, which is often modeled as a Poisson RFS, and $\theta_{k}(\Theta_{k}^i | \svecat{x}{k}{i})$ is the multi-target measurement density defined as:
+
+\begin{equation}
+    \theta_k(\Theta_{k}^i | \svecat{x}{k}{i}) = \begin{cases}
+        P_{D,k}(\svecat{x}{k}{i})
+            g_k(\vecat{z}{k} | \svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \{\vecat{z}{k}\}, \\
+            1 - P_{D,k}(\svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \emptyset.
+    \end{cases}
+\end{equation}
+
+In general, multi-target trackers are built on top of several general assumptions about the problem. These assumptions form the Standard Model of Multi-target tracking \cite[311--313]{mahlerStatisticalMultisourcemultitargetInformation2007}. We will enumerate these assumptions, which summarize this section, in the following list:
+
+\begin{enumerate}
+    \item The clutter process is Poisson-distributed in time and uniformly distributed in space.
+    \item The clutter process, target motions, and observations are statistically independent.
+    \item The transition density and the measurement likelihood are Markovian, that is once $\vecat{x}{k-1}$ is known, then $\vecat{x}{k}$ is independent of $\vecat{x}{k-2}$, $\vecat{x}{k-3}$, etc.
+    \item Existing targets survive from time $k-1$ to $k$ with the probability $P_{S,k}(\cdot)$ and move to the next state with the motion model $f_k(\vecat{x}{k} | \vecat{x}{k-1})$.
+    \item A target generates a measurement with probability $P_{D,k}(\cdot)$ with the measurement model $g(\vecat{z}{k} | \vecat{x}{k})$.
+    \item A target generates no more than one measurement at a time.
+    \item The birth process is Poisson-distributed in time.
+\end{enumerate}
+
+The PHD filter also relies on these main assumptions. In the following sections, we present the PHD filter, which is based on the propagation of the first-order multi-target moment, or the PHD function, in time instead of the full posterior distribution. Next, we will derive relations for the Gaussian-linear case to get equations of the GM-PHD filter. Finally, we present the way how we can input additional information into the filter to get better tracking results.

@@ -160,6 +160,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newcommand{\varat}[2]{\relax\ifmmode{#1}_{#2}\else ${#1}_{#2}$\fi}
 \newcommand{\vecat}[2]{\relax\ifmmode\mathbf{#1}_{#2}\else $\mathbf{#1}_{#2}$\fi}
+\newcommand{\svecat}[3]{\relax\ifmmode\vecat{#1}{#2}^{#3}\else $\vecat{#1}{#2}^{#3}$\fi}
 
 \graphicspath{figures}
 \mainmatter\mainmatterinit % do not remove these two commands
