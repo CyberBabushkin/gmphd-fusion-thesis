@@ -59,6 +59,20 @@
   keywords = {Kalman Filter,Measurement Noise,Process Noise}
 }
 
+@book{challaFundamentalsObjectTracking2011,
+  title = {Fundamentals of {{Object Tracking}}},
+  author = {Challa, Subhash and Morelande, Mark R. and Mušicki, Darko and Evans, Robin J.},
+  date = {2011-07-28},
+  edition = {1},
+  publisher = {{Cambridge University Press}},
+  doi = {10.1017/CBO9780511975837},
+  url = {https://www.cambridge.org/core/product/identifier/9780511975837/type/book},
+  urldate = {2023-04-18},
+  abstract = {Kalman filter, particle filter, IMM, PDA, ITS, random sets... The number of useful object-tracking methods is exploding. But how are they related? How do they help track everything from aircraft, missiles and extra-terrestrial objects to people and lymphocyte cells? How can they be adapted to novel applications? Fundamentals of Object Tracking tells you how. Starting with the generic object-tracking problem, it outlines the generic Bayesian solution. It then shows systematically how to formulate the major tracking problems – maneuvering, multiobject, clutter, out-of-sequence sensors – within this Bayesian framework and how to derive the standard tracking solutions. This structured approach makes very complex object-tracking algorithms accessible to the growing number of users working on real-world tracking problems and supports them in designing their own tracking filters under their unique application constraints. The book concludes with a chapter on issues critical to successful implementation of tracking algorithms, such as track initialization and merging.},
+  isbn = {978-0-521-87628-5 978-0-511-97583-7},
+  file = {/Users/mannannlegur/Zotero/storage/GWU4ICRC/Challa et al. - 2011 - Fundamentals of Object Tracking.pdf}
+}
+
 @incollection{chenChapter15Multitarget2014,
   title = {Chapter 15 - {{Multitarget Multisensor Tracking}}},
   booktitle = {Academic {{Press Library}} in {{Signal Processing}}},
@@ -156,9 +170,9 @@
   title = {Multisensor {{Poisson Multi-Bernoulli Filter}} for {{Joint Target-Sensor State Tracking}}},
   author = {Fröhle, Markus and Lindberg, Christopher and Granström, Karl and Wymeersch, Henk},
   date = {2019-01-14},
-  number = {arXiv:1712.08146},
-  eprint = {arXiv:1712.08146},
+  eprint = {1712.08146},
   eprinttype = {arxiv},
+  eprintclass = {cs, eess},
   url = {http://arxiv.org/abs/1712.08146},
   urldate = {2023-01-29},
   abstract = {In a typical multitarget tracking (MTT) scenario, the sensor state is either assumed known, or tracking is performed in the sensor's (relative) coordinate frame. This assumption does not hold when the sensor, e.g., an automotive radar, is mounted on a vehicle, and the target state should be represented in a global (absolute) coordinate frame. Then it is important to consider the uncertain location of the vehicle on which the sensor is mounted for MTT. In this paper, we present a multisensor low complexity Poisson multi-Bernoulli MTT filter, which jointly tracks the uncertain vehicle state and target states. Measurements collected by different sensors mounted on multiple vehicles with varying location uncertainty are incorporated sequentially based on the arrival of new sensor measurements. In doing so, targets observed from a sensor mounted on a well-localized vehicle reduce the state uncertainty of other poorly localized vehicles, provided that a common non-empty subset of targets is observed. A low complexity filter is obtained by approximations of the joint sensor-feature state density minimizing the Kullback-Leibler divergence (KLD). Results from synthetic as well as experimental measurement data, collected in a vehicle driving scenario, demonstrate the performance benefits of joint vehicle-target state tracking.},
@@ -181,19 +195,6 @@
   eventtitle = {{{IEEE Transactions}} on {{Signal Processing}}},
   keywords = {Approximation methods,Bayes methods,CPHD filter,Current measurement,Dedecius,Kullback-Leibler divergence,Mathematical model,Minimization,multiple target tracking,PHD filter,Radar tracking,Random finite sets,Target tracking},
   file = {/Users/mannannlegur/Zotero/storage/XUEI5596/García-Fernández and Vo - 2015 - Derivation of the PHD and CPHD Filters Based on Di.pdf}
-}
-
-@article{garcia-fernandezDerivationPHDCPHD2015a,
-  title = {Derivation of the {{PHD}} and {{CPHD Filters Based}} on {{Direct Kullback}}–{{Leibler Divergence Minimization}}},
-  author = {García-Fernández, Ángel and Vo, Ba-Ngu},
-  date = {2015-11-01},
-  journaltitle = {Signal Processing, IEEE Transactions on},
-  shortjournal = {Signal Processing, IEEE Transactions on},
-  volume = {63},
-  pages = {5812--5820},
-  doi = {10.1109/TSP.2015.2468677},
-  abstract = {In this paper, we provide novel derivations of the probability hypothesis density (PHD) and cardinalised PHD (CPHD) filters without using probability generating functionals or functional derivatives. We show that both the PHD and CPHD filters fit in the context of assumed density filtering and implicitly perform Kullback–Leibler divergence (KLD) minimizations after the prediction and update steps. We perform the KLD minimizations directly on the multitarget prediction and posterior densities.},
-  file = {/Users/mannannlegur/Zotero/storage/MWGBJGEY/García-Fernández and Vo - 2015 - Derivation of the PHD and CPHD Filters Based on Di.pdf}
 }
 
 @article{garcia-fernandezPoissonMultiBernoulliMixture2018,
@@ -241,9 +242,9 @@
   title = {A Possibilistic Framework for Multi-Target Multi-Sensor Fusion},
   author = {Houssineau, Jeremie and Cai, Han and Uney, Murat and Delande, Emmanuel},
   date = {2022-09-25},
-  number = {arXiv:2209.12245},
-  eprint = {arXiv:2209.12245},
+  eprint = {2209.12245},
   eprinttype = {arxiv},
+  eprintclass = {eess},
   url = {http://arxiv.org/abs/2209.12245},
   urldate = {2023-02-17},
   abstract = {Fusing and sharing information from multiple sensors over a network is a challenging task, especially in the context of multi-target tracking. Part of this challenge arises from the absence of a foundational rule for fusing probability distributions, with various approaches stemming from different principles. Yet, when expressing multi-target tracking algorithms within the framework of possibility theory, one specific fusion rule appears to be particularly natural and useful. In this article, this fusion rule is applied to both centralised and decentralised fusion, based on the possibilistic analogue of the probability hypothesis density filter. We then show that the proposed approach outperforms its probabilistic counterpart on simulated data.},
@@ -323,7 +324,7 @@
   doi = {10.1109/TAES.2003.1261119},
   abstract = {The theoretically optimal approach to multisensor-multitarget detection, tracking, and identification is a suitable generalization of the recursive Bayes nonlinear filter. Even in single-target problems, this optimal filter is so computationally challenging that it must usually be approximated. Consequently, multitarget Bayes filtering will never be of practical interest without the development of drastic but principled approximation strategies. In single-target problems, the computationally fastest approximate filtering approach is the constant-gain Kalman filter. This filter propagates a first-order statistical moment - the posterior expectation - in the place of the posterior distribution. The purpose of this paper is to propose an analogous strategy for multitarget systems: propagation of a first-order statistical moment of the multitarget posterior. This moment, the probability hypothesis density (PHD), is the function whose integral in any region of state space is the expected number of targets in that region. We derive recursive Bayes filter equations for the PHD that account for multiple sensors, nonconstant probability of detection, Poisson false alarms, and appearance, spawning, and disappearance of targets. We also show that the PHD is a best-fit approximation of the multitarget posterior in an information-theoretic sense.},
   eventtitle = {{{IEEE Transactions}} on {{Aerospace}} and {{Electronic Systems}}},
-  keywords = {Contracts,Density measurement,Filtering,Nonlinear filters,Probability,Random number generation,Sensor systems,State-space methods,Terrorism,Virtual colonoscopy},
+  keywords = {Contracts,Density measurement,Filtering,Nonlinear filters,Probability,Random number generation,reading-list,Sensor systems,State-space methods,Terrorism,Virtual colonoscopy},
   file = {/Users/mannannlegur/Zotero/storage/9INZRX6S/Mahler - 2003 - Multitarget Bayes filtering via first-order multit.pdf}
 }
 
@@ -482,7 +483,7 @@
   publisher = {{Springer}},
   location = {{New York}},
   url = {https://link.springer.com/book/10.1007/978-1-4419-6923-1},
-  isbn = {978-1-4419-6922-4 978-1-4419-6923-1},
+  isbn = {978-1-4419-6922-4},
   langid = {english},
   pagetotal = {273},
   keywords = {Poisson processes},
@@ -594,7 +595,8 @@
   urldate = {2023-04-17},
   bookauthor = {Webster, John G.},
   isbn = {978-0-471-34608-1},
-  langid = {english}
+  langid = {english},
+  file = {/Users/mannannlegur/Zotero/storage/LQT3RG5E/Vo et al. - 2015 - Multitarget Tracking.pdf}
 }
 
 @inproceedings{wanUnscentedKalmanFilter2000,
