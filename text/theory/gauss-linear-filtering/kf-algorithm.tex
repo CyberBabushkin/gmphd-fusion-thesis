@@ -51,7 +51,7 @@ We have derived several important formulas and relations, which are essential to
     We started with the application of the Chapman-Kolmogorov equation from \ref{theorem:chapman-kolmogorov} and the substitution of its terms with the suitable distributions. Next, in the equation \ref{eq:kf-predict-result}, we used the result of Theorem \ref{theorem:gaussian-identity}, and finally we applied Corollary \ref{theorem:gid-integral} to get \ref{eq:kf-predict-result}.
 \end{proof}
 
-\begin{theorem}[The Kalman filter update]
+\begin{theorem}[The Kalman filter update]\label{theorem:kalman-update}
     Assume that the predicted density from \ref{theorem:kalman-predict} is $p\left(\vecat{x}{k} | \vecat{z}{1:k-1}\right)=\allowbreak \mathscr{N}\left(\vecat{x}{k}; \mathbf{F} \vecat{\hat{x}}{k|k-1}, \mathbf{F} \vecat{P}{k|k-1} \mathbf{F}^\intercal + \mathbf{Q}\right)$, $p(\vecat{z}{k} | \vecat{x}{k})$ is the measurement model given in \ref{eq:measurement-model},
     and $\vecat{z}{k}$ is the measurement at time $k$. Then the posterior density after the update step is given by the following relation:
 
@@ -113,7 +113,7 @@ We have derived several important formulas and relations, which are essential to
 
 Before we conclude this section with the full algorithm of the Kalman filter, it should be noted that straightforward computation of the covariance matrix after the update step is sensitive to round-off numerical errors, and this can be avoided using a different form of the same expression for $\vecat{P}{k|k}$ \cite{bar-shalomEstimationApplicationsTracking2001}:
 
-\begin{equation}
+\begin{equation}\label{eq:kf-joseph-form}
     \vecat{P}{k|k} =
     (\mathbf{I} - \vecat{K}{k}\mathbf{H})\vecat{P}{k|k-1}
     (\mathbf{I} - \vecat{K}{k}\mathbf{H})^\intercal

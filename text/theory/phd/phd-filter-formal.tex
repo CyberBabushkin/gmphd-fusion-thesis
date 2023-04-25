@@ -18,12 +18,12 @@ The last assumption is a simplification that allows to derive a closed form solu
 
 Both the prediction and the update follow the same rules we have derived in Section \ref{sec:bayes-filter-rfs}. It can be shown that the Chapman-Kolmogorov equation and the measurement correction step for the PHD filter, excluding target spawning, has the following form:
 
-\begin{theorem}[The PHD recursion]
+\begin{theorem}[The PHD recursion]\label{theorem:phd-recursion}
     Assuming that all requirements defined above hold, the PHD recursion has the following form:
 
     \begin{align}
         v_{k|k-1}(\vecat{x}{k} | Z_{1:k-1})
-        &= \gamma_k(\vecat{x}{k-1}) + \int P_{S,k}(\vecat{x}{k-1}) f_{k|k-1}(\vecat{x}{k} | \vecat{x}{k-1}) v_{k-1}(\vecat{x}{k-1} | Z_{1:k-1}) \mathrm{d} \vecat{x}{k-1}, \\
+        &= \gamma_k(\vecat{x}{k}) + \int P_{S,k}(\vecat{x}{k-1}) f_{k|k-1}(\vecat{x}{k} | \vecat{x}{k-1}) v_{k-1}(\vecat{x}{k-1} | Z_{1:k-1}) \mathrm{d} \vecat{x}{k-1}, \\
         v_k(\vecat{x}{k} | Z_{1:k})
         &= \left[1-P_{D,k}(\vecat{x}{k})\right] v_{k|k-1}(\vecat{x}{k} | Z_{1:k-1}) \\
         &+ \sum_{\vecat{z}{k} \in Z_k} \frac{
