@@ -4,13 +4,13 @@ two realizations, $0$ or $1$. This distribution is parameterized with
 $r$, the probability of the positive outcome. Its probability mass 
 function is given by
 
-$$
+\begin{equation}
 p(x) = \begin{cases}
  1 - r, & \text{if } x = 0, \\
      r, & \text{if } x = 1, \\
      0, & \text{otherwise}.
 \end{cases}
-$$
+\end{equation}
 
 \begin{figure}
 \centering
@@ -34,9 +34,9 @@ The pmf and the cdf of the Bernoulli distribution can be seen on Figure \ref{fig
 We denote this distribution as $p(x) = \operatorname{Bernoulli}(x;r)$.
 The expected value and the covariance of a Bernoulli random variable $X$ are
 
-$$
+\begin{equation}
 E[X] = r, \qquad \operatorname{Var}[X] = r(1-r).
-$$
+\end{equation}
 
 In object tracking, we use Bernoulli random variables to model the existence of
 an object at some time step $k$, which we will discuss in detail in the following

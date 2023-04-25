@@ -17,35 +17,36 @@ We have defined three main axioms of probability theory. In addition to these ax
 crucial concepts illustrate the relationship between events. Given two events, $E_1$ and $E_2$,
 the \textit{conditional probability} of $E_1$ given $E_2$ is defined as
 
-$$
+\begin{equation}
 \Pr{E_1 \mid E_2} = \frac{\Pr{E_1 \cap E_2}}{\Pr{E_2}}.
-$$
+\end{equation}
 
 If the events are \textit{independent} of each other, the probability of them occurring
 simultaneously is given by
 
-$$
-\Pr{E_1 \cap E_2} = \Pr{E_1}\Pr{E_2}.
-$$
+\begin{equation}
+    \Pr{E_1 \cap E_2} = \Pr{E_1}\Pr{E_2}.
+\end{equation}
 
 These relationships allow us to define the \textit{law of total probability}
 \cite[31]{zwillingerCRCStandardProbability2000}, which is a key component of Bayes' rule.
 Let $A$ be an event, $A \int \Omega$, and $\{B_n : n = 1, 2, \ldots\}$ be a countable
 partition of the space $\Omega$. Then, we have:
 
-$$
-\Pr{A} = \sum_n \Pr{A \mid B_n} \Pr{B_n}.
-$$
+\begin{equation}
+    \Pr{A} = \sum_n \Pr{A \mid B_n} \Pr{B_n}.
+\end{equation}
 
 Now, we can deduce the following rule:
 
 \begin{definition}[Bayes' rule]
 Let $A$ and $B$ be two events from the outcome space $\Omega$. Then the following applies:
 
-$$
-\Pr{A \mid B} = \frac{\Pr{B \mid A}}{\Pr{B}}
-    = \frac{\Pr{B \mid A}}{\sum_n \Pr{B \mid A_n}\Pr{A_n}}.
-$$
+\begin{equation}
+    \Pr{A \mid B} = \frac{\Pr{B \mid A}}{\Pr{B}}
+    = \frac{\Pr{B \mid A}}{\sum_n \Pr{B \mid A_n}\Pr{A_n}}.    
+\end{equation}
+
 \end{definition}
 
 Bayes' rule plays a crucial role in Bayesian inference and serves as the basis for

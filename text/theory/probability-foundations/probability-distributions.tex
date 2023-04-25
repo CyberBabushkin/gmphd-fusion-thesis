@@ -34,9 +34,10 @@ function (pdf)}.\footnote{
 \begin{definition}[Probability density function (pdf)]
     The probability density function $p(x)$ of a scalar real-valued random variable $X$
     is defined as:
-    $$
-    p(x) = \frac{\partial P(x)}{\partial x}.
-    $$
+
+    \begin{equation}
+        p(x) = \frac{\partial P(x)}{\partial x}.
+    \end{equation}
 \end{definition}
 
 Probability distributions are fundamental in Bayesian statistics and provide a way
@@ -53,14 +54,12 @@ need to know several statistical properties of probability distributions to full
 understand their behavior. Two main properties of probability distributions are
 the expected value, $E[X]$, and the variance, $\operatorname{Var}[X]$:
 
-$$
-\begin{aligned}
+\begin{align}
 E[X]&=\int_{-\infty}^{\infty} x p(x) d x, \\
 \operatorname{Var}[X]
     &= E\left[(X-E[X])^2\right]
     =\int_{-\infty}^{\infty}(x-E[X])^2 p(x) d x.
-\end{aligned}
-$$
+\end{align}
 
 The expected value, or the first moment, represents the most probable value of
 a random variable. The variance, or the second central moment, is a measure of the
@@ -68,19 +67,18 @@ variability of a random variable and is often denoted as $\operatorname{Var}[X] 
 Furthermore, we often study the relationship between two random variables, say $X$ and
 $Y$, and measure their joint variability, which we call a \textit{covariance}:
 
-$$
+\begin{equation}
 \operatorname{Cov}[X, Y]
     = E\left[(X-E[X])(Y-E[Y])\right]
     =\int_{-\infty}^{\infty}(x-E[X])(y-E[Y]) p(x, y) d x d x.
-$$
+\end{equation}
 
 For vector-valued random variables, that is $X, Y \in \mathbb{R}^k$ and $\mathbf{x}$
 is the realization of $X$, the formulas are the following. It is worth noting that
 the covariance in the vector case becomes a matrix and is called a \textit{covariance
 matrix}:
 
-$$
-\begin{aligned}
+\begin{align}
 E[X]
     &=\int_{-\infty}^{\infty} \mathbf{x} p(\mathbf{x}) d \mathbf{x}, \\
 \operatorname{Var}(X)
@@ -97,8 +95,7 @@ E[X]
         \left(\mathbf{y}-E[Y]\right)^\intercal
         p(\mathbf{x}, \mathbf{y})
         d \mathbf{x} d \mathbf{y}.
-\end{aligned}
-$$
+\end{align}
 
 Probability distributions are fundamental in Bayesian statistics and
 provide a way to model and analyze the behavior of random variables. For

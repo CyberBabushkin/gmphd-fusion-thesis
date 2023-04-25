@@ -9,23 +9,22 @@ estimators but we are interested in two of them: ML and MAP.
 The \textit{Maximum Likelihood (ML)} estimator finds the value of the parameter 
 such that it maximizes the likelihood function. Formally:
 
-$$
+\begin{equation}
 \hat{x}_{\mathrm{ML}} = \arg \max_x p(z|x).
-$$
+\end{equation}
 
 The ML estimator is a point estimator that finds the parameter value that 
 makes the observed data most probable. For instance, the frequentist approach
 uses this estimator to find the parameter value. The MLE does not take the 
-prior distribution into account and is more sensitive to outliers. 
-\todo{Citation needed}
+prior distribution into account and is more sensitive to outliers \cite{bar-shalomEstimationApplicationsTracking2001} 
 
 The \textit{Maximum A Posteriori (MAP)} estimator, on the other hand, finds the 
 value of the parameter that maximizes the posterior distribution. In formal 
 notation:
 
-$$
+\begin{equation}
 \hat{x}_{\mathrm{MAP}} = \arg \max_x p(x|z) = \arg \max_x p(z|x)p(x).
-$$
+\end{equation}
 
 The MAP estimator finds the most probable value of the parameter given the 
 observed data. Comparing to the MLE, MAP uses prior information and more robust

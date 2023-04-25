@@ -4,9 +4,9 @@ Fortunately, this is straightforward after we define the conditional probability
 
 \begin{definition}[Conditional probability for pdfs]\label{def:cond-prob-pdf}
     Let $x$ and $y$ be random variables with pdfs $p(x)$ and $p(y)$, respectively, and the joint distribution $p(x,y)$. Then the conditional probability of $x$ given $y$ is defined as:
-    \begin{equation*}
+    \begin{equation}
         p(x|y) = \frac{p(x,y)}{p(y)}.
-    \end{equation*}
+    \end{equation}
 \end{definition}
 
 \begin{definition}[Bayes' rule for pdfs]
@@ -15,11 +15,11 @@ Fortunately, this is straightforward after we define the conditional probability
     for 
     $p(x | z)$ is defined as follows:
 
-    $$
+    \begin{equation}
     p(x | z)
         = \frac{p(z | x) p(x)}{p(z)}
         = \frac{p(z | x) p(x)}{\int p(z | x) p(x) dx}.
-    $$
+    \end{equation}
 \end{definition}
 
 The distribution $p(x | z)$ is the posterior distribution, $p(z | x)$ is the 
@@ -31,9 +31,9 @@ to omit this denominator in the text and write the posterior only in terms of
 prior and likelihood. Since it is not already the equality, we use the
 proportionality symbol:
 
-$$
+\begin{equation}
 p(x | z) \propto p(z | x) p(x).
-$$
+\end{equation}
 
 We can use the rule defined above to compute the posterior of some parameter
 based on all the data. However, in many real-world applications, measurements
@@ -52,14 +52,14 @@ straightforward manner.
     distribution obtained at time $k-1$ using all the measurements up to $k-1$ 
     and $p(z_k | x_k)$ be the likelihood of the new measurement $z_k$. The 
     posterior distribution $p(x_k | z_{1:k})$ at time step $k$ is:
-    \todo{The alignment of the formula is awful. Check later}
-    $$
+
+    \begin{equation}
     p(x_k | z_{1:k}) 
         = \frac
             { p(z_k | x_k) p(x_k | z_{1:k-1}) }
             { p(z_k | x_k) p(x_k | z_{1:k-1}) dx_k }
         \propto p(z_k | x_k) p(x_k | z_{1:k-1}).
-    $$
+    \end{equation}
 \end{theorem}
 
 It should be mentioned that $x_k$ and $z_k$ must not always be scalars. As we

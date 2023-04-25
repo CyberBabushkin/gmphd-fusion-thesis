@@ -53,12 +53,12 @@ We can now describe these models formally. Note that since the state is a
 vector, we will use $\mathbf{x}$ for vectors. The motion and measurement models 
 can be generally expressed as:
 
-\begin{align*}
+\begin{align}
     p(\vecat{x}{k} | \vecat{x}{k-1}) 
         &= f_t(\vecat{x}{k-1}, \vecat{u}{k}, \vecat{w}{k}), \\
     p(\vecat{z}{k} | \vecat{x}{k}) 
         &= h_t(\vecat{x}{k}, \vecat{v}{k}),
-\end{align*}
+\end{align}
 
 \noindent where $f_t$ and $h_t$ are functions, $\vecat{x}{k-1}$ is the estimated state 
 from time step $k-1$, $\vecat{u}{k}$ is called the input (or control) vector, 

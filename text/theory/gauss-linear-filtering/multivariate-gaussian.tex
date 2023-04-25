@@ -29,7 +29,7 @@ As we will later see, in object tracking, we heavily use conditional probabiliti
 \begin{theorem}[Conditioning on a Gaussian joint distribution]\label{theorem:gauss-cond}
     Let $\mathbf{x}$ and $\mathbf{y}$ be Gaussian random variables with distributions $\mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right)$ and $\mathscr{N}\left(\mathbf{y} ; \mathbf\mu_y, \mathbf\Sigma_{yy}\right)$, respectively. Let their joint probability be given by:
 
-    \begin{equation*}
+    \begin{equation}
         p(\mathbf{x}, \mathbf{y}) = \mathscr{N}\left(
             \begin{bmatrix}
                 \mathbf{x} \\
@@ -44,13 +44,13 @@ As we will later see, in object tracking, we heavily use conditional probabiliti
                 \mathbf{\Sigma}_{xy}^\intercal & \mathbf{\Sigma}_{yy}
             \end{bmatrix}
         \right).
-    \end{equation*}
-    Then the conditional distribution of $\mathbf{x}$ given $\mathbf{y}$ is defined as:
+    \end{equation}
+    \noindent Then the conditional distribution of $\mathbf{x}$ given $\mathbf{y}$ is defined as:
     \begin{equation}\label{eq:gauss-cond}
         p(\mathbf{x}|\mathbf{y}) =
         \mathscr{N}\left(\mathbf{x}; \boldsymbol\mu_{x|y}, \mathbf\Sigma_{x|y}\right),
     \end{equation}
-    where
+    \noindent where
     \begin{align}
         \boldsymbol\mu_{x|y}
         &= \boldsymbol\mu_x + \mathbf{\Sigma}_{xy} \mathbf{\Sigma}_{yy}^{-1}(\mathbf{y} - \boldsymbol\mu_y) \\
@@ -62,9 +62,9 @@ As we will later see, in object tracking, we heavily use conditional probabiliti
 \begin{theorem}[Marginalization of a Gaussian joint distribution]\label{theorem:gauss-marg}
     Consider the same $\mathbf{x}$, $\mathbf{y}$, $\mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right)$, $\mathscr{N}\left(\mathbf{y} ; \mathbf\mu_y, \mathbf\Sigma_{xx}\right)$ and $p(\mathbf{x}, \mathbf{y})$ given in Theorem \ref{theorem:gauss-cond}. The marginal distribution of $x$ is defined as:
 
-    \begin{equation*}
+    \begin{equation}
         p(\mathbf{x}) = \mathscr{N}\left(\mathbf{x} ; \mathbf\mu_x, \mathbf\Sigma_{xx}\right).
-    \end{equation*}
+    \end{equation}
 \end{theorem}
 
 The proofs for Theorem \ref{theorem:gauss-cond} and Theorem \ref{theorem:gauss-marg} can be found in classical statistical textbooks such as \cite[161--163]{johnsonAppliedMultivariateStatistical2007}.
