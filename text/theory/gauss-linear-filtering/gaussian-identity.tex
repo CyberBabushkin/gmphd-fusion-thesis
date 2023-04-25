@@ -37,14 +37,14 @@ Before we introduce the actual formulas of the Kalman filter, we should introduc
         &= \frac{1}{(2\pi)^{n} \sqrt{|U| |V|}}
         \exp \left(
         -\frac{1}{2}
-        \bigg[(x - Ay - d)^\intercal U^{-1} (x - Ay - d) \right.\\
+        \bigg[(x - Ay - d)^\intercal U^{-1} (x - Ay - d) \right. \nonumber \\
         &\left.\qquad\qquad\qquad\qquad\qquad+ (y - m)^\intercal V^{-1} (y - m) \bigg] \right).
         \label{eq:gid-proof:lhs-expanded}
     \end{align}
 
     If we introduce a small algebraic trick for matrices:
 
-    \begin{equation*}
+    \begin{equation}
         \begin{bmatrix}
             I & -A \\
             0 & I
@@ -63,7 +63,7 @@ Before we introduce the actual formulas of the Kalman filter, we should introduc
             x - Ay - d \\
             y - m
         \end{bmatrix},
-    \end{equation*}
+    \end{equation}
     
     we can manipulate the exponent to obtain another quadratic form:
 

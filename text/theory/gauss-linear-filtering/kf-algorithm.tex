@@ -99,14 +99,14 @@ We have derived several important formulas and relations, which are essential to
 
     where, according to Theorem \ref{theorem:gaussian-identity}, the values of $\vecat{\hat{x}}{k|k}$ and $\vecat{P}{k|k}$ are:
 
-    \begin{align*}
+    \begin{align}
         \vecat{\hat{x}}{k|k}
         &= \vecat{\hat{x}}{k|k-1} + \vecat{K}{k}(\vecat{z}{k} - \mathbf{H}\vecat{\hat{x}}{k|k-1}), \\
         \vecat{P}{k|k}
         &= (\mathbf{I} - \vecat{K}{k}\mathbf{H})\vecat{P}{k|k-1}, \\
         \vecat{K}{k} 
         &= \vecat{P}{k|k-1}\mathbf{H}^\intercal(\mathbf{H}\vecat{P}{k|k-1}\mathbf{H}^\intercal + \mathbf{R})^{-1}.
-    \end{align*}
+    \end{align}
 
     This proof utilizes the same Gaussian product identity theorem with its corollary utilizing in addition the application of the Bayes' rule.
 \end{proof}
