@@ -1,0 +1,68 @@
+We evaluate the algorithm's performance in four different test scenarios using multiple parameter values. To facilitate reference to these scenarios later in the report, we denote them as \textbf{(C1)}--\textbf{(C4)}. The following subsections provide a detailed description of each test case. Here, we describe the complete setup common to all scenarios.
+
+All test cases use the Gaussian-linear Constant Velocity motion and measurement models described in Section \ref{sec:cv-model}. Targets are assumed to move in 2D Euclidean space, where distance is measured in meters and time in seconds. Additionally, we assume that the sampling period is constant and set to $1 s$. The process noise $q$ is set to $5 m/s^2$ for every target and every test case. Consequently, the single-target state vector $\vecat{x}{k}$, the single-target state transition matrix $\mathbf{F}$, and the process noise matrix $\mathbf{Q}$ have the following form:
+
+\begin{equation}
+    \vecat{x}{k} =
+    \begin{bmatrix}
+        x_{k} \\ 
+        y_{k} \\ 
+        v_{x,k} \\ 
+        v_{y,k}
+    \end{bmatrix};
+    \quad
+    \mathbf{F} =
+    \begin{bmatrix}
+       1 & 0 & 1 & 0 \\
+       0 & 1 & 0 & 1 \\
+       0 & 0 & 1 & 0 \\
+       0 & 0 & 0 & 1 
+    \end{bmatrix};
+    \quad
+    \mathbf{Q} = \begin{bmatrix}
+        \frac{25}{3}    & 0             & \frac{25}{2}      & 0  \\
+        0               & \frac{25}{3}  & 0                 & \frac{25}{2} \\
+        \frac{25}{2}    & 0             & 25                & 0 \\
+        0               & \frac{25}{2}  & 0                 & 25
+    \end{bmatrix}.
+\end{equation}
+
+Moreover, we set the standard deviation of the measurement noise to a constant value for all test cases, $r = 10 m$. The measurement matrix $\mathbf{H}$ and the measurement noise matrix $\mathbf{R}$ are defined as:
+
+\begin{equation}
+    H =
+    \begin{bmatrix}
+        1 & 0 &0 & 0 \\
+        0 & 1 &0 & 0
+    \end{bmatrix};
+    \quad
+    R = \begin{bmatrix}
+        100 & 0   \\
+        0   & 100
+    \end{bmatrix}.
+\end{equation}
+
+The sensor's field of view is a 2D square with an area of $V = 4 \times 10^6 m^2$, with boundaries delimited by $[-1000, 1000] \times [-1000, 1000]$ meters. This rectangular region corresponds to the surveillance area where the sensor is deployed. The sensor is assumed to be perfect with infinite resolution.
+
+The initial detection and survival probabilities are set to $P_{D,k} = 0.98$ and $P_{S,k} = 0.99$, respectively. We will see the metrics for different values of these parameters in the next chapter.
+
+The birth process is initialized as a Gaussian mixture with two components, where each component represents the location where new targets are expected to be born and its weight denotes the likelihood of a real target being present in the area. The specific relationships for each test case differ and will be presented in the following subsections.
+
+The noise process is modeled using a Poisson random finite set, and the clutter measurements are Poisson distributed in time and uniformly distributed in space. The clutter intensity is denoted by a normalized intensity over the surveillance region, the clutter spatial intensity $\lambda_c$, and is set to a constant $\lambda_c = 12.5 \times 10^{-6} m^{-2}$. With the surveillance area equal to $V = 4 \times 10^6 m^2$, this Poisson process generates on average 50 clutter measurements at each time step. In later sections, we will evaluate the impact of changing the spatial clutter intensity, represented by the parameter $\lambda_c$, on the performance of the GM-PHD filter by testing it for different values of $\lambda_c$. This clutter process is described by the following equation:
+
+\begin{equation}
+\kappa_k(\mathbf{z}) = \lambda_c V u(\mathbf{z}),
+\end{equation}
+
+where $u(\mathbf{z})$ represents the bivariate uniform distribution over the surveillance area $[x_0, x_1] \times [y_0, y_1]$, given by:
+
+\begin{equation}
+    u(\mathbf{z}) = \begin{cases}
+        \frac{1}{(x_1 - x_0)(y_1 - y_0)}, & \mathbf{z} \in [x_0, x_1] \times [y_0, y_1], \\
+        0, & \text{otherwise}.
+    \end{cases}
+\end{equation}
+
+The truncation threshold for the pruning step of the GM-PHD filter is set to $\tau = 10^{-5}$, and the merging threshold is set to $U = 4$. The impact of changing these parameters on the filter's performance will be discussed. The maximum number of components is fixed at $J_{\mathrm{max}} = 1000$, intentionally set higher than the value proposed in \cite{voGaussianMixtureProbability2006} to evaluate different parameter settings with more precision, particularly in scenarios with a higher number of targets.
+
+In the following subsections, we will provide a detailed description of the dynamics of targets for each test case. We will then evaluate the GM-PHD filter's performance for each scenario and discuss the results.

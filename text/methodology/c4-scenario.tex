@@ -1,0 +1,56 @@
+The last test scenario is identical to the previous one, (C3), with the addition of two fused components. The example provided in Section \ref{sec:gm-phd-fusion} suggests that the additional information may be provided by another sensor or, for instance, by a soldier. The filter is then able to capture objects that remain invisible due to its physical limitations or the environmental conditions.
+
+The birth intensity is given by Equations \ref{eq:c2-birth} and \ref{eq:c2-birth-means}. Initial states of moving targets are defined by Equations \ref{eq:c2-init-states} and \ref{eq:c3-additional-states}, and tracks of moving targets are visually demonstrated in Figure \ref{fig:c3-scenario}. However, in this test case, we additionally create fusion sets at times $k=20$ and $k=60$ with one element. At every other time step, the fusion set remains empty. Recall that the fusion intensity $\psi_k$ is given by Equation \ref{eq:gm-phd-fusion-fusion-intensity}. The set $\Psi_{F,k}$ in our scenario is defined as follows:
+
+\begin{equation}
+    \Psi_{F, k} = \begin{cases}
+        \left\{ ( w_{20}^{(1)}, \svecat{m}{\psi, 20}{(1)}, \svecat{P}{\psi, 20}{(1)}, T_{\psi, 20} )\right\}, & \text{if } k = 20, \\
+        \left\{ ( w_{60}^{(2)}, \svecat{m}{\psi, 60}{(2)}, \svecat{P}{\psi, 60}{(2)}, T_{\psi, 60} )\right\}, & \text{if } k = 60, \\
+        \emptyset, & \text{otherwise},
+    \end{cases}
+\end{equation}
+
+\noindent where: 
+
+\begin{alignat}{3}
+    w_{20}^{(1)}
+    &= 0.6,
+    &\qquad
+    \svecat{m}{\psi, 20}{(1)}
+    &= \begin{bmatrix}
+        -1050 \\
+        -1050 \\
+        25 \\
+        25
+    \end{bmatrix},
+    &\qquad
+    \svecat{P}{\psi, 20}{(1)}
+    &= \begin{bmatrix}
+        100 & 0 & 0 & 0 \\
+        0 & 100 & 0 & 0 \\
+        0 & 0 & 100 & 0 \\
+        0 & 0 & 0 & 100
+    \end{bmatrix}, \\
+    w_{60}^{(2)}
+    &= 0.7,
+    &\qquad
+    \svecat{m}{\psi, 60}{(2)}
+    &= \begin{bmatrix}
+        1020 \\
+        1020 \\
+        -22 \\
+        -22
+    \end{bmatrix},
+    &\qquad
+    \svecat{P}{\psi, 60}{(3)}
+    &= \begin{bmatrix}
+        40 & 0 & 0 & 0 \\
+        0 & 40 & 0 & 0 \\
+        0 & 0 & 5 & 0 \\
+        0 & 0 & 0 & 5
+    \end{bmatrix}.
+\end{alignat}
+
+\noindent and $T_{\psi, 20}$ and $T_{\psi, 20}$ are some unique tags for new Gaussian components.
+
+We assume that there are two sensors, each measuring at two different locations. The first sensor generates estimates with larger uncertainty; therefore, the covariance matrix has higher values, and the weight, the measure of uncertainty of the sensor, is lower. The second sensor, which inputs information at time $k=60$, has better precision, and the estimate of the position of the second object and its speed is more precise, thus having a higher weight value.

@@ -1,0 +1,25 @@
+Each test scenario \textbf{(C1)}--\textbf{(C4)} has default settings as defined in Section \ref{sec:test-scenarios}. However, to obtain a complete picture of how the GM-PHD filter behaves in different situations, we also evaluate each test case with various combinations of filter settings. This testing is performed by fixing the default values of every parameter and iterating through different values of one parameter at a time. The list of tested settings includes:
+
+\begin{itemize}
+    \item Clutter spatial density $\lambda_c \in [0, 1.25, 2.5, 3.75, 5, 6.25, 7.5, 8.75, 10, 11.25, 12.5] \times 10^{-6}$
+    \item Detection probability $P_{D,k} \int [0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]$
+    \item Survival probability $P_{S,k} \int [0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1.0]$
+    \item Truncation threshold $\tau \int [10^{-6}, 10^{-5}, 10^{-4}, 10^{-3}]$
+    \item Merge threshold $U \int [4, 10, 20, 50]$
+\end{itemize}
+
+The GM-PHD filter with additional information fusion was implemented using Python 3.10 and the following libraries:
+
+\begin{itemize}
+    \item NumPy v1.23.5 for mathematical operations and efficient matrix multiplication,
+    \item SciPy v1.10.0 for a convenient and reliable sampling from multivariate distributions,
+    \item Matplotlib v3.7.0 for plot generation and visualization.
+\end{itemize}
+
+Additionally, for numerical stability of calculation of covariance matrices, so that they remain symmetrical and positive definite, a small trick is applied:
+
+\begin{equation}
+    \mathbf{P} = 0.5 * (\mathbf{P} + \mathbf{P}^\intercal).
+\end{equation}
+
+For each testing scenario and every combination of default settings and changed parameters, a testing case is created. Each testing case is evaluated using $100$ Monte Carlo input data samples, which are randomly generated measurements, clutter, and misdetections. The filter is run on each sample separately, resulting in $100$ filter runs per testing case. In total, we conducted $13,200$ runs of the GM-PHD filter. The testing was performed using a MacBook Pro model A2141 with a 2.6 GHz 6-Core Intel Core i7 CPU and 16 GB RAM. The total running time, including steps from data generation to evaluation and plotting, was approximately 17 hours.
