@@ -73,10 +73,10 @@ All other steps of the GM-PHD filter remain the same. The final algorithm of the
 
     \item[]
     \Procedure{GM-PHD-Fusion}{$Z_k, \Psi_k, v_{k-1} = \{ w_{k-1}^{(i)}, \vecat{m}{k-1}^{(i)}, \vecat{P}{k-1}^{(i)}, T_{k-1}^{(i)}\}_{i=1}^{J_{k-1}}$}\label{alg:gm-phd:step}
-        \State $v_{k|k-1} \gets \Call{Predict-Fuse}{v_{k-1}}$
+        \State $v_{k|k-1} \gets \Call{Predict-Fuse}{\Psi_k, v_{k-1}}$
         \State $v_{k} \gets \Call{Update}{Z_k, v_{k|k-1}}$ \Comment{Defined in Algorithm \ref{alg:gm-phd:update}}
         \State $\bar{v}_k \gets \Call{Prune}{\tau, v_{k}}$ \Comment{Defined in Algorithm \ref{alg:gm-phd:prune}}
-        \State $\tilde{v}_k \gets \Call{Merge}{\tau, \bar{v}_k}$ \Comment{Defined in Algorithm \ref{alg:gm-phd:merge}}
+        \State $\tilde{v}_k \gets \Call{Merge}{U, \bar{v}_k}$ \Comment{Defined in Algorithm \ref{alg:gm-phd:merge}}
         \State $\hat{X} \gets \Call{StateExtract}{\tilde{v}_k}$ \Comment{Defined in Algorithm \ref{alg:gm-phd:extract-states}}
         \State \Return $\hat{X}$
     \EndProcedure
