@@ -1,0 +1,21 @@
+% 1. Index
+% 2. For every case:
+%     - Plots how data is generated (L: tracks + measurements; RT: X with meas and clutter (mention the rate in the figure); RB: Y same)
+%     - Explain the box and whisker plot
+%         - https://www.simplypsychology.org/boxplots.html
+%     - Tracks estimates + final posterior
+%     - Clutter. L: CPEP; R: EAE
+%     - Prob det. L: CPEP; R: EAE
+%     - Prob surv. L: CPEP; R: EAE
+%     - Prune thr. L: CPEP; R: EAE
+%     - Merge thr. L: CPEP; R: EAE
+% 3. Discussion
+%     - Processing time with clutter increases
+%     - Table: comparison of test cases for two metrics and default settings
+%         - Columns are metrics + columns with absolute and relative increase
+%         - Rows are two cases
+%     - Track continuity problem with clutter
+%     - Limitations
+%     - Low pd and low ps
+
+In this chapter, we present the results of a thorough testing of different parameters of the GM-PHD filter on different test cases presented in the previous chapter. For convenience, we have split this chapter into multiple sections, referring to each test scenario and included multiple plots that depict the change of both the CPEP metric and the expected absolute error on the number of targets. Finally, we discuss the results, outline the strengths and weaknesses of the GM-PHD filter, and compare the results of the (C3) and (C4) scenarios, with and without external information fusion.

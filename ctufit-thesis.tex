@@ -144,11 +144,11 @@
 % list of other contents END
 %%%%%%%%%%%%%%%%%%%%%%
 
-\include{text/acknowledment}
-\include{text/declaration}
+\input{text/acknowledgment}
+\input{text/declaration}
 \printabstractpage % do not remove this command
-\include{text/summary}
-\chapter{List of Acronyms}\include{text/acronyms}
+\input{text/summary}
+\chapter{List of Acronyms}\input{text/acronyms}
 
 %%%%%%%%%%%%%%%%%%%
 % THE THESIS
@@ -172,11 +172,16 @@
 \addcontentsline{toc}{chapter}{Introduction}\markboth{Introduction}{Introduction}
 \setcounter{page}{1}
 
-\chapter*{Introduction}\input{text/introduction/index}
-\section*{Motivation}\input{text/introduction/motivation}
-\section*{Related works}\input{text/introduction/related-works}
-\section*{Contribution of this work}\input{text/introduction/contribution}
-\section*{Structure}\input{text/introduction/structure}
+\chapter*{Introduction}
+    \input{text/introduction/index}
+    \section*{Motivation}
+        \input{text/introduction/motivation}
+    \section*{Related works}
+        \input{text/introduction/related-works}
+    \section*{Contribution of this work}
+        \input{text/introduction/contribution}
+    \section*{Structure}
+        \input{text/introduction/structure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Theoretical background
@@ -221,6 +226,10 @@
                 \input{text/theory/gauss-linear-filtering/gaussian-identity}
             \subsubsection{The Kalman filter algorithm}\label{sec:kf-algorithm}
                 \input{text/theory/gauss-linear-filtering/kf-algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MTT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Multi-target tracking}\label{ch:mtt}
     \input{text/theory/mtt/index}
@@ -272,41 +281,22 @@
             \input{text/methodology/c4-scenario}
     \section{Parameters testing and methodology}\label{sec:parameters-tests}
         \input{text/methodology/parameters-tests}
-    
-% - Implementation overview
-% - GM-PHD algorithm, Python implementation description
-% - Test scenarios, data generation
-% - Metrics: CPEP, EAE
-
-% Metrics
-% Test scenarios, data generation
-% Implementation
-%     - Mention the covariance normalization 
-% Results
-%    - Clutter
-%    - P_D
-%    - P_S
-%    - \tau
-% Fusion vs. non-fusion table
-%    - Columns are metrics + columns with absolute and relative increase
-%    - Rows are tow cases
-% Discussion
-%    - Track continuity problem with clutter 
-%    - Fusion
-%    - 
-% 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Results analysis
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Results analysis}\input{text/results/index}
-% - Results obtained from tests, graphs
-% - Comparison GM-PHD vs. GM-PHD with externals information
-% - Change of performace due to changes of different parameters
-% - Quantitative and qualitative evaluation of results
-% - Tracks and observed problems
-% - Discussion on the performance evaluation
-% - Limitations
+\chapter{Results analysis}\label{ch:results}
+    \input{text/results/index}
+    \section{Test results (C1)}\label{sec:c1-results}
+        \input{text/results/c1-results}
+    \section{Test results (C2)}\label{sec:c2-results}
+        \input{text/results/c2-results}
+    \section{Test results (C3)}\label{sec:c3-results}
+        \input{text/results/c3-results}
+    \section{Test results (C4)}\label{sec:c4-results}
+        \input{text/results/c4-results}
+    \section{Discussion}\label{sec:discussion}
+        \input{text/results/discussion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Conclusion
@@ -318,7 +308,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \appendix\appendixinit
-\chapter{Appendix 1}\input{text/appendices/appendix}
+\chapter{Appendix 1. Results comparison across different filter parameters}\label{appendix:results-figures}
+    \input{text/appendices/results-figures}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % References
@@ -331,6 +322,6 @@
 % USB/CD file tree
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Obsah přiloženého média}\input{text/medium}
+\chapter{Contents of the attached medium}\input{text/medium}
 
 \end{document}
