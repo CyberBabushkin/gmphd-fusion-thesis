@@ -172,15 +172,9 @@
 \addcontentsline{toc}{chapter}{Introduction}\markboth{Introduction}{Introduction}
 \setcounter{page}{1}
 
-\chapter*{Introduction}
+\chapter*{Introduction}\label{ch:introduction}
     \input{text/introduction/index}
-    \section*{Motivation}
-        \input{text/introduction/motivation}
-    \section*{Related works}
-        \input{text/introduction/related-works}
-    \section*{Contribution of this work}
-        \input{text/introduction/contribution}
-    \section*{Structure}
+    \section*{Structure}\label{sec:structure}
         \input{text/introduction/structure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -316,6 +310,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \backmatter
+% \emergencystretch=2.5em
 \printbibliography
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
