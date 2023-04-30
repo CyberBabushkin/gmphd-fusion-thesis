@@ -1,0 +1,9 @@
+In this work, we explored one of the most popular Bayesian filters for multi-target tracking in Gaussian-linear cases, the Gaussian Mixture Probability Density (GM-PHD) filter. We investigated its performance and robustness in several tracking scenarios, including challenging situations where a sensor fails to collect measurements from targets and external information fusion is required.
+
+We have demonstrated that the performance of the GM-PHD filter can be improved by incorporating external estimates from other sensors, as shown through evaluation of several metrics that indicated significant improvement in tracking results.
+
+However, we have also identified a problem with track continuity when using the simple tagging of Gaussian components. We believe that more sophisticated techniques may improve track maintenance of the GM-PHD filter and make it more robust to complex scenarios with high uncertainty due to clutter measurements and a high number of targets.
+
+Additionally, we have measured and discussed the filter's performance depending on the setup of internal parameters. We observed that the GM-PHD filter was sensitive to the choice of settings, particularly the clutter rate and probability of detection, highlighting the need to consider environmental conditions and the quality of the sensor when using the filter.
+
+In conclusion, the GM-PHD filter remains a powerful and robust algorithm for state estimation of multiple targets in complex scenarios. Its computational complexity is outstanding compared to traditional multi-target tracking algorithms, and it is proven that the propagation of only the posterior first-order moment may be sufficient to achieve good tracking results. We believe that the techniques introduced in this work and the comprehensive performance measurements conducted may aid the multi-tracking research community in further improving the GM-PHD filter.
