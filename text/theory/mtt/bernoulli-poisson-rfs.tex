@@ -6,19 +6,19 @@ The Bernoulli random finite sets is one of the simplest and straightforward RFS 
     \begin{equation}
         p_\Xi(X) =
         \begin{cases}
-            1 - r, & \textup{if } X = \emptyset, \\
-            r p(\mathbf{x}), & \textup{if } X = \{\mathbf{x}\}, \\
-            0, & \textup{otherwise}.
+            1 - r & \textup{if } X = \emptyset, \\
+            r p(\mathbf{x}) & \textup{if } X = \{\mathbf{x}\}, \\
+            0 & \textup{otherwise}.
         \end{cases}
     \end{equation}
 
-    The cardinality of the Bernoulli RFS has the Bernoulli distribution, that is:
+    \noindent The cardinality of the Bernoulli RFS has the Bernoulli distribution, that is:
 
     \begin{equation}
         \Pr{|\Xi| = k} = \begin{cases}
-            1 - r, & \textup{if } k = 0, \\
-            r, & \textup{if } k = 1, \\
-            0, & \textup{otherwise}.
+            1 - r & \textup{if } k = 0, \\
+            r & \textup{if } k = 1, \\
+            0 & \textup{otherwise}.
         \end{cases}
     \end{equation}
 \end{definition}
@@ -33,7 +33,7 @@ The Poisson RFS is also a widely used multi-target pdf. It is commonly used to m
         \prod_{\mathbf{x} \in \Xi} \lambda(\mathbf{x}).
     \end{equation}
 
-    The cardinality pmf of the Poisson RFS is Poisson-distributed with the rate parameter $\hat{\lambda} = \int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}$ is the following:
+    \noindent The cardinality pmf of the Poisson RFS is Poisson-distributed with the rate parameter $\hat{\lambda} = \int \lambda(\mathbf{x}) \mathrm{d}\mathbf{x}$ is the following:
 
     \begin{equation}
         \Pr{|\Xi| = k} = \operatorname{Poisson}(k; \hat{\lambda}).

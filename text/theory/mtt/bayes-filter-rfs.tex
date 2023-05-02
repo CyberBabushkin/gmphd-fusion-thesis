@@ -2,7 +2,7 @@ In Section \ref{sec:bayes-filter}, we have discussed the prediction step, also k
 
 Since RFS pdfs are indeed densities, as we discussed in Section \ref{sec:rfs-definition}, the recursive relations for RFS have the same form, however, densities are multi-target densities that catch the motion of all objects at once, and arguments are sets.
 
-\begin{theorem}[The prediction step for RFS]{theorem:bayes-filter-predict-rfs}
+\begin{theorem}[The prediction step for RFS]\label{theorem:bayes-filter-predict-rfs}
     Given sets of measurements $Z_{1:k-1} = \{Z_1,\allowbreak Z_2, \ldots, Z_{k-1}\}$, the current state RFS $X_{k-1}$, the multi-target transition density $f_{k|k-1}(X_k | X_{k-1})$, and the multi-target posterior density from the previous time step $p_{k-1}\left({X}_{k-1} | {Z}_{1:k-1}\right)$, the prediction step of the Bayes filter for RFSs is computed as follows:
 
     \begin{equation}

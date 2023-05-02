@@ -6,8 +6,8 @@ Existing targets either move according to their underlying dynamics model to the
 
 \begin{equation}
     S_{k|k-1}(\vecat{x}{k-1}) = \begin{cases}
-        \{\vecat{x}{k}\}, & \text{if the target survives}, \\
-        \emptyset, & \text{otherwise}.
+        \{\vecat{x}{k}\} & \text{if the target survives}, \\
+        \emptyset & \text{otherwise}.
     \end{cases}
 \end{equation}
 
@@ -34,7 +34,7 @@ If we apply the convolution formula from Definition \ref{def:rfs-convolution}, a
     s_{k|k-1}(S_{k|k-1}^i | \svecat{x}{k-1}{i}) = \begin{cases}
         P_{S,k}(\svecat{x}{k-1}{i})
             f_{k|k-1}(\vecat{x}{k} | \svecat{x}{k-1}{i}) & \text{if } S_{k|k-1}^i = \{\vecat{x}{k}\}, \\
-            1 - P_{S,k}(\svecat{x}{k-1}{i}), & \text{if } S_{k|k-1}^i = \emptyset.
+            1 - P_{S,k}(\svecat{x}{k-1}{i}) & \text{if } S_{k|k-1}^i = \emptyset.
     \end{cases}
 \end{equation}
 
@@ -42,8 +42,8 @@ The multi-target measurement model, or the multi-target likelihood, also consist
 
 \begin{equation}
     \Theta_k(\vecat{x}{k}) = \begin{cases}
-        \{\vecat{z}{k}\}, & \text{if target is detected}, \\
-        \emptyset, & \text{otherwise}.
+        \{\vecat{z}{k}\} & \text{if target is detected}, \\
+        \emptyset & \text{otherwise}.
     \end{cases}
 \end{equation}
 
@@ -69,8 +69,8 @@ As we did for the multi-target transition density, we denote $\Theta_k^i = \Thet
 \begin{equation}
     \theta_k(\Theta_{k}^i | \svecat{x}{k}{i}) = \begin{cases}
         P_{D,k}(\svecat{x}{k}{i})
-            g_k(\vecat{z}{k} | \svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \{\vecat{z}{k}\}, \\
-            1 - P_{D,k}(\svecat{x}{k}{i}), & \text{if } \Theta_{k}^i = \emptyset.
+            g_k(\vecat{z}{k} | \svecat{x}{k}{i}) & \text{if } \Theta_{k}^i = \{\vecat{z}{k}\}, \\
+            1 - P_{D,k}(\svecat{x}{k}{i}) & \text{if } \Theta_{k}^i = \emptyset.
     \end{cases}
 \end{equation}
 

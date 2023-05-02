@@ -56,8 +56,10 @@ is also known as the Chapman-Kolmogorov equation.
             ) p\left(
                 {x}_{k-1} | {z}_{1: k-1}
             \right)
-            \mathrm{d} {x}_{k-1}.
+            \mathrm{d} {x}_{k-1},
     \end{equation}
+    
+    \noindent where the integral is taken over the entire state space of ${x}_{k-1}$, and $p\left({x}_{k-1} | {z}_{1: k-1}\right)$ is the posterior density of the state at time $k-1$, given all measurements up to time $k-1$.
 \end{theorem}
 
 Next, on the update step, the filter corrects the predicted state with the 

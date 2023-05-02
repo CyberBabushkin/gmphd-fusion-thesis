@@ -98,7 +98,7 @@ linear state-space model has the following representation:
     prior state.
 \end{itemize}
 
-The control variable $\vecat{u}{k}$, in general, represents some input signal from the environment, and $\mathbf{B}$ specifies how the input signal affects the dynamic system. This may include the effect of gravity on the vertical traveled distance or the voltage applied to some circuit. However, in object tracking, we rely on measurements obtained from sensors to update our estimate of the object's state. We do not have control over the object's motion. Thus, the input matrix is often redundant, and we omit it (or set it to a zero matrix) along with the input variable $\vecat{u}{k}$.
+The control variable $\vecat{u}{k}$, in general, represents some input signal from the environment, and $\mathbf{B}$ specifies how the input signal affects the dynamic system. This may include the effect of gravity on the vertical traveled distance or the voltage applied to some circuit. However, in object tracking, we rely on measurements obtained from sensors to update our estimate of the object state. We do not have control over the object motion. Thus, the input matrix is often redundant, and we omit it (or set it to a zero matrix) along with the input variable $\vecat{u}{k}$.
 
 The notation above may be inconvenient in some cases. In this work, we will often use a shorter version that has the same meaning:
 

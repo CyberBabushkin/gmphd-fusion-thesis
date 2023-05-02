@@ -53,7 +53,7 @@ As we will later see, in object tracking, we heavily use conditional probabiliti
     \noindent where
     \begin{align}
         \boldsymbol\mu_{x|y}
-        &= \boldsymbol\mu_x + \mathbf{\Sigma}_{xy} \mathbf{\Sigma}_{yy}^{-1}(\mathbf{y} - \boldsymbol\mu_y) \\
+        &= \boldsymbol\mu_x + \mathbf{\Sigma}_{xy} \mathbf{\Sigma}_{yy}^{-1}(\mathbf{y} - \boldsymbol\mu_y), \\
         \mathbf\Sigma_{x|y} 
         &= \mathbf\Sigma_{xx} - \mathbf\Sigma_{xy}\mathbf\Sigma_{yy}^{-1}\mathbf\Sigma_{xy}^\intercal.\label{eq:gauss-cond-params}
     \end{align}

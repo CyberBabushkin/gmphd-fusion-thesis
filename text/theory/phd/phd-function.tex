@@ -4,8 +4,8 @@ Let a random finite set be denoted by $\Xi$ with the multi-target probability di
 
 \begin{equation}
     \delta_\Xi(\mathbf{x}) = \begin{cases}
-        0, & \text{if } X = \emptyset, \\
-        \sum_{\mathbf{w} \in X} \delta_\mathbf{w}(\mathbf{x}), & \text{otherwise},
+        0 & \text{if } X = \emptyset, \\
+        \sum_{\mathbf{w} \in X} \delta_\mathbf{w}(\mathbf{x}) & \text{otherwise},
     \end{cases}
 \end{equation}
 
@@ -18,7 +18,7 @@ Let a random finite set be denoted by $\Xi$ with the multi-target probability di
         v_\Xi(\mathbf{x}) = E[\delta_\Xi(\mathbf{x})] = \int \delta_\Xi(\mathbf{x}) \cdot p_\Xi(X) \delta X.
     \end{equation}
 
-    The function $v_\Xi(\mathbf{x})$ is also called the Probability hypothesis density (PHD) function.
+    \noindent The function $v_\Xi(\mathbf{x})$ is also called the Probability hypothesis density (PHD) function.
 \end{definition}
 
 The PHD function is not a probability density function, that is, it is not normalized to integrate to one. The integral of the PHD function over some subspace $S$ yields the expected number of targets in this subspace:

@@ -19,7 +19,7 @@ The GM-PHD filter with additional information fusion was implemented using Pytho
 Additionally, for numerical stability of calculation of covariance matrices, so that they remain symmetrical and positive definite, a small trick is applied:
 
 \begin{equation}
-    \mathbf{P} = 0.5 * (\mathbf{P} + \mathbf{P}^\intercal).
+    \mathbf{P} = 0.5 \times (\mathbf{P} + \mathbf{P}^\intercal).
 \end{equation}
 
 For each testing scenario and every combination of default settings and changed parameters, a testing case is created. Each testing case is evaluated using $100$ Monte Carlo input data samples, which are randomly generated measurements, clutter, and misdetections. The filter is run on each sample separately, resulting in $100$ filter runs per testing case. In total, we conducted $13,200$ runs of the GM-PHD filter. The testing was performed using a MacBook Pro model A2141 with a 2.6 GHz 6-Core Intel Core i7 CPU and 16 GB RAM. The total running time, including steps from data generation to evaluation and plotting, was approximately 17 hours.
