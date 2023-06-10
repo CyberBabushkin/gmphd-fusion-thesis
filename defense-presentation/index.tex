@@ -1,0 +1,79 @@
+\documentclass[a4paper]{beamer}
+%
+% Josef Hlavac & Tomas Zahradnicky (21.10.2010)
+%
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\pgfpagesuselayout{resize}[a4paper,border shrink=5mm,landscape]
+%\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{color}
+\usetheme{Frankfurt}
+\useinnertheme{circles}
+\usepackage{subfigure}
+\usepackage{xmpmulti}
+\usepackage{mathrsfs}  % mathscr
+\usepackage[czech,slovak,english]{babel}%\useinnertheme{rounded}
+%\useinnertheme{rectangles}
+%\useinnertheme{balls}
+\usefonttheme{professionalfonts}
+%
+\def\uv#1{\char92\relax #1\char34\relax}
+\def\Put(#1,#2)#3{\leavevmode\makebox(0,0){\put(#1,#2){#3}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\FirstName{Bc. Andrey}
+\newcommand\FirstNameAbbreviated{A}
+\newcommand\LastName{Babushkin}
+\newcommand\Email{babusand@fit.cvut.cz}
+\newcommand\DissertationTitle{Multiple Target Tracking with External Information}
+%\newcommand\Department{Department of Theoretical Computer Science}
+%\newcommand\Department{Department of Digital Design}
+%\newcommand\Department{Department of Software Engineering}
+% \newcommand\Department{Department of Computer Systems}
+\newcommand\Department{Department of Applied Mathematics}
+\newcommand\Faculty{Faculty of Information Technology}
+\newcommand\University{Czech Technical University in Prague}
+\newcommand\FacultyAndUniversityAbbr{FIT CTU}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\varat}[2]{\relax\ifmmode{#1}_{#2}\else ${#1}_{#2}$\fi}
+\newcommand{\vecat}[2]{\relax\ifmmode\mathbf{#1}_{#2}\else $\mathbf{#1}_{#2}$\fi}
+\newcommand{\svecat}[3]{\relax\ifmmode\vecat{#1}{#2}^{#3}\else $\vecat{#1}{#2}^{#3}$\fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subtitle{BBB}
+\subject{SUBJECT}
+\author[\FirstNameAbbreviated. \LastName]{\FirstName{} \LastName}
+\title{\DissertationTitle}
+\titlegraphic{\includegraphics[width=1.5cm]{pic/LogoCVUT.pdf}}
+\institute[\FacultyAndUniversityAbbr]{\Department\\ \Faculty\\ \University}
+\date{June 15, 2023}
+%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+% \begin{frame}[noframenumbering]
+%     \frametitle{Outline}
+%     \tableofcontents
+% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{sections/problem-definition}
+\include{sections/bayes}
+\include{sections/phd}
+\include{sections/fusion}
+\include{sections/experiments}
+\include{sections/summary}
+% \include{sections/stt}
+% \include{sections/mtt}
+% \include{sections/experiments}
+
+\appendix
+\include{sections/reviewer}
+
+\end{document}
