@@ -15,6 +15,10 @@ The aim of the thesis is to propose a framework fusing external information into
 3. Experimentally assess the feasibility of the resulting framework. That is, provide some simulation examples and evaluate the results.
 4. Discuss the properties of the proposed framework, its performance, advantages and disadvantages. Suggest possible future research directions.
 
+## Filter Implementation
+
+The source code of the filter in Python, including the code for rendering all the graphs used in the thesis, can be found [here](https://github.com/mannannlegur/gmphd-fusion).
+
 ## References
 
 - \[1\] Á. F. García-Fernández and B. -N. Vo, "Derivation of the PHD and CPHD Filters Based on Direct Kullback–Leibler Divergence Minimization," in IEEE Transactions on Signal Processing, vol. 63, no. 21, pp. 5812-5820, Nov.1, 2015, doi: 10.1109/TSP.2015.2468677.
